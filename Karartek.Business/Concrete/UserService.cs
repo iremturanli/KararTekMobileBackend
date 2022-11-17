@@ -18,14 +18,15 @@ namespace Karartek.Business.Concrete
         private readonly IUserDal _userDal;
         private readonly IConfiguration _configuration;
         private string RandomPassword;
+        private string NewRandomPassword;
+
+
 
         public UserService(IUserDal userDal, IConfiguration configuration)
         {
             _userDal = userDal;
             _configuration = configuration;
         }
-
-
 
 
 
@@ -65,12 +66,62 @@ namespace Karartek.Business.Concrete
                 response.Message = "User Found";
                 return response;
             }
-
-
-
-
         }
+
+        public ResponseDto ForgotMyPassword(ForgotMyPasswordDto forgotMyPasswordDto)
+            {
+                ResponseDto response = new ResponseDto();
+                NewRandomPassword = GeneratePassword();
+                var user = _userDal.GetUserByIdentity(forgotMyPasswordDto.IdentityNumber);
+
+            
+               
+
+
+
+                if (user is null || user.PhoneNumber!=forgotMyPasswordDto.PhoneNumber )
+                {
+                    response.HasError = true;
+                    response.Message = "Telefon numaranızı kontrol ediniz."; //mantıksız
+                    return response;
+
+
+
+                }
+
+                else
+                {
+
+                    CreatePasswordHash(NewRandomPassword, out byte[] passwordHash, out byte[] passwordSalt);
+                    var userToResetPassword = _userDal.userForForgotPassword(forgotMyPasswordDto.IdentityNumber, passwordHash, passwordSalt);
+
+
+                    SmtpClient client = new SmtpClient("smtp.yandex.com.tr", 587);
+                    MailMessage message = new MailMessage();
+                    message.From = new MailAddress("karartek@yandex.com");
+                    message.To.Add(userToResetPassword.Email);
+                    message.Subject = "Merhaba Sayın " + userToResetPassword.FirstName + " "+ userToResetPassword.LastName;
+                    message.Body = "Yeni uygulama şifreniz: " + NewRandomPassword;
+                    client.UseDefaultCredentials = false;
+                    client.EnableSsl = true; // Encryption
+                    client.Credentials = new System.Net.NetworkCredential("karartek@yandex.com", "plbobupzzvaxxgpw");
+
+                    client.Send(message);
+
+
+
+                //We create Token here
+           
+                    response.HasError = false;
+                    response.Message = "Şifre Sıfırlama İşlemi Başarılı";
+                    return response;
+                }
+
+
+            }
+
         public bool Register(UserForRegister userForRegister)
+
         {
             var user = _userDal.GetUserByIdentity(userForRegister.IdentityNumber);
 
@@ -227,4 +278,5 @@ namespace Karartek.Business.Concrete
 
     }
 
-}
+      
+    }

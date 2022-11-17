@@ -46,5 +46,18 @@ namespace Karartek.Api.Controllers
           return Ok(userToLogin);
         }
 
+        [HttpPost("forgotMyPassword")]
+        public ActionResult ForgotMyPassword(ForgotMyPasswordDto forgotMyPasswordDto)
+        {
+            var userToLogin = _userService.ForgotMyPassword(forgotMyPasswordDto);
+            if (userToLogin == null)
+            {
+                return BadRequest("Login Failed");
+            }
+
+            return Ok(userToLogin);
+        }
+
+
     }
 }

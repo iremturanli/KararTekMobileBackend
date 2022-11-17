@@ -21,5 +21,26 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
             context.SaveChanges();
             return user;
         }
+
+        public User userForForgotPassword(string identityNumber, byte[] passwordHash, byte[] passwordSalt)
+        {
+
+            using var context = new AppDbContext();
+            var user = GetUserByIdentity(identityNumber);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordHash;
+
+            context.Update(user);
+            context.SaveChanges();
+
+            return user;
+
+
+
+        }
+
+
+
+
     }
 }
