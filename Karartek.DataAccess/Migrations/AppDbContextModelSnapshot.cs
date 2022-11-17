@@ -76,6 +76,33 @@ namespace Karartek.DataAccess.Migrations
                     b.ToTable("Judgments", (string)null);
                 });
 
+            modelBuilder.Entity("Karartek.Entities.Concrete.JudgmentPool", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("JudgmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JudgmentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("JudgmentPool", (string)null);
+                });
+
             modelBuilder.Entity("Karartek.Entities.Concrete.User", b =>
                 {
                     b.Property<int>("Id")
@@ -185,17 +212,36 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2022, 11, 16, 19, 44, 57, 509, DateTimeKind.Local).AddTicks(7995),
+                            CreateDate = new DateTime(2022, 11, 17, 16, 38, 38, 866, DateTimeKind.Local).AddTicks(4181),
                             TypeId = 1,
                             TypeName = "Student"
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2022, 11, 16, 19, 44, 57, 511, DateTimeKind.Local).AddTicks(631),
+                            CreateDate = new DateTime(2022, 11, 17, 16, 38, 38, 867, DateTimeKind.Local).AddTicks(6997),
                             TypeId = 2,
                             TypeName = "Lawyer"
                         });
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.JudgmentPool", b =>
+                {
+                    b.HasOne("Karartek.Entities.Concrete.Judgment", "Judgment")
+                        .WithMany("JudgmentPools")
+                        .HasForeignKey("JudgmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Karartek.Entities.Concrete.User", "User")
+                        .WithMany("JudgmentPools")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Judgment");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Karartek.Entities.Concrete.User", b =>
@@ -207,6 +253,16 @@ namespace Karartek.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("UserType");
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.Judgment", b =>
+                {
+                    b.Navigation("JudgmentPools");
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.User", b =>
+                {
+                    b.Navigation("JudgmentPools");
                 });
 
             modelBuilder.Entity("Karartek.Entities.Concrete.UserType", b =>

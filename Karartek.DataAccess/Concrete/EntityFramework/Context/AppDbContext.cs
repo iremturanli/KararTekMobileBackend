@@ -9,12 +9,14 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
         public DbSet<User> Users { get; set; }
         public DbSet<Judgment> Judgments { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
+        public DbSet<JudgmentPool> JudgmentPools { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer(@"Server=(localdb)\KararTek;Encrypt=false;TrustServerCertificate=False;Integrated Security=true");
-            optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=KararTek;Password=irem@123;Encrypt=false;TrustServerCertificate=False");
+            ////optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=KararTek;Password=irem@123;Encrypt=false;TrustServerCertificate=False");
             //     optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=Northwind;Password=irem@123;");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=KararTek1;Trusted_Connection=true");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -49,6 +51,12 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<UserType>().Property(x => x.TypeId).IsRequired();
             modelBuilder.Entity<UserType>().Property(x => x.TypeName).ValueGeneratedNever();
             modelBuilder.Entity<UserType>().HasData(UserTypeSeeds.userTypes);
+
+            modelBuilder.Entity<JudgmentPool>().ToTable("JudgmentPool");
+            modelBuilder.Entity<JudgmentPool>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
+            modelBuilder.Entity<JudgmentPool>().Property(x => x.CreateDate).IsRequired();
+            modelBuilder.Entity<JudgmentPool>().HasOne<Judgment>(x => x.Judgment).WithMany(x => x.JudgmentPools).IsRequired().HasForeignKey(x => x.JudgmentId);
+            modelBuilder.Entity<JudgmentPool>().HasOne<User>(x => x.User).WithMany(x => x.JudgmentPools).IsRequired().HasForeignKey(x => x.UserId);
 
         }
     }

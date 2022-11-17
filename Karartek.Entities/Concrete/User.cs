@@ -20,6 +20,8 @@ namespace Karartek.Entities.Concrete
         public byte[] PasswordHash { get; set; } = null!;
         public byte[] PasswordSalt { get; set; } = null!;
         public UserType? UserType { get; set; } = null!;
+        public virtual ICollection<JudgmentPool>? JudgmentPools { get; set; } = null!;
+
     }
 
     /*
