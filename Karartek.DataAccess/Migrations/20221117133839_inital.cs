@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Karartek.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class inital : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -83,14 +83,51 @@ namespace Karartek.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "JudgmentPool",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    JudgmentId = table.Column<int>(type: "int", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JudgmentPool", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JudgmentPool_Judgments_JudgmentId",
+                        column: x => x.JudgmentId,
+                        principalTable: "Judgments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JudgmentPool_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "UserTypes",
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 16, 19, 44, 57, 509, DateTimeKind.Local).AddTicks(7995), 1, "Student" },
-                    { 2, new DateTime(2022, 11, 16, 19, 44, 57, 511, DateTimeKind.Local).AddTicks(631), 2, "Lawyer" }
+                    { 1, new DateTime(2022, 11, 17, 16, 38, 38, 866, DateTimeKind.Local).AddTicks(4181), 1, "Student" },
+                    { 2, new DateTime(2022, 11, 17, 16, 38, 38, 867, DateTimeKind.Local).AddTicks(6997), 2, "Lawyer" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JudgmentPool_JudgmentId",
+                table: "JudgmentPool",
+                column: "JudgmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JudgmentPool_UserId",
+                table: "JudgmentPool",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_UserTypeId",
@@ -101,6 +138,9 @@ namespace Karartek.DataAccess.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "JudgmentPool");
+
             migrationBuilder.DropTable(
                 name: "Judgments");
 
