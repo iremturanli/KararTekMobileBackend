@@ -276,7 +276,7 @@ namespace Karartek.Business.Concrete
 
         }
 
-
+       
     }
 
       

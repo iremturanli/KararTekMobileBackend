@@ -26,7 +26,7 @@ namespace Karartek.Api.Controllers
         public ActionResult Register(UserForRegister userForRegister)
         {
             var userToRegister = _userService.Register(userForRegister);
-            if (userToRegister)
+            if (userToRegister!=null)
             {
                 return Ok(userToRegister);
 
