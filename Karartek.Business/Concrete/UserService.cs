@@ -1,4 +1,5 @@
-﻿using Karartek.Business.Abstract;
+﻿using Azure;
+using Karartek.Business.Abstract;
 using Karartek.DataAccess.Abstract;
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
@@ -120,14 +121,17 @@ namespace Karartek.Business.Concrete
 
             }
 
-        public bool Register(UserForRegister userForRegister)
+        public ResponseDto Register(UserForRegister userForRegister)
 
         {
             var user = _userDal.GetUserByIdentity(userForRegister.IdentityNumber);
+            ResponseDto response = new ResponseDto();
 
             if (user is not null)
             {
-                return false;
+                response.HasError = true;
+                response.Message = "Kimlik numarasına kayıtlı kişi mevcut"; //mantıksız
+                return response;
             }
 
             else
@@ -178,12 +182,9 @@ namespace Karartek.Business.Concrete
             client.Credentials = new System.Net.NetworkCredential("karartek@yandex.com", "plbobupzzvaxxgpw");
 
             client.Send(message);
-            if (result != null)
-            {
-                return true;
-
-            }
-            return false;
+            response.HasError = false;
+            response.Message = "Kayıt Başarılı";
+            return response;
         }
 
 

@@ -11,16 +11,17 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context.Seed
             {
                 Id=1,
                 TypeId = 1,
-                TypeName = "Öğrenci",
+                TypeName = "Avukat - Avukat Stajyeri",
                 CreateDate = DateTime.Now,
 
             },
             new UserType
             {   Id=2,
                 TypeId = 2,
-                TypeName = "Avukat - Avukat Stajyeri",
+                TypeName = "Öğrenci",
                 CreateDate = DateTime.Now,
-            }
+            },
+          
         };
 
     }
