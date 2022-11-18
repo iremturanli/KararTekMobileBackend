@@ -9,6 +9,6 @@ namespace Karartek.Business.Abstract
         bool DeleteUserType(UserType userType);
         UserType GetUserTypeById(int id);
         bool UpdateUserType(UserType userType);
-        List<UserType> GetUserTypes();
+        UserTypeResponseDto GetUserTypes();
     }
 }

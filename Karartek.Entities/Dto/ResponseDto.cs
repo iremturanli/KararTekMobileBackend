@@ -12,4 +12,6 @@ namespace Karartek.Entities.Dto
         public string Message { get; set; }
         public string Token { get; set; } = null!;
     }
+
+
 }

@@ -17,7 +17,7 @@ namespace Karartek.Api.Controllers
         }
 
         [HttpGet("GetAll")]
-        public List<UserType> GetAll()
+        public UserTypeResponseDto GetAll()
         {
             var userTypeToSearch = _userTypeService.GetUserTypes();
             return userTypeToSearch;

@@ -29,9 +29,15 @@ namespace Karartek.Business.Concrete
         {
             return _userTypeDal.DeleteUserType(userType);
         }
-        public List<UserType> GetUserTypes()
+        public UserTypeResponseDto GetUserTypes()
         {
-            return _userTypeDal.GetUserTypes();
+            var result = new UserTypeResponseDto
+            {
+                UserTypes = _userTypeDal.GetUserTypes(),
+                HasError = false,
+                Message = "Success"
+            };
+            return result;
         }
         public UserType GetUserTypeById(int id)
         {
