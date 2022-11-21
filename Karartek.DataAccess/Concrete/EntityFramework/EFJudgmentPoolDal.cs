@@ -1,6 +1,7 @@
 ﻿using Karartek.DataAccess.Abstract;
 using Karartek.DataAccess.Concrete.EntityFramework.Context;
 using Karartek.Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 namespace Karartek.DataAccess.Concrete.EntityFramework
 {
@@ -27,7 +28,14 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
 
             public JudgmentPool Remove(JudgmentPool judgmentPool)
         {
-            throw new NotImplementedException();
+            using (AppDbContext context = new AppDbContext())
+            {
+                var removedJudgment = context.Entry(judgmentPool);
+                removedJudgment.State = EntityState.Deleted;
+                context.SaveChanges();
+                return judgmentPool;
+            }
+
         }
 
         public List<JudgmentPool> GetAllJudgmentsinPool(int userId)

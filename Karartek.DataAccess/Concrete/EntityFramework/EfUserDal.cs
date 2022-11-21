@@ -28,7 +28,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
             using var context = new AppDbContext();
             var user = GetUserByIdentity(identityNumber);
             user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordHash;
+            user.PasswordSalt = passwordSalt;
 
             context.Update(user);
             context.SaveChanges();
