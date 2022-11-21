@@ -5,7 +5,7 @@ namespace Karartek.Business.Abstract
     public interface IUserService
     {
         ResponseDto Login(UserForLogin userForLogin);
-        bool Register(UserForRegister userForRegister);
+        ResponseDto Register(UserForRegister userForRegister);
         ResponseDto ForgotMyPassword(ForgotMyPasswordDto forgotMyPasswordDto);
     }
 }

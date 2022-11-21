@@ -15,6 +15,7 @@ namespace Karartek.DataAccess.Abstract
         void Delete(Judgment judgment);
         Judgment Get(Expression<Func<Judgment,bool>>? filter =null);
         List<Judgment> GetAll(Expression<Func<Judgment, bool>>? filter = null);
+        Judgment Update(Judgment judgment);
 
     }
 }

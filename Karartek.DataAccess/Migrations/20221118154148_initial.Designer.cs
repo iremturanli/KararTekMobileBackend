@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Karartek.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221117133839_inital")]
-    partial class inital
+    [Migration("20221118154148_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,6 +66,14 @@ namespace Karartek.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("int");
+
                     b.Property<string>("MeritsNo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -91,6 +99,11 @@ namespace Karartek.DataAccess.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<int>("JudgmentId")
                         .HasColumnType("int");
 
@@ -106,7 +119,7 @@ namespace Karartek.DataAccess.Migrations
                     b.ToTable("JudgmentPool", (string)null);
                 });
 
-            modelBuilder.Entity("Karartek.Entities.Concrete.User", b =>
+            modelBuilder.Entity("Karartek.Entities.Concrete.Lawyer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -117,7 +130,70 @@ namespace Karartek.DataAccess.Migrations
 
                     b.Property<string>("BarRegisterNo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Lawyers", (string)null);
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.Student", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Faculty")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Grade")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("StudentNumber")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.Property<string>("University")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Students", (string)null);
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -135,23 +211,18 @@ namespace Karartek.DataAccess.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Faculty")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Grade")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("IdentityNumber")
                         .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -167,14 +238,6 @@ namespace Karartek.DataAccess.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StudentNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("University")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -200,6 +263,11 @@ namespace Karartek.DataAccess.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<int>("TypeId")
                         .HasColumnType("int");
 
@@ -215,16 +283,18 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2022, 11, 17, 16, 38, 38, 866, DateTimeKind.Local).AddTicks(4181),
+                            CreateDate = new DateTime(2022, 11, 18, 18, 41, 48, 105, DateTimeKind.Local).AddTicks(9530),
+                            IsDeleted = false,
                             TypeId = 1,
-                            TypeName = "Student"
+                            TypeName = "Avukat - Avukat Stajyeri"
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2022, 11, 17, 16, 38, 38, 867, DateTimeKind.Local).AddTicks(6997),
+                            CreateDate = new DateTime(2022, 11, 18, 18, 41, 48, 117, DateTimeKind.Local).AddTicks(9660),
+                            IsDeleted = false,
                             TypeId = 2,
-                            TypeName = "Lawyer"
+                            TypeName = "Öğrenci"
                         });
                 });
 
@@ -243,6 +313,17 @@ namespace Karartek.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Judgment");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.Student", b =>
+                {
+                    b.HasOne("Karartek.Entities.Concrete.User", "User")
+                        .WithOne("Student")
+                        .HasForeignKey("Karartek.Entities.Concrete.Student", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -266,6 +347,8 @@ namespace Karartek.DataAccess.Migrations
             modelBuilder.Entity("Karartek.Entities.Concrete.User", b =>
                 {
                     b.Navigation("JudgmentPools");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("Karartek.Entities.Concrete.UserType", b =>

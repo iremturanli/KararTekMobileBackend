@@ -68,5 +68,17 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
 
 
           }
+
+        public Judgment Update(Judgment judgment)
+        {
+            using(AppDbContext context = new AppDbContext())
+            {
+                context.Update(judgment);
+                context.SaveChanges();
+
+                return judgment;
+            }
+           
         }
+    }
     }

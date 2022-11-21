@@ -35,11 +35,11 @@ namespace Karartek.Api.Controllers
     }
 
 
-    [HttpGet("Search Judgment")]
+    [HttpGet("AllJudgments")]
     public List<Judgment>GetAll()
     {
-        var judgmentToSearch = _judgmentService.GetAll();
-            return judgmentToSearch;
+        var judgments = _judgmentService.GetAll();
+            return judgments;
            
         
     }
@@ -60,9 +60,16 @@ namespace Karartek.Api.Controllers
             return true;
 
 
+        }
+        [HttpGet("JudgmentsToLike{{id}}")]
+        public bool JudgmentsToLike(int id)
+        {
+            _judgmentService.Likes(id);
+            return true;
 
 
         }
+
 
 
 
