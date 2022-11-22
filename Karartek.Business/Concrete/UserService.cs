@@ -18,14 +18,19 @@ namespace Karartek.Business.Concrete
 
         private readonly IUserDal _userDal;
         private readonly IConfiguration _configuration;
+        private readonly IStudentDal _studentDal;
+        private readonly ILawyerDal _lawyerDal;
         private string RandomPassword;
         private string NewRandomPassword;
 
 
 
-        public UserService(IUserDal userDal, IConfiguration configuration)
+
+        public UserService(IUserDal userDal, ILawyerDal lawyerDal, IStudentDal studentDal, IConfiguration configuration)
         {
             _userDal = userDal;
+            _studentDal = studentDal;
+            _lawyerDal = lawyerDal;
             _configuration = configuration;
         }
 
@@ -70,56 +75,51 @@ namespace Karartek.Business.Concrete
         }
 
         public ResponseDto ForgotMyPassword(ForgotMyPasswordDto forgotMyPasswordDto)
+        {
+            ResponseDto response = new ResponseDto();
+            NewRandomPassword = GeneratePassword();
+            var user = _userDal.GetUserByIdentity(forgotMyPasswordDto.IdentityNumber);
+
+            if (user is null || user.PhoneNumber != forgotMyPasswordDto.PhoneNumber)
             {
-                ResponseDto response = new ResponseDto();
-                NewRandomPassword = GeneratePassword();
-                var user = _userDal.GetUserByIdentity(forgotMyPasswordDto.IdentityNumber);
-
-            
-               
+                response.HasError = true;
+                response.Message = "Telefon numaranızı kontrol ediniz."; //mantıksız
+                return response;
 
 
 
-                if (user is null || user.PhoneNumber!=forgotMyPasswordDto.PhoneNumber )
-                {
-                    response.HasError = true;
-                    response.Message = "Telefon numaranızı kontrol ediniz."; //mantıksız
-                    return response;
+            }
+
+            else
+            {
+
+                CreatePasswordHash(NewRandomPassword, out byte[] passwordHash, out byte[] passwordSalt);
+                var userToResetPassword = _userDal.userForForgotPassword(forgotMyPasswordDto.IdentityNumber, passwordHash, passwordSalt);
 
 
+                SmtpClient client = new SmtpClient("smtp.yandex.com.tr", 587);
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress("karartek@yandex.com");
+                message.To.Add(userToResetPassword.Email);
+                message.Subject = "Merhaba Sayın " + userToResetPassword.FirstName + " " + userToResetPassword.LastName;
+                message.Body = "Yeni uygulama şifreniz: " + NewRandomPassword;
+                client.UseDefaultCredentials = false;
+                client.EnableSsl = true; // Encryption
+                client.Credentials = new System.Net.NetworkCredential("karartek@yandex.com", "plbobupzzvaxxgpw");
 
-                }
-
-                else
-                {
-
-                    CreatePasswordHash(NewRandomPassword, out byte[] passwordHash, out byte[] passwordSalt);
-                    var userToResetPassword = _userDal.userForForgotPassword(forgotMyPasswordDto.IdentityNumber, passwordHash, passwordSalt);
-
-
-                    SmtpClient client = new SmtpClient("smtp.yandex.com.tr", 587);
-                    MailMessage message = new MailMessage();
-                    message.From = new MailAddress("karartek@yandex.com");
-                    message.To.Add(userToResetPassword.Email);
-                    message.Subject = "Merhaba Sayın " + userToResetPassword.FirstName + " "+ userToResetPassword.LastName;
-                    message.Body = "Yeni uygulama şifreniz: " + NewRandomPassword;
-                    client.UseDefaultCredentials = false;
-                    client.EnableSsl = true; // Encryption
-                    client.Credentials = new System.Net.NetworkCredential("karartek@yandex.com", "plbobupzzvaxxgpw");
-
-                    client.Send(message);
+                client.Send(message);
 
 
 
                 //We create Token here
-           
-                    response.HasError = false;
-                    response.Message = "Şifre Sıfırlama İşlemi Başarılı";
-                    return response;
-                }
 
-
+                response.HasError = false;
+                response.Message = "Şifre Sıfırlama İşlemi Başarılı";
+                return response;
             }
+
+
+        }
 
         public ResponseDto Register(UserForRegister userForRegister)
 
@@ -144,38 +144,70 @@ namespace Karartek.Business.Concrete
                 CreatePasswordHash(RandomPassword, out byte[] passwordHash, out byte[] passwordSalt);
                 string dataToSave = Convert.ToBase64String(passwordHash);
                 Console.WriteLine(dataToSave);
-
                 user = new User()
+
                 {
 
                     FirstName = userForRegister.FirstName,
                     LastName = userForRegister.LastName,
-                    UserTypeId = userForRegister.UserType,
+                    UserTypeId = userForRegister.UserTypeId,
                     IdentityNumber = userForRegister.IdentityNumber,
-                    City = userForRegister.Email,
+                    City = userForRegister.City,
                     District = userForRegister.City,
                     PhoneNumber = userForRegister.PhoneNumber,
-                    BarRegisterNo = userForRegister.BarRegisterNo,
                     Email = userForRegister.Email,
-                    University = userForRegister.University,
-                    Faculty = userForRegister.Faculty,
-                    Grade = userForRegister.Grade,
-                    StudentNumber = userForRegister.StudentNumber,
                     PasswordHash = passwordHash,
-                    PasswordSalt = passwordSalt
+                    PasswordSalt = passwordSalt,
+                    CreateDate = DateTime.Now
+
 
                 };
+                var result = _userDal.Insert(user);
+
+
+                if (userForRegister.UserTypeId == 1)
+                {
+                    var lawyer = new Lawyer()
+                    {
+                        BarRegisterNo = userForRegister.BarRegisterNo,
+                        CreateDate = DateTime.Now
+
+                    };
+
+                    var lawyerResult = _lawyerDal.Insert(lawyer);
+
+
+
+                }
+                else
+                {
+
+                    var student = new Student()
+                    {
+                        StudentNumber = userForRegister.StudentNumber,
+                        CreateDate = DateTime.Now,
+                        University = userForRegister.University,
+                        Faculty = userForRegister.Faculty
+
+                    };
+
+                    var studentResult = _studentDal.Insert(student);
+
+
+
+
+                }
+
 
             }
-            user.CreateDate = DateTime.Now;//?
 
-            var result = _userDal.Insert(user);
+
 
             SmtpClient client = new SmtpClient("smtp.yandex.com.tr", 587);
             MailMessage message = new MailMessage();
             message.From = new MailAddress("karartek@yandex.com");
             message.To.Add(userForRegister.Email);
-            message.Subject = "Merhaba Sayın " + userForRegister.FirstName + userForRegister.LastName;
+            message.Subject = "Merhaba Sayın " + userForRegister.FirstName + " " + userForRegister.LastName;
             message.Body = "Karartek uygulama şifreniz: " + RandomPassword;
             client.UseDefaultCredentials = false;
             client.EnableSsl = true; // Encryption
@@ -276,8 +308,8 @@ namespace Karartek.Business.Concrete
 
         }
 
-       
+
     }
 
-      
-    }
+
+}

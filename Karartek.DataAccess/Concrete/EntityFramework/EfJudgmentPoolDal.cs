@@ -57,3 +57,5 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
     }
 }
 
+
+

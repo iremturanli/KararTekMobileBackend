@@ -10,8 +10,12 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Karartek.Business.Concrete
+
 {
+    
+
     public class JudgmentService : IJudgmentService
         
     {
@@ -77,8 +81,36 @@ namespace Karartek.Business.Concrete
             return result;
         }
 
+        public ResponseDto Likes(int id)
+        {
+            ResponseDto response = new ResponseDto();
+            var judgmentToLike = _judgmentDal.Get(p=>p.Id==id);
+            if(judgmentToLike!=null)
+            {
+               judgmentToLike.Likes++;
+                _judgmentDal.Update(judgmentToLike);
+                Console.WriteLine(judgmentToLike.Likes);
 
-        
+                response.HasError = false;
+                response.Message = judgmentToLike.Likes + "Beğeni "; //mantıksız
+                
+                return response;
+             
+
+            }
+            else
+            {
+                response.HasError = true;
+                response.Message = "İşlem Hatalı"; //mantıksız
+                return response;
+
+            }
+       
+
+
+
+
+        }
     }
 }
 

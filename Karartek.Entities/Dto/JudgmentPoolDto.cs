@@ -11,7 +11,8 @@ namespace Karartek.Entities.Dto
     {
         public int UserId { get; set; }
         public int JudgmentId { get; set; }
-       
+
+
     }
 }
 

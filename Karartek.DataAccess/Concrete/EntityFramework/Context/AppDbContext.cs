@@ -10,6 +10,8 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
         public DbSet<Judgment> Judgments { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
         public DbSet<JudgmentPool> JudgmentPools { get; set; }
+        public DbSet<Lawyer> Lawyers { get; set; }
+        public DbSet<Student> Students { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -30,7 +32,28 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<User>().Property(x => x.CreateDate).IsRequired();
             modelBuilder.Entity<User>().Property(x => x.PasswordHash).IsRequired();
             modelBuilder.Entity<User>().Property(x => x.PasswordSalt).IsRequired();
+            modelBuilder.Entity<Student>().Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
             modelBuilder.Entity<User>().HasOne<UserType>(x => x.UserType).WithMany(x => x.Users).IsRequired().HasForeignKey(x => x.UserTypeId);
+
+            modelBuilder.Entity<Student>().ToTable("Students");
+            modelBuilder.Entity<Student>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
+            modelBuilder.Entity<Student>().Property(x => x.University).HasMaxLength(100).IsRequired();
+            modelBuilder.Entity<Student>().Property(x => x.Faculty).HasMaxLength(100).IsRequired();
+            modelBuilder.Entity<Student>().Property(x => x.Grade).HasMaxLength(100).IsRequired();
+            modelBuilder.Entity<Student>().Property(x => x.StudentNumber).HasMaxLength(11).IsRequired();
+            modelBuilder.Entity<Student>().Property(x => x.CreateDate).IsRequired();
+            modelBuilder.Entity<Student>().Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
+
+            modelBuilder.Entity<Student>().HasOne<User>(x => x.User).WithOne(x => x.Student).HasForeignKey<Student>(x => x.Id).OnDelete(DeleteBehavior.Cascade);
+
+
+            modelBuilder.Entity<Lawyer>().ToTable("Lawyers");
+            modelBuilder.Entity<Lawyer>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
+            modelBuilder.Entity<Lawyer>().Property(x => x.BarRegisterNo).HasMaxLength(100).IsRequired();
+            modelBuilder.Entity<Lawyer>().Property(x => x.CreateDate).IsRequired();
+            modelBuilder.Entity<Lawyer>().Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
+
+
 
             modelBuilder.Entity<Judgment>().ToTable("Judgments");
             modelBuilder.Entity<Judgment>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
@@ -42,7 +65,9 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<Judgment>().Property(x => x.MeritsNo).IsRequired();
             modelBuilder.Entity<Judgment>().Property(x => x.DecreeYear).IsRequired();
             modelBuilder.Entity<Judgment>().Property(x => x.DecreeNo).IsRequired();
+            modelBuilder.Entity<Judgment>().Property(x => x.Likes).IsRequired();
             modelBuilder.Entity<Judgment>().Property(x => x.CreateDate).IsRequired();
+            modelBuilder.Entity<Judgment>().Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
 
 
             modelBuilder.Entity<UserType>().ToTable("UserTypes");
@@ -50,14 +75,17 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<UserType>().Property(x => x.CreateDate).IsRequired();
             modelBuilder.Entity<UserType>().Property(x => x.TypeId).IsRequired();
             modelBuilder.Entity<UserType>().Property(x => x.TypeName).ValueGeneratedNever();
+            modelBuilder.Entity<UserType>().Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
             modelBuilder.Entity<UserType>().HasData(UserTypeSeeds.userTypes);
+   ;
 
             modelBuilder.Entity<JudgmentPool>().ToTable("JudgmentPool");
             modelBuilder.Entity<JudgmentPool>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
             modelBuilder.Entity<JudgmentPool>().Property(x => x.CreateDate).IsRequired();
+            modelBuilder.Entity<JudgmentPool>().Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
             modelBuilder.Entity<JudgmentPool>().HasOne<Judgment>(x => x.Judgment).WithMany(x => x.JudgmentPools).IsRequired().HasForeignKey(x => x.JudgmentId);
             modelBuilder.Entity<JudgmentPool>().HasOne<User>(x => x.User).WithMany(x => x.JudgmentPools).IsRequired().HasForeignKey(x => x.UserId);
-
+             
         }
     }
 }

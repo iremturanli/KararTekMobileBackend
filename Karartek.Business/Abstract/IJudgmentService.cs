@@ -16,6 +16,7 @@ namespace Karartek.Business.Abstract
         List<Judgment> GetAll();
         List<Judgment> GetbyKeyword(string keyword);
         bool DeleteDecree(int id);
+        ResponseDto Likes(int id);
 
     }
 }

@@ -4,7 +4,7 @@
     {
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
-        public int UserType { get; set; } 
+        public int UserTypeId { get; set; } 
         public string City { get; set; } = null!;
         public string District{ get; set; } = null!;
         public string IdentityNumber { get; set; } = null!;

@@ -13,6 +13,7 @@ namespace Karartek.Entities.Concrete
         public string MeritsNo { get; set; } = null!;
         public string DecreeYear { get; set; } = null!;
         public string DecreeNo { get; set; } = null!;
+        public int Likes { get; set; }
         public virtual ICollection<JudgmentPool>? JudgmentPools { get; set; } = null!;
     }
 }

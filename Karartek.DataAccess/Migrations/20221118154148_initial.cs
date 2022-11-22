@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Karartek.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class inital : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,11 +27,28 @@ namespace Karartek.DataAccess.Migrations
                     MeritsNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DecreeYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DecreeNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Likes = table.Column<int>(type: "int", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Judgments", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Lawyers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BarRegisterNo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lawyers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -42,7 +59,8 @@ namespace Karartek.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TypeId = table.Column<int>(type: "int", nullable: false),
                     TypeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
@@ -62,15 +80,11 @@ namespace Karartek.DataAccess.Migrations
                     District = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdentityNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BarRegisterNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    University = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Faculty = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Grade = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StudentNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -91,7 +105,8 @@ namespace Karartek.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     JudgmentId = table.Column<int>(type: "int", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
@@ -110,13 +125,36 @@ namespace Karartek.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Students",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    University = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Faculty = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Grade = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    StudentNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Students_Users_Id",
+                        column: x => x.Id,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "UserTypes",
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 17, 16, 38, 38, 866, DateTimeKind.Local).AddTicks(4181), 1, "Student" },
-                    { 2, new DateTime(2022, 11, 17, 16, 38, 38, 867, DateTimeKind.Local).AddTicks(6997), 2, "Lawyer" }
+                    { 1, new DateTime(2022, 11, 18, 18, 41, 48, 105, DateTimeKind.Local).AddTicks(9530), 1, "Avukat - Avukat Stajyeri" },
+                    { 2, new DateTime(2022, 11, 18, 18, 41, 48, 117, DateTimeKind.Local).AddTicks(9660), 2, "Öğrenci" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -140,6 +178,12 @@ namespace Karartek.DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "JudgmentPool");
+
+            migrationBuilder.DropTable(
+                name: "Lawyers");
+
+            migrationBuilder.DropTable(
+                name: "Students");
 
             migrationBuilder.DropTable(
                 name: "Judgments");

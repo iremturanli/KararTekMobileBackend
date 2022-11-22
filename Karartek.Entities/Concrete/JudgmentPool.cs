@@ -9,6 +9,7 @@ namespace Karartek.Entities.Concrete
         public int JudgmentId { get; set; }
         public User? User { get; set; }=null!;
         public Judgment? Judgment { get; set; } = null!;
-      
+       
+
     }
 }
