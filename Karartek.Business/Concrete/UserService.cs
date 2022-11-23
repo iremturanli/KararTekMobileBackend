@@ -153,7 +153,7 @@ namespace Karartek.Business.Concrete
                     UserTypeId = userForRegister.UserTypeId,
                     IdentityNumber = userForRegister.IdentityNumber,
                     City = userForRegister.City,
-                    District = userForRegister.City,
+                    District = userForRegister.District,
                     PhoneNumber = userForRegister.PhoneNumber,
                     Email = userForRegister.Email,
                     PasswordHash = passwordHash,
@@ -169,6 +169,7 @@ namespace Karartek.Business.Concrete
                 {
                     var lawyer = new Lawyer()
                     {
+                        Id=result.Id,
                         BarRegisterNo = userForRegister.BarRegisterNo,
                         CreateDate = DateTime.Now
 
@@ -184,6 +185,7 @@ namespace Karartek.Business.Concrete
 
                     var student = new Student()
                     {
+                        Id= result.Id,
                         StudentNumber = userForRegister.StudentNumber,
                         CreateDate = DateTime.Now,
                         University = userForRegister.University,

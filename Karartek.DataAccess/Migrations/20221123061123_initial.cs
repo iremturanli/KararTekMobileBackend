@@ -14,6 +14,22 @@ namespace Karartek.DataAccess.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "City_District",
+                columns: table => new
+                {
+                    IlIlceId = table.Column<int>(name: "Il_Ilce_Id", type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IlIlceTuruId = table.Column<int>(name: "Il_Ilce_Turu_Id", type: "int", nullable: false),
+                    PlakaKodu = table.Column<int>(name: "Plaka_Kodu", type: "int", nullable: false),
+                    IlId = table.Column<int>(name: "Il_Id", type: "int", nullable: false),
+                    IlIlceAdi = table.Column<string>(name: "Il_Ilce_Adi", type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_City_District", x => x.IlIlceId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Judgments",
                 columns: table => new
                 {
@@ -76,8 +92,8 @@ namespace Karartek.DataAccess.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     UserTypeId = table.Column<int>(type: "int", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    District = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<int>(type: "int", nullable: false),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdentityNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
@@ -89,6 +105,12 @@ namespace Karartek.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_City_District_City",
+                        column: x => x.City,
+                        principalTable: "City_District",
+                        principalColumn: "Il_Ilce_Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Users_UserTypes_UserTypeId",
                         column: x => x.UserTypeId,
@@ -153,8 +175,9 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 18, 18, 41, 48, 105, DateTimeKind.Local).AddTicks(9530), 1, "Avukat - Avukat Stajyeri" },
-                    { 2, new DateTime(2022, 11, 18, 18, 41, 48, 117, DateTimeKind.Local).AddTicks(9660), 2, "Öğrenci" }
+                    { 1, new DateTime(2022, 11, 23, 9, 11, 23, 552, DateTimeKind.Local).AddTicks(823), 1, "Avukat-Avukat Stajyeri" },
+                    { 2, new DateTime(2022, 11, 23, 9, 11, 23, 553, DateTimeKind.Local).AddTicks(3800), 2, "Öğrenci" },
+                    { 3, new DateTime(2022, 11, 23, 9, 11, 23, 553, DateTimeKind.Local).AddTicks(3808), 3, "TBB Kullanıcısı" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -166,6 +189,11 @@ namespace Karartek.DataAccess.Migrations
                 name: "IX_JudgmentPool_UserId",
                 table: "JudgmentPool",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_City",
+                table: "Users",
+                column: "City");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_UserTypeId",
@@ -190,6 +218,9 @@ namespace Karartek.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "City_District");
 
             migrationBuilder.DropTable(
                 name: "UserTypes");

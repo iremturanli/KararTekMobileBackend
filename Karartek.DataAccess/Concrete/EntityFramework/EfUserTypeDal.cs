@@ -39,7 +39,9 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
         public List<UserType> GetUserTypes()
         {
             using var context = new AppDbContext();
+            var result = context.UserTypes.SingleOrDefault(x => x.TypeId == 1 && x.TypeId == 2);
             return context.UserTypes.ToList();
+
         }
 
         public UserType GetUserTypeById(int id)

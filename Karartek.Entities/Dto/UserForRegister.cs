@@ -5,8 +5,8 @@
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public int UserTypeId { get; set; } 
-        public string City { get; set; } = null!;
-        public string District{ get; set; } = null!;
+        public int City { get; set; }
+        public string? District{ get; set; }
         public string IdentityNumber { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public string BarRegisterNo { get; set; } = null!;

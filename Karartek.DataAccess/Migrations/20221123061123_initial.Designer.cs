@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Karartek.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221118154148_initial")]
+    [Migration("20221123061123_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -25,6 +25,33 @@ namespace Karartek.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.City_District", b =>
+                {
+                    b.Property<int>("Il_Ilce_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Il_Ilce_Id"));
+
+                    b.Property<int>("Il_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Il_Ilce_Adi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Il_Ilce_Turu_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Plaka_Kodu")
+                        .HasColumnType("int");
+
+                    b.HasKey("Il_Ilce_Id");
+
+                    b.ToTable("City_District", (string)null);
+                });
 
             modelBuilder.Entity("Karartek.Entities.Concrete.Judgment", b =>
                 {
@@ -195,15 +222,13 @@ namespace Karartek.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("City")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("District")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -246,6 +271,8 @@ namespace Karartek.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("City");
+
                     b.HasIndex("UserTypeId");
 
                     b.ToTable("Users", (string)null);
@@ -283,18 +310,26 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2022, 11, 18, 18, 41, 48, 105, DateTimeKind.Local).AddTicks(9530),
+                            CreateDate = new DateTime(2022, 11, 23, 9, 11, 23, 552, DateTimeKind.Local).AddTicks(823),
                             IsDeleted = false,
                             TypeId = 1,
-                            TypeName = "Avukat - Avukat Stajyeri"
+                            TypeName = "Avukat-Avukat Stajyeri"
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2022, 11, 18, 18, 41, 48, 117, DateTimeKind.Local).AddTicks(9660),
+                            CreateDate = new DateTime(2022, 11, 23, 9, 11, 23, 553, DateTimeKind.Local).AddTicks(3800),
                             IsDeleted = false,
                             TypeId = 2,
                             TypeName = "Öğrenci"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreateDate = new DateTime(2022, 11, 23, 9, 11, 23, 553, DateTimeKind.Local).AddTicks(3808),
+                            IsDeleted = false,
+                            TypeId = 3,
+                            TypeName = "TBB Kullanıcısı"
                         });
                 });
 
@@ -330,13 +365,26 @@ namespace Karartek.DataAccess.Migrations
 
             modelBuilder.Entity("Karartek.Entities.Concrete.User", b =>
                 {
+                    b.HasOne("Karartek.Entities.Concrete.City_District", "City_District")
+                        .WithMany("Users")
+                        .HasForeignKey("City")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Karartek.Entities.Concrete.UserType", "UserType")
                         .WithMany("Users")
                         .HasForeignKey("UserTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("City_District");
+
                     b.Navigation("UserType");
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.City_District", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Karartek.Entities.Concrete.Judgment", b =>
