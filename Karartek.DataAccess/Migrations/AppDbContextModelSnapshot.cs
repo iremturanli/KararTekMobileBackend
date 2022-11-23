@@ -72,6 +72,10 @@ namespace Karartek.DataAccess.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Decision")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Decree")
                         .IsRequired()
                         .HasMaxLength(9999999)
@@ -95,6 +99,9 @@ namespace Karartek.DataAccess.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<int>("JudgmentTypeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Likes")
                         .HasColumnType("int");
 
@@ -107,6 +114,8 @@ namespace Karartek.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("JudgmentTypeId");
 
                     b.ToTable("Judgments", (string)null);
                 });
@@ -131,6 +140,12 @@ namespace Karartek.DataAccess.Migrations
                     b.Property<int>("JudgmentId")
                         .HasColumnType("int");
 
+                    b.Property<int>("LawyerJudgmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SearchTypeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -138,9 +153,68 @@ namespace Karartek.DataAccess.Migrations
 
                     b.HasIndex("JudgmentId");
 
+                    b.HasIndex("LawyerJudgmentId");
+
+                    b.HasIndex("SearchTypeId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("JudgmentPool", (string)null);
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.JudgmentType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JudgmentTypes", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateDate = new DateTime(2022, 11, 23, 17, 2, 37, 747, DateTimeKind.Local).AddTicks(5160),
+                            IsDeleted = false,
+                            TypeId = 1,
+                            TypeName = "Yargıtay"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreateDate = new DateTime(2022, 11, 23, 17, 2, 37, 747, DateTimeKind.Local).AddTicks(5190),
+                            IsDeleted = false,
+                            TypeId = 2,
+                            TypeName = "Danıştay"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreateDate = new DateTime(2022, 11, 23, 17, 2, 37, 747, DateTimeKind.Local).AddTicks(5200),
+                            IsDeleted = false,
+                            TypeId = 3,
+                            TypeName = "Anayasa Mahkemesi"
+                        });
                 });
 
             modelBuilder.Entity("Karartek.Entities.Concrete.Lawyer", b =>
@@ -149,8 +223,6 @@ namespace Karartek.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BarRegisterNo")
                         .IsRequired()
@@ -168,6 +240,201 @@ namespace Karartek.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Lawyers", (string)null);
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.LawyerJudgment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CommisionName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Court")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Decision")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Decree")
+                        .IsRequired()
+                        .HasMaxLength(9999999)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DecreeNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DecreeType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("DecreeYear")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("LawyerAssessment")
+                        .IsRequired()
+                        .HasMaxLength(9999999)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MeritsNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MeritsYear")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StateId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TBBComments")
+                        .IsRequired()
+                        .HasMaxLength(99999)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StateId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("LawyerJudgments", (string)null);
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.LawyerJudgmentState", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<int>("StateId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StateName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LawyerJudgmentState", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateDate = new DateTime(2022, 11, 23, 17, 2, 37, 734, DateTimeKind.Local).AddTicks(9510),
+                            IsDeleted = false,
+                            StateId = 1,
+                            StateName = "Onaya Gönderildi"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreateDate = new DateTime(2022, 11, 23, 17, 2, 37, 743, DateTimeKind.Local).AddTicks(8470),
+                            IsDeleted = false,
+                            StateId = 2,
+                            StateName = "Onay Bekliyor"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreateDate = new DateTime(2022, 11, 23, 17, 2, 37, 743, DateTimeKind.Local).AddTicks(8490),
+                            IsDeleted = false,
+                            StateId = 3,
+                            StateName = "Reddedildi"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreateDate = new DateTime(2022, 11, 23, 17, 2, 37, 743, DateTimeKind.Local).AddTicks(8490),
+                            IsDeleted = false,
+                            StateId = 4,
+                            StateName = "Onaylandı"
+                        });
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.SearchType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SearchTypes", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateDate = new DateTime(2022, 11, 23, 17, 2, 37, 746, DateTimeKind.Local).AddTicks(7610),
+                            IsDeleted = false,
+                            TypeId = 1,
+                            TypeName = "Avukatın Eklediği Kararlar"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreateDate = new DateTime(2022, 11, 23, 17, 2, 37, 746, DateTimeKind.Local).AddTicks(7650),
+                            IsDeleted = false,
+                            TypeId = 2,
+                            TypeName = "Yüksek Yargı Kararları"
+                        });
                 });
 
             modelBuilder.Entity("Karartek.Entities.Concrete.Student", b =>
@@ -244,7 +511,9 @@ namespace Karartek.DataAccess.Migrations
                         .HasColumnType("nvarchar(11)");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -307,7 +576,7 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2022, 11, 23, 9, 11, 23, 552, DateTimeKind.Local).AddTicks(823),
+                            CreateDate = new DateTime(2022, 11, 23, 17, 2, 37, 745, DateTimeKind.Local).AddTicks(9120),
                             IsDeleted = false,
                             TypeId = 1,
                             TypeName = "Avukat-Avukat Stajyeri"
@@ -315,7 +584,7 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2022, 11, 23, 9, 11, 23, 553, DateTimeKind.Local).AddTicks(3800),
+                            CreateDate = new DateTime(2022, 11, 23, 17, 2, 37, 745, DateTimeKind.Local).AddTicks(9160),
                             IsDeleted = false,
                             TypeId = 2,
                             TypeName = "Öğrenci"
@@ -323,11 +592,22 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            CreateDate = new DateTime(2022, 11, 23, 9, 11, 23, 553, DateTimeKind.Local).AddTicks(3808),
+                            CreateDate = new DateTime(2022, 11, 23, 17, 2, 37, 745, DateTimeKind.Local).AddTicks(9160),
                             IsDeleted = false,
                             TypeId = 3,
                             TypeName = "TBB Kullanıcısı"
                         });
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.Judgment", b =>
+                {
+                    b.HasOne("Karartek.Entities.Concrete.JudgmentType", "JudgmentType")
+                        .WithMany("Judgments")
+                        .HasForeignKey("JudgmentTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("JudgmentType");
                 });
 
             modelBuilder.Entity("Karartek.Entities.Concrete.JudgmentPool", b =>
@@ -338,6 +618,18 @@ namespace Karartek.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Karartek.Entities.Concrete.LawyerJudgment", "LawyerJudgment")
+                        .WithMany("JudgmentPools")
+                        .HasForeignKey("LawyerJudgmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Karartek.Entities.Concrete.SearchType", "SearchType")
+                        .WithMany("JudgmentPools")
+                        .HasForeignKey("SearchTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Karartek.Entities.Concrete.User", "User")
                         .WithMany("JudgmentPools")
                         .HasForeignKey("UserId")
@@ -345,6 +637,40 @@ namespace Karartek.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Judgment");
+
+                    b.Navigation("LawyerJudgment");
+
+                    b.Navigation("SearchType");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.Lawyer", b =>
+                {
+                    b.HasOne("Karartek.Entities.Concrete.User", "User")
+                        .WithOne("Lawyer")
+                        .HasForeignKey("Karartek.Entities.Concrete.Lawyer", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.LawyerJudgment", b =>
+                {
+                    b.HasOne("Karartek.Entities.Concrete.LawyerJudgmentState", "LawyerJudgmentState")
+                        .WithMany("LawyerJudgments")
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Karartek.Entities.Concrete.User", "User")
+                        .WithMany("LawyerJudgments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LawyerJudgmentState");
 
                     b.Navigation("User");
                 });
@@ -389,9 +715,33 @@ namespace Karartek.DataAccess.Migrations
                     b.Navigation("JudgmentPools");
                 });
 
+            modelBuilder.Entity("Karartek.Entities.Concrete.JudgmentType", b =>
+                {
+                    b.Navigation("Judgments");
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.LawyerJudgment", b =>
+                {
+                    b.Navigation("JudgmentPools");
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.LawyerJudgmentState", b =>
+                {
+                    b.Navigation("LawyerJudgments");
+                });
+
+            modelBuilder.Entity("Karartek.Entities.Concrete.SearchType", b =>
+                {
+                    b.Navigation("JudgmentPools");
+                });
+
             modelBuilder.Entity("Karartek.Entities.Concrete.User", b =>
                 {
                     b.Navigation("JudgmentPools");
+
+                    b.Navigation("Lawyer");
+
+                    b.Navigation("LawyerJudgments");
 
                     b.Navigation("Student");
                 });

@@ -6,24 +6,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Karartek.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class initial2 : Migration
+    public partial class userid : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "TypeName",
-                table: "LawyerJudgmentState",
-                newName: "StateName");
-
-            migrationBuilder.RenameColumn(
-                name: "TypeId",
-                table: "LawyerJudgmentState",
-                newName: "StateId");
-
             migrationBuilder.AddColumn<int>(
-                name: "LawyerJudgmentId",
-                table: "JudgmentPool",
+                name: "UserId",
+                table: "LawyerJudgments",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
@@ -33,95 +23,95 @@ namespace Karartek.DataAccess.Migrations
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 17, 36, 21, 626, DateTimeKind.Local).AddTicks(3970));
+                value: new DateTime(2022, 11, 23, 17, 2, 37, 747, DateTimeKind.Local).AddTicks(5160));
 
             migrationBuilder.UpdateData(
                 table: "JudgmentTypes",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 17, 36, 21, 626, DateTimeKind.Local).AddTicks(4000));
+                value: new DateTime(2022, 11, 23, 17, 2, 37, 747, DateTimeKind.Local).AddTicks(5190));
 
             migrationBuilder.UpdateData(
                 table: "JudgmentTypes",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 17, 36, 21, 626, DateTimeKind.Local).AddTicks(4000));
+                value: new DateTime(2022, 11, 23, 17, 2, 37, 747, DateTimeKind.Local).AddTicks(5200));
 
             migrationBuilder.UpdateData(
                 table: "LawyerJudgmentState",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 17, 36, 21, 613, DateTimeKind.Local).AddTicks(1940));
+                value: new DateTime(2022, 11, 23, 17, 2, 37, 734, DateTimeKind.Local).AddTicks(9510));
 
             migrationBuilder.UpdateData(
                 table: "LawyerJudgmentState",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 17, 36, 21, 622, DateTimeKind.Local).AddTicks(8800));
+                value: new DateTime(2022, 11, 23, 17, 2, 37, 743, DateTimeKind.Local).AddTicks(8470));
 
             migrationBuilder.UpdateData(
                 table: "LawyerJudgmentState",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 17, 36, 21, 622, DateTimeKind.Local).AddTicks(8820));
+                value: new DateTime(2022, 11, 23, 17, 2, 37, 743, DateTimeKind.Local).AddTicks(8490));
 
             migrationBuilder.UpdateData(
                 table: "LawyerJudgmentState",
                 keyColumn: "Id",
                 keyValue: 4,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 17, 36, 21, 622, DateTimeKind.Local).AddTicks(8820));
+                value: new DateTime(2022, 11, 23, 17, 2, 37, 743, DateTimeKind.Local).AddTicks(8490));
 
             migrationBuilder.UpdateData(
                 table: "SearchTypes",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 17, 36, 21, 625, DateTimeKind.Local).AddTicks(7280));
+                value: new DateTime(2022, 11, 23, 17, 2, 37, 746, DateTimeKind.Local).AddTicks(7610));
 
             migrationBuilder.UpdateData(
                 table: "SearchTypes",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 17, 36, 21, 625, DateTimeKind.Local).AddTicks(7310));
+                value: new DateTime(2022, 11, 23, 17, 2, 37, 746, DateTimeKind.Local).AddTicks(7650));
 
             migrationBuilder.UpdateData(
                 table: "UserTypes",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 17, 36, 21, 625, DateTimeKind.Local).AddTicks(450));
+                value: new DateTime(2022, 11, 23, 17, 2, 37, 745, DateTimeKind.Local).AddTicks(9120));
 
             migrationBuilder.UpdateData(
                 table: "UserTypes",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 17, 36, 21, 625, DateTimeKind.Local).AddTicks(490));
+                value: new DateTime(2022, 11, 23, 17, 2, 37, 745, DateTimeKind.Local).AddTicks(9160));
 
             migrationBuilder.UpdateData(
                 table: "UserTypes",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 17, 36, 21, 625, DateTimeKind.Local).AddTicks(490));
+                value: new DateTime(2022, 11, 23, 17, 2, 37, 745, DateTimeKind.Local).AddTicks(9160));
 
             migrationBuilder.CreateIndex(
-                name: "IX_JudgmentPool_LawyerJudgmentId",
-                table: "JudgmentPool",
-                column: "LawyerJudgmentId");
+                name: "IX_LawyerJudgments_UserId",
+                table: "LawyerJudgments",
+                column: "UserId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_JudgmentPool_LawyerJudgments_LawyerJudgmentId",
-                table: "JudgmentPool",
-                column: "LawyerJudgmentId",
-                principalTable: "LawyerJudgments",
+                name: "FK_LawyerJudgments_Users_UserId",
+                table: "LawyerJudgments",
+                column: "UserId",
+                principalTable: "Users",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }
@@ -130,110 +120,100 @@ namespace Karartek.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_JudgmentPool_LawyerJudgments_LawyerJudgmentId",
-                table: "JudgmentPool");
+                name: "FK_LawyerJudgments_Users_UserId",
+                table: "LawyerJudgments");
 
             migrationBuilder.DropIndex(
-                name: "IX_JudgmentPool_LawyerJudgmentId",
-                table: "JudgmentPool");
+                name: "IX_LawyerJudgments_UserId",
+                table: "LawyerJudgments");
 
             migrationBuilder.DropColumn(
-                name: "LawyerJudgmentId",
-                table: "JudgmentPool");
-
-            migrationBuilder.RenameColumn(
-                name: "StateName",
-                table: "LawyerJudgmentState",
-                newName: "TypeName");
-
-            migrationBuilder.RenameColumn(
-                name: "StateId",
-                table: "LawyerJudgmentState",
-                newName: "TypeId");
+                name: "UserId",
+                table: "LawyerJudgments");
 
             migrationBuilder.UpdateData(
                 table: "JudgmentTypes",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 14, 44, 0, 387, DateTimeKind.Local).AddTicks(3990));
+                value: new DateTime(2022, 11, 23, 9, 53, 40, 447, DateTimeKind.Local).AddTicks(910));
 
             migrationBuilder.UpdateData(
                 table: "JudgmentTypes",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 14, 44, 0, 387, DateTimeKind.Local).AddTicks(4020));
+                value: new DateTime(2022, 11, 23, 9, 53, 40, 447, DateTimeKind.Local).AddTicks(940));
 
             migrationBuilder.UpdateData(
                 table: "JudgmentTypes",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 14, 44, 0, 387, DateTimeKind.Local).AddTicks(4020));
+                value: new DateTime(2022, 11, 23, 9, 53, 40, 447, DateTimeKind.Local).AddTicks(950));
 
             migrationBuilder.UpdateData(
                 table: "LawyerJudgmentState",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 14, 44, 0, 374, DateTimeKind.Local).AddTicks(690));
+                value: new DateTime(2022, 11, 23, 9, 53, 40, 434, DateTimeKind.Local).AddTicks(3570));
 
             migrationBuilder.UpdateData(
                 table: "LawyerJudgmentState",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 14, 44, 0, 383, DateTimeKind.Local).AddTicks(5600));
+                value: new DateTime(2022, 11, 23, 9, 53, 40, 443, DateTimeKind.Local).AddTicks(4740));
 
             migrationBuilder.UpdateData(
                 table: "LawyerJudgmentState",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 14, 44, 0, 383, DateTimeKind.Local).AddTicks(5620));
+                value: new DateTime(2022, 11, 23, 9, 53, 40, 443, DateTimeKind.Local).AddTicks(4760));
 
             migrationBuilder.UpdateData(
                 table: "LawyerJudgmentState",
                 keyColumn: "Id",
                 keyValue: 4,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 14, 44, 0, 383, DateTimeKind.Local).AddTicks(5620));
+                value: new DateTime(2022, 11, 23, 9, 53, 40, 443, DateTimeKind.Local).AddTicks(4770));
 
             migrationBuilder.UpdateData(
                 table: "SearchTypes",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 14, 44, 0, 386, DateTimeKind.Local).AddTicks(7000));
+                value: new DateTime(2022, 11, 23, 9, 53, 40, 446, DateTimeKind.Local).AddTicks(3190));
 
             migrationBuilder.UpdateData(
                 table: "SearchTypes",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 14, 44, 0, 386, DateTimeKind.Local).AddTicks(7030));
+                value: new DateTime(2022, 11, 23, 9, 53, 40, 446, DateTimeKind.Local).AddTicks(3230));
 
             migrationBuilder.UpdateData(
                 table: "UserTypes",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 14, 44, 0, 385, DateTimeKind.Local).AddTicks(9070));
+                value: new DateTime(2022, 11, 23, 9, 53, 40, 445, DateTimeKind.Local).AddTicks(5160));
 
             migrationBuilder.UpdateData(
                 table: "UserTypes",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 14, 44, 0, 385, DateTimeKind.Local).AddTicks(9140));
+                value: new DateTime(2022, 11, 23, 9, 53, 40, 445, DateTimeKind.Local).AddTicks(5200));
 
             migrationBuilder.UpdateData(
                 table: "UserTypes",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "CreateDate",
-                value: new DateTime(2022, 11, 22, 14, 44, 0, 385, DateTimeKind.Local).AddTicks(9140));
+                value: new DateTime(2022, 11, 23, 9, 53, 40, 445, DateTimeKind.Local).AddTicks(5200));
         }
     }
 }

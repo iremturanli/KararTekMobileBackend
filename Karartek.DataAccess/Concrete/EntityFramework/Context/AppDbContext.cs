@@ -23,9 +23,9 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer(@"Server=(localdb)\KararTek;Encrypt=false;TrustServerCertificate=False;Integrated Security=true");
-           //optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=KararTek;Password=irem@123;Encrypt=false;TrustServerCertificate=False");
+           optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=KararTek;Password=irem@123;Encrypt=false;TrustServerCertificate=False");
 
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=KararTek;Trusted_Connection=true");
+            //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=KararTek;Trusted_Connection=true");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -97,6 +97,8 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<LawyerJudgment>().Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
             modelBuilder.Entity<LawyerJudgment>().Property(x => x.Likes).IsRequired();
             modelBuilder.Entity<LawyerJudgment>().HasOne<LawyerJudgmentState>(x => x.LawyerJudgmentState).WithMany(x => x.LawyerJudgments).IsRequired().HasForeignKey(x => x.StateId);
+            modelBuilder.Entity<LawyerJudgment>().HasOne<User>(x => x.User).WithMany(x => x.LawyerJudgments).IsRequired().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
+
 
             modelBuilder.Entity<LawyerJudgmentState>().ToTable("LawyerJudgmentState");
             modelBuilder.Entity<LawyerJudgmentState>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
@@ -143,6 +145,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<JudgmentPool>().HasOne<User>(x => x.User).WithMany(x => x.JudgmentPools).IsRequired().HasForeignKey(x => x.UserId);
 
             modelBuilder.Entity<City_District>().ToTable("City_District");
+            //id
             modelBuilder.Entity<City_District>().Property(x => x.Il_Ilce_Id).UseIdentityColumn().ValueGeneratedOnAdd();
             modelBuilder.Entity<City_District>().Property(x=> x.Il_Ilce_Turu_Id).IsRequired();
             modelBuilder.Entity<City_District>().Property(x => x.Plaka_Kodu).IsRequired();

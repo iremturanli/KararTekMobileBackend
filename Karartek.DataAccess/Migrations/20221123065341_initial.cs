@@ -14,6 +14,22 @@ namespace Karartek.DataAccess.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "City_District",
+                columns: table => new
+                {
+                    IlIlceId = table.Column<int>(name: "Il_Ilce_Id", type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IlIlceTuruId = table.Column<int>(name: "Il_Ilce_Turu_Id", type: "int", nullable: false),
+                    PlakaKodu = table.Column<int>(name: "Plaka_Kodu", type: "int", nullable: false),
+                    IlId = table.Column<int>(name: "Il_Id", type: "int", nullable: false),
+                    IlIlceAdi = table.Column<string>(name: "Il_Ilce_Adi", type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_City_District", x => x.IlIlceId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JudgmentTypes",
                 columns: table => new
                 {
@@ -35,8 +51,8 @@ namespace Karartek.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TypeId = table.Column<int>(type: "int", nullable: false),
-                    TypeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StateId = table.Column<int>(type: "int", nullable: false),
+                    StateName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
@@ -150,8 +166,8 @@ namespace Karartek.DataAccess.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     UserTypeId = table.Column<int>(type: "int", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    District = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<int>(type: "int", nullable: false),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdentityNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
@@ -163,6 +179,12 @@ namespace Karartek.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_City_District_City",
+                        column: x => x.City,
+                        principalTable: "City_District",
+                        principalColumn: "Il_Ilce_Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Users_UserTypes_UserTypeId",
                         column: x => x.UserTypeId,
@@ -179,8 +201,8 @@ namespace Karartek.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     JudgmentId = table.Column<int>(type: "int", nullable: false),
+                    LawyerJudgmentId = table.Column<int>(type: "int", nullable: false),
                     SearchTypeId = table.Column<int>(type: "int", nullable: false),
-                    LawyerJudgmentId = table.Column<int>(type: "int", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
@@ -197,7 +219,8 @@ namespace Karartek.DataAccess.Migrations
                         name: "FK_JudgmentPool_LawyerJudgments_LawyerJudgmentId",
                         column: x => x.LawyerJudgmentId,
                         principalTable: "LawyerJudgments",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_JudgmentPool_SearchTypes_SearchTypeId",
                         column: x => x.SearchTypeId,
@@ -260,20 +283,20 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 22, 14, 42, 16, 141, DateTimeKind.Local).AddTicks(3680), 1, "Yargıtay" },
-                    { 2, new DateTime(2022, 11, 22, 14, 42, 16, 141, DateTimeKind.Local).AddTicks(3710), 2, "Danıştay" },
-                    { 3, new DateTime(2022, 11, 22, 14, 42, 16, 141, DateTimeKind.Local).AddTicks(3720), 3, "Anayasa Mahkemesi" }
+                    { 1, new DateTime(2022, 11, 23, 9, 53, 40, 447, DateTimeKind.Local).AddTicks(910), 1, "Yargıtay" },
+                    { 2, new DateTime(2022, 11, 23, 9, 53, 40, 447, DateTimeKind.Local).AddTicks(940), 2, "Danıştay" },
+                    { 3, new DateTime(2022, 11, 23, 9, 53, 40, 447, DateTimeKind.Local).AddTicks(950), 3, "Anayasa Mahkemesi" }
                 });
 
             migrationBuilder.InsertData(
                 table: "LawyerJudgmentState",
-                columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
+                columns: new[] { "Id", "CreateDate", "StateId", "StateName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 22, 14, 42, 16, 128, DateTimeKind.Local).AddTicks(6080), 1, "Onaya Gönderildi" },
-                    { 2, new DateTime(2022, 11, 22, 14, 42, 16, 137, DateTimeKind.Local).AddTicks(9070), 2, "Onay Bekliyor" },
-                    { 3, new DateTime(2022, 11, 22, 14, 42, 16, 137, DateTimeKind.Local).AddTicks(9090), 3, "Reddedildi" },
-                    { 4, new DateTime(2022, 11, 22, 14, 42, 16, 137, DateTimeKind.Local).AddTicks(9100), 4, "Onaylandı" }
+                    { 1, new DateTime(2022, 11, 23, 9, 53, 40, 434, DateTimeKind.Local).AddTicks(3570), 1, "Onaya Gönderildi" },
+                    { 2, new DateTime(2022, 11, 23, 9, 53, 40, 443, DateTimeKind.Local).AddTicks(4740), 2, "Onay Bekliyor" },
+                    { 3, new DateTime(2022, 11, 23, 9, 53, 40, 443, DateTimeKind.Local).AddTicks(4760), 3, "Reddedildi" },
+                    { 4, new DateTime(2022, 11, 23, 9, 53, 40, 443, DateTimeKind.Local).AddTicks(4770), 4, "Onaylandı" }
                 });
 
             migrationBuilder.InsertData(
@@ -281,8 +304,8 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 22, 14, 42, 16, 140, DateTimeKind.Local).AddTicks(6590), 1, "Avukatın Eklediği Kararlar" },
-                    { 2, new DateTime(2022, 11, 22, 14, 42, 16, 140, DateTimeKind.Local).AddTicks(6620), 2, "Yüksek Yargı Kararları" }
+                    { 1, new DateTime(2022, 11, 23, 9, 53, 40, 446, DateTimeKind.Local).AddTicks(3190), 1, "Avukatın Eklediği Kararlar" },
+                    { 2, new DateTime(2022, 11, 23, 9, 53, 40, 446, DateTimeKind.Local).AddTicks(3230), 2, "Yüksek Yargı Kararları" }
                 });
 
             migrationBuilder.InsertData(
@@ -290,9 +313,9 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 22, 14, 42, 16, 139, DateTimeKind.Local).AddTicks(8010), 1, "Avukat-Avukat Stajyeri" },
-                    { 2, new DateTime(2022, 11, 22, 14, 42, 16, 139, DateTimeKind.Local).AddTicks(8040), 2, "Öğrenci" },
-                    { 3, new DateTime(2022, 11, 22, 14, 42, 16, 139, DateTimeKind.Local).AddTicks(8040), 3, "TBB Kullanıcısı" }
+                    { 1, new DateTime(2022, 11, 23, 9, 53, 40, 445, DateTimeKind.Local).AddTicks(5160), 1, "Avukat-Avukat Stajyeri" },
+                    { 2, new DateTime(2022, 11, 23, 9, 53, 40, 445, DateTimeKind.Local).AddTicks(5200), 2, "Öğrenci" },
+                    { 3, new DateTime(2022, 11, 23, 9, 53, 40, 445, DateTimeKind.Local).AddTicks(5200), 3, "TBB Kullanıcısı" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -324,6 +347,11 @@ namespace Karartek.DataAccess.Migrations
                 name: "IX_LawyerJudgments_StateId",
                 table: "LawyerJudgments",
                 column: "StateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_City",
+                table: "Users",
+                column: "City");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_UserTypeId",
@@ -360,6 +388,9 @@ namespace Karartek.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "LawyerJudgmentState");
+
+            migrationBuilder.DropTable(
+                name: "City_District");
 
             migrationBuilder.DropTable(
                 name: "UserTypes");
