@@ -3,6 +3,7 @@ namespace Karartek.Entities.Dto
 {
     public class LawyerJudgmentDto
     {
+        public int Id { get; set; }
         public string CommisionName { get; set; } = null!;
         public string Court { get; set; } = null!;
         public string Decree { get; set; } = null!;
@@ -19,3 +20,4 @@ namespace Karartek.Entities.Dto
     }
 }
 
+                    

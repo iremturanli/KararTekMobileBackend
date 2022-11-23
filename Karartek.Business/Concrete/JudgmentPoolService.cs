@@ -93,42 +93,51 @@ namespace Karartek.Business.Concrete
             
         }
 
-
         public List<Judgment> GetAll(JudgmentPoolDto judgmentPoolDto)
         {
-        
-            var list= new List<JudgmentPool>(_judgmentPoolDal.GetAll(p=>p.UserId==judgmentPoolDto.UserId));
- 
-  
-
-            for (var i=0;i<list.Count;i++)
-            {
-               var temp=(list[i].JudgmentId);
-    
-                
-                    var result = _judgmentDal.Get(p => p.Id == temp);
-                    judgmentsList.Add(result);
-
-
-
-                
-              
-
-
-
-
-
-
-            }
-            return judgmentsList;
-          
-
-
-
+            throw new NotImplementedException();
         }
+
+
+        /* public List<Judgment> GetAll(JudgmentPoolDto judgmentPoolDto)
+         {
+
+             var list= new List<JudgmentPool>(_judgmentPoolDal.GetAll(p=>p.UserId==judgmentPoolDto.UserId));
+
+
+
+             for (var i=0;i<list.Count;i++)
+             {
+                 //var temp=(list[i].JudgmentId);
+                 if (list[i].JudgmentId)
+                 {
+
+                 }
+
+                     var result = _judgmentDal.Get(p => p.Id == temp);
+                     judgmentsList.Add(result);
+
+
+
+
+
+
+
+
+
+
+
+             }
+             return judgmentsList;
+
+
+
+
+        */
+    }
 
 
 
 
     }
-}
+
