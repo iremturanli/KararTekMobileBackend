@@ -25,6 +25,15 @@ namespace Karartek.Business.Concrete
 
 
 
+        public User GetUserByIdentity(int id)
+
+        {
+            return _userDal.Get(p => p.Id == id);
+
+
+
+        }
+
 
         public UserService(IUserDal userDal, ILawyerDal lawyerDal, IStudentDal studentDal, IConfiguration configuration)
         {
@@ -185,7 +194,7 @@ namespace Karartek.Business.Concrete
 
                     var student = new Student()
                     {
-                        Id= result.Id,
+                        Id = result.Id,
                         StudentNumber = userForRegister.StudentNumber,
                         CreateDate = DateTime.Now,
                         University = userForRegister.University,
@@ -203,7 +212,7 @@ namespace Karartek.Business.Concrete
 
             }
 
-
+           
 
             SmtpClient client = new SmtpClient("smtp.yandex.com.tr", 587);
             MailMessage message = new MailMessage();
@@ -221,7 +230,7 @@ namespace Karartek.Business.Concrete
             return response;
         }
 
-
+        
         public string GeneratePassword()
         {
             string PasswordLength = "8";
@@ -310,8 +319,8 @@ namespace Karartek.Business.Concrete
 
         }
 
-
+        
     }
 
-
-}
+      
+    }

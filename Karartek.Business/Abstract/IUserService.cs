@@ -1,4 +1,5 @@
-﻿using Karartek.Entities.Dto;
+﻿using Karartek.Entities.Concrete;
+using Karartek.Entities.Dto;
 
 namespace Karartek.Business.Abstract
 {
@@ -7,5 +8,9 @@ namespace Karartek.Business.Abstract
         ResponseDto Login(UserForLogin userForLogin);
         ResponseDto Register(UserForRegister userForRegister);
         ResponseDto ForgotMyPassword(ForgotMyPasswordDto forgotMyPasswordDto);
+        User GetUserByIdentity(int id);
+  
+
+
     }
 }

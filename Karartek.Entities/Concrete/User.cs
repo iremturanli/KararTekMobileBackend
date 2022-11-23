@@ -15,6 +15,7 @@ namespace Karartek.Entities.Concrete
         public byte[] PasswordHash { get; set; } = null!;
         public byte[] PasswordSalt { get; set; } = null!;
         public Student? Student;
+        public Lawyer? Lawyer;
         public UserType? UserType { get; set; } = null!;
         public City_District? City_District { get; set; } = null!;
         public virtual ICollection<JudgmentPool>? JudgmentPools { get; set; } = null!;

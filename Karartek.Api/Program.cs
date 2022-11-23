@@ -2,7 +2,9 @@ using System.Text;
 using Karartek.Business.Abstract;
 using Karartek.Business.Concrete;
 using Karartek.DataAccess.Abstract;
+using Karartek.DataAccess.Concrete;
 using Karartek.DataAccess.Concrete.EntityFramework;
+using Karartek.DataAccess.Concrete.EntityFramework.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -27,6 +29,16 @@ builder.Services.AddSingleton<IJudgmentPoolDal, EfJudgmentPoolDal>();
 builder.Services.AddSingleton<IJudgmentPoolService, JudgmentPoolService>();
 builder.Services.AddSingleton<ILawyerDal, EfLawyerDal>();
 builder.Services.AddSingleton<IStudentDal, EfStudentDal>();
+builder.Services.AddSingleton<IJudgmentTypeService, JudgmentTypeService>();
+builder.Services.AddSingleton<IJudgmentTypeDal, EfJudgmentTypeDal>();
+builder.Services.AddSingleton<ISearchTypeService, SearchTypeService>();
+builder.Services.AddSingleton<ISearchTypeDal, EfSearchTypeDal>();
+builder.Services.AddSingleton<ILawyerJudgmentService, LawyerJudgmentService>();
+builder.Services.AddSingleton<ILawyerJudgmentDal, EfLawyerJudgmentDal>();
+builder.Services.AddSingleton<ILawyerJudgmentStateDal, EfLawyerJudgmentStateDal>();
+builder.Services.AddSingleton<ILawyerJudgmentStateService, LawyerJudgmentStateService>();
+
+
 
 builder.Services.AddSwaggerGen(options => {
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme

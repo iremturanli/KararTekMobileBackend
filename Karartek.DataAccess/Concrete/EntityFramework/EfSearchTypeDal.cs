@@ -1,15 +1,16 @@
-﻿using Karartek.DataAccess.Abstract;
+﻿using System;
+using Karartek.DataAccess.Abstract;
 using Karartek.DataAccess.Concrete.EntityFramework.Context;
 using Karartek.Entities.Concrete;
 
 namespace Karartek.DataAccess.Concrete.EntityFramework
 {
-    public class EfUserTypeDal : IUserTypeDal
+    public class EfSearchTypeDal:ISearchTypeDal
     {
-        public bool AddUserType(UserType userType)
+        public bool AddSearchType(SearchType searchType)
         {
             using var context = new AppDbContext();
-            context.UserTypes.Add(userType);
+            context.SearchTypes.Add(searchType);
             var result = context.SaveChanges();
             if (result > 0)
             {
@@ -21,10 +22,10 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
             }
         }
 
-        public bool DeleteUserType(UserType userType)
+        public bool DeleteSearchType(SearchType searchType)
         {
             using var context = new AppDbContext();
-            context.UserTypes.Remove(userType);
+            context.SearchTypes.Remove(searchType);
             var result = context.SaveChanges();
             if (result > 0)
             {
@@ -36,25 +37,23 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
             }
         }
 
-        public List<UserType> GetUserTypes()
+        public List<SearchType> GetSearchTypes()
         {
             using var context = new AppDbContext();
-            var result = context.UserTypes.SingleOrDefault(x => x.TypeId == 1 && x.TypeId == 2);
-            return context.UserTypes.ToList();
-            
+            return context.SearchTypes.ToList();
         }
 
-        public UserType GetUserTypeById(int id)
+        public SearchType GetSearchTypeById(int id)
         {
             using var context = new AppDbContext();
-            var userType = context.UserTypes.SingleOrDefault(x => x.TypeId == id);
-            return userType;
+            var searchType = context.SearchTypes.SingleOrDefault(x => x.TypeId == id);
+            return searchType;
         }
 
-        public bool UpdateUserType(UserType userType)
+        public bool UpdateSearchType(SearchType searchType)
         {
             using var context = new AppDbContext();
-            context.UserTypes.Update(userType);
+            context.SearchTypes.Update(searchType);
             var result = context.SaveChanges();
             if (result > 0)
             {
@@ -65,5 +64,8 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
                 return false;
             }
         }
+
+       
     }
 }
+

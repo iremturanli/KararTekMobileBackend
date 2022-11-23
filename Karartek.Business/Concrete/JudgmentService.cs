@@ -47,7 +47,9 @@ namespace Karartek.Business.Concrete
                     DecreeNo = judgmentDto.DecreeNo,
                     DecreeYear = judgmentDto.DecreeYear,
                     MeritsNo = judgmentDto.MeritsNo,
-                    MeritsYear = judgmentDto.MeritsYear,         
+                    MeritsYear = judgmentDto.MeritsYear,
+                    JudgmentTypeId=judgmentDto.JudgmentTypeId,
+                    Decision=judgmentDto.Decision
                                     
                 };
                 
@@ -80,6 +82,19 @@ namespace Karartek.Business.Concrete
             Console.WriteLine(  result);
             return result;
         }
+        public List<Judgment> GetYargıtayJudgments()
+        {
+            return new List<Judgment>(_judgmentDal.GetAll(p => p.JudgmentTypeId == 1));
+        }
+
+        public List<Judgment> GetDanistayJudgments()
+        {
+            return new List<Judgment>(_judgmentDal.GetAll(p => p.JudgmentTypeId == 2));
+        }
+        public List<Judgment> GetAnayasaMahkemeJudgments()
+        {
+            return new List<Judgment>(_judgmentDal.GetAll(p => p.JudgmentTypeId == 3));
+        }
 
         public ResponseDto Likes(int id)
         {
@@ -111,6 +126,7 @@ namespace Karartek.Business.Concrete
 
 
         }
+
     }
 }
 
