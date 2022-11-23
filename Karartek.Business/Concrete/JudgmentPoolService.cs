@@ -18,14 +18,16 @@ namespace Karartek.Business.Concrete
     {
         List<Judgment>judgmentsList = new List<Judgment>();
         private readonly IJudgmentDal _judgmentDal;
+        private readonly ILawyerJudgmentDal _lawyerJudgmentDal;
         private readonly IJudgmentPoolDal _judgmentPoolDal;
     
 
 
-        public JudgmentPoolService(IJudgmentDal judgmentDal,IJudgmentPoolDal judgmentPoolDal, IConfiguration configuration)
+        public JudgmentPoolService(IJudgmentDal judgmentDal, ILawyerJudgmentDal lawyerJudgmentDal,IJudgmentPoolDal judgmentPoolDal, IConfiguration configuration)
         {
             _judgmentPoolDal = judgmentPoolDal;
             _judgmentDal = judgmentDal;
+            _lawyerJudgmentDal = lawyerJudgmentDal;
 
         }
 
@@ -38,7 +40,9 @@ namespace Karartek.Business.Concrete
             {
                 JudgmentId = favJudgment.Id,
                 UserId=judgmentPoolDto.UserId,
-                CreateDate=DateTime.Now
+                CreateDate=DateTime.Now,
+    
+                
 
             };
 
@@ -54,6 +58,32 @@ namespace Karartek.Business.Concrete
         }
 
 
+        public ResponseDto AddLawyerJudgmenttoJudgmentPool(JudgmentPoolDto judgmentPoolDto, int judgmentId)
+        {
+            ResponseDto response = new ResponseDto();
+            var favJudgment = _lawyerJudgmentDal.Get(p => p.Id == judgmentId);
+
+            var judgmentPool = new JudgmentPool()
+            {
+               
+                UserId = judgmentPoolDto.UserId,
+                CreateDate = DateTime.Now,
+                JudgmentId=0
+
+            };
+
+
+            var result = _judgmentPoolDal.Insert(judgmentPool);
+
+            response.HasError = false;
+            response.Message = "Karar Havuzune Eklendi";
+            return response;
+
+
+
+        }
+
+
 
         public bool DeleteFromJudgmentPool(int id )
         {
@@ -62,6 +92,7 @@ namespace Karartek.Business.Concrete
                 return true;
             
         }
+
 
         public List<Judgment> GetAll(JudgmentPoolDto judgmentPoolDto)
         {
@@ -73,10 +104,15 @@ namespace Karartek.Business.Concrete
             for (var i=0;i<list.Count;i++)
             {
                var temp=(list[i].JudgmentId);
-         
-                var result = _judgmentDal.Get(p => p.Id == temp );
-                judgmentsList.Add(result);
+    
+                
+                    var result = _judgmentDal.Get(p => p.Id == temp);
+                    judgmentsList.Add(result);
 
+
+
+                
+              
 
 
 

@@ -26,24 +26,24 @@ namespace Karartek.Api.Controllers
         public ActionResult Register(UserForRegister userForRegister)
         {
             var userToRegister = _userService.Register(userForRegister);
-            if (userToRegister!=null)
+            if (userToRegister != null)
             {
                 return Ok(userToRegister);
 
             }
-            
+
             return BadRequest("Registeration Failed");
         }
         [HttpPost("login")]
         public ActionResult Login(UserForLogin userForLogin)
         {
             var userToLogin = _userService.Login(userForLogin);
-            if (userToLogin ==null)
+            if (userToLogin == null)
             {
                 return BadRequest("Login Failed");
             }
 
-          return Ok(userToLogin);
+            return Ok(userToLogin);
         }
 
         [HttpPost("forgotMyPassword")]
@@ -58,6 +58,20 @@ namespace Karartek.Api.Controllers
             return Ok(userToLogin);
         }
 
+        [HttpGet("GetUserInformation")]
+        public ActionResult GetUser()
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var identity = Int32.Parse(userId);
+            var user = _userService.GetUserByIdentity(identity);
 
+            if (user == null)
+            {
+                return BadRequest("Kullanıcı bilgileri bulunamadı");
+            }
+
+            return Ok(user);
+
+        }
     }
 }

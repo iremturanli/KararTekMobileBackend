@@ -1,4 +1,6 @@
-﻿using Karartek.DataAccess.Abstract;
+﻿using System.Linq;
+using System.Linq.Expressions;
+using Karartek.DataAccess.Abstract;
 using Karartek.DataAccess.Concrete.EntityFramework.Context;
 using Karartek.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +40,16 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
 
 
         }
+
+        public User Get(Expression<Func<User, bool>>? filter = null)
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                return context.Set<User>().SingleOrDefault(filter);
+            }
+        }
+
+
 
 
 

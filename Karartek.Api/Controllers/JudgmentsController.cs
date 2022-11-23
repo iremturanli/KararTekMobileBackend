@@ -4,56 +4,81 @@ using Karartek.Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Karartek.Api.Controllers
-{ 
+{
     [Route("api/[controller]")]
     [ApiController]
 
     public class JudgmentsController : ControllerBase
     {
-    private IJudgmentService _judgmentService;
+        private IJudgmentService _judgmentService;
 
-    public JudgmentsController(IJudgmentService judgmentService)
-    {
-        _judgmentService = judgmentService;
-    }
-
-
-
-    [HttpPost("Add Judgment")]
-    public ActionResult AddJudgment(JudgmentDto judgmentDto)
-    {
-        
-        var judgmentToAdd = _judgmentService.AddJudgment(judgmentDto);
-        if (judgmentToAdd)
+        public JudgmentsController(IJudgmentService judgmentService)
         {
-            return Ok(judgmentToAdd);
+            _judgmentService = judgmentService;
+        }
+
+
+
+        [HttpPost("Add Judgment")]
+        public ActionResult AddJudgment(JudgmentDto judgmentDto)
+        {
+
+            var judgmentToAdd = _judgmentService.AddJudgment(judgmentDto);
+            if (judgmentToAdd)
+            {
+                return Ok(judgmentToAdd);
+
+            }
+            else
+            { return BadRequest("Adding Failed"); }
 
         }
-        else
-            { return BadRequest("Adding Failed"); }
-        
-    }
 
 
-    [HttpGet("AllJudgments")]
-    public List<Judgment>GetAll()
-    {
-        var judgments = _judgmentService.GetAll();
+        [HttpGet("AllJudgments")]
+        public List<Judgment> GetAll()
+        {
+            var judgments = _judgmentService.GetAll();
             return judgments;
-           
-        
-    }
 
-    [HttpGet("GetByKeyword/{{keyword}}")]
-     public List<Judgment> GetbyKeyword(string keyword)
+
+        }
+        [HttpGet("YargitayJudgments")]
+        public List<Judgment> GetYargitayJudgments()
+        {
+            var judgments = _judgmentService.GetYargıtayJudgments();
+            return judgments;
+
+
+        }
+
+        [HttpGet("DanistayJudgments")]
+        public List<Judgment> GetDanistayJudgments()
+        {
+            var judgments = _judgmentService.GetDanistayJudgments();
+            return judgments;
+
+
+        }
+        [HttpGet("AnayasaMahkemeJudgments")]
+        public List<Judgment> GetAnayasaMahkemeJudgments()
+        {
+            var judgments = _judgmentService.GetAnayasaMahkemeJudgments();
+            return judgments;
+
+
+        }
+
+        [HttpGet("GetByKeyword/{{keyword}}")]
+        public List<Judgment> GetbyKeyword(string keyword)
         {
             var judgmentToSearch = _judgmentService.GetbyKeyword(keyword);
             return judgmentToSearch;
 
-            
+
         }
 
-     [HttpGet("DeleteDecree/{{id}}")]
+        [HttpGet("DeleteDecree/{{id}}")]
         public bool DeleteDecree(int id)
         {
             _judgmentService.DeleteDecree(id);

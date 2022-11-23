@@ -1,15 +1,20 @@
-﻿using Karartek.DataAccess.Abstract;
+﻿using System;
+using Karartek.DataAccess.Abstract;
 using Karartek.DataAccess.Concrete.EntityFramework.Context;
 using Karartek.Entities.Concrete;
 
 namespace Karartek.DataAccess.Concrete.EntityFramework
 {
-    public class EfUserTypeDal : IUserTypeDal
+    public class EfJudgmentTypeDal:IJudgmentTypeDal
     {
-        public bool AddUserType(UserType userType)
+        public EfJudgmentTypeDal()
+        {
+        }
+
+        public bool AddJudgmentType(JudgmentType judgmentType)
         {
             using var context = new AppDbContext();
-            context.UserTypes.Add(userType);
+            context.JudgmentTypes.Add(judgmentType);
             var result = context.SaveChanges();
             if (result > 0)
             {
@@ -21,10 +26,10 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
             }
         }
 
-        public bool DeleteUserType(UserType userType)
+        public bool DeleteJudgmentType(JudgmentType judgmentType)
         {
             using var context = new AppDbContext();
-            context.UserTypes.Remove(userType);
+            context.JudgmentTypes.Remove(judgmentType);
             var result = context.SaveChanges();
             if (result > 0)
             {
@@ -36,25 +41,23 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
             }
         }
 
-        public List<UserType> GetUserTypes()
+        public JudgmentType GetJudgmentTypeById(int id)
         {
             using var context = new AppDbContext();
-            var result = context.UserTypes.SingleOrDefault(x => x.TypeId == 1 && x.TypeId == 2);
-            return context.UserTypes.ToList();
-            
+            var judgmentType = context.JudgmentTypes.SingleOrDefault(x => x.TypeId == id);
+            return judgmentType;
         }
 
-        public UserType GetUserTypeById(int id)
+        public List<JudgmentType> GetJudgmentTypes()
         {
             using var context = new AppDbContext();
-            var userType = context.UserTypes.SingleOrDefault(x => x.TypeId == id);
-            return userType;
+            return context.JudgmentTypes.ToList();
         }
 
-        public bool UpdateUserType(UserType userType)
+        public bool UpdateJudgmentType(JudgmentType judgmentType)
         {
             using var context = new AppDbContext();
-            context.UserTypes.Update(userType);
+            context.JudgmentTypes.Update(judgmentType);
             var result = context.SaveChanges();
             if (result > 0)
             {
@@ -67,3 +70,4 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
         }
     }
 }
+

@@ -3,7 +3,7 @@ namespace Karartek.Entities.Dto
 {
     public class JudgmentDto
     {
-        
+        public int JudgmentTypeId { get; set; }
         public string CommisionName { get; set; } = null!;
         public string Court { get; set; } = null!;
         public string Decree { get; set; } = null!;
@@ -12,7 +12,8 @@ namespace Karartek.Entities.Dto
         public string MeritsNo { get; set; } = null!;
         public string DecreeYear { get; set; } = null!;
         public string DecreeNo { get; set; } = null!;
-        
+        public string Decision { get; set; } = null!;
+
 
 
 
