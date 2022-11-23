@@ -1,5 +1,4 @@
-﻿using System;
-using Karartek.Entities.Concrete;
+﻿using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
 
 namespace Karartek.Business.Abstract
@@ -11,7 +10,7 @@ namespace Karartek.Business.Abstract
         List<LawyerJudgment> GetbyKeyword(string keyword);
         bool DeleteDecree(int id);
         ResponseDto Likes(int id);
-        ResponseDto ApproveJudgment(int id);
+        BaseResponseDto ApproveJudgment(JudgmentApprovalRequestDto judgmentApprovalRequestDto);
         ResponseDto DeclineJudgment(int id, string comment);
     }
 }

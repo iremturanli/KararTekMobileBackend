@@ -1,11 +1,10 @@
-﻿using System;
-using Karartek.Core.Entities;
+﻿using Karartek.Core.Entities;
 
 namespace Karartek.Entities.Concrete
 {
-    public class LawyerJudgment:BaseEntity
+    public class LawyerJudgment : BaseEntity
     {
-        
+
         public string CommisionName { get; set; } = null!;
         public string Court { get; set; } = null!;
         public string Decree { get; set; } = null!;

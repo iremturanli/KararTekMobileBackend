@@ -1,5 +1,4 @@
-﻿using Azure;
-using Karartek.Business.Abstract;
+﻿using Karartek.Business.Abstract;
 using Karartek.DataAccess.Abstract;
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
@@ -25,14 +24,32 @@ namespace Karartek.Business.Concrete
 
 
 
-        public User GetUserByIdentity(int id)
+        public UserResponseDto GetUserById(int id)
 
         {
-            return _userDal.Get(p => p.Id == id);
+            //TODO:Add remaining Dtos
+            var user = _userDal.GetUserById(id);
+            UserResponseDto userResponseDto = new UserResponseDto();
+            userResponseDto.Id = user.Id;
+            userResponseDto.CityId = user.CityId;
+            userResponseDto.DistrictId = user.DistrictId;
+            userResponseDto.DistrictName = user.District.Name;
+            userResponseDto.CityName = user.City.Name;
+            return userResponseDto;
+
 
 
 
         }
+        public User GetUserByIdentity(string identity)
+
+        {
+            return _userDal.GetUserByIdentity(identity);
+
+
+
+        }
+
 
 
         public UserService(IUserDal userDal, ILawyerDal lawyerDal, IStudentDal studentDal, IConfiguration configuration)
@@ -178,7 +195,7 @@ namespace Karartek.Business.Concrete
                 {
                     var lawyer = new Lawyer()
                     {
-                        Id=result.Id,
+                        Id = result.Id,
                         BarRegisterNo = userForRegister.BarRegisterNo,
                         CreateDate = DateTime.Now
 
@@ -212,7 +229,7 @@ namespace Karartek.Business.Concrete
 
             }
 
-           
+
 
             SmtpClient client = new SmtpClient("smtp.yandex.com.tr", 587);
             MailMessage message = new MailMessage();
@@ -230,7 +247,7 @@ namespace Karartek.Business.Concrete
             return response;
         }
 
-        
+
         public string GeneratePassword()
         {
             string PasswordLength = "8";
@@ -319,8 +336,8 @@ namespace Karartek.Business.Concrete
 
         }
 
-        
+
     }
 
-      
-    }
+
+}

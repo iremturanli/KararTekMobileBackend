@@ -8,8 +8,9 @@ namespace Karartek.Business.Abstract
         ResponseDto Login(UserForLogin userForLogin);
         ResponseDto Register(UserForRegister userForRegister);
         ResponseDto ForgotMyPassword(ForgotMyPasswordDto forgotMyPasswordDto);
-        User GetUserByIdentity(int id);
-  
+        User GetUserByIdentity(string userIdentity);
+        UserResponseDto GetUserById(int id);
+
 
 
     }

@@ -1,8 +1,5 @@
-﻿using System;
-using Karartek.Business.Abstract;
+﻿using Karartek.Business.Abstract;
 using Karartek.DataAccess.Abstract;
-using Karartek.DataAccess.Concrete;
-using Karartek.DataAccess.Concrete.EntityFramework;
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Concrete.Enum;
 using Karartek.Entities.Dto;
@@ -45,6 +42,7 @@ namespace Karartek.Business.Concrete
                     Decision = lawyerJudgmentDto.Decision,
                     TBBComments = lawyerJudgmentDto.TBBComments,
                     CreateDate = DateTime.Now,
+                    UserId = lawyerJudgmentDto.UserId,
 
 
 
@@ -64,31 +62,43 @@ namespace Karartek.Business.Concrete
             return false;
         }
 
-        public ResponseDto ApproveJudgment(int id)
+        public BaseResponseDto ApproveJudgment(JudgmentApprovalRequestDto judgmentApprovalRequestDto)
         {
-            ResponseDto response = new ResponseDto();
-            var judgment = _lawyerJudgmentDal.Get(p => p.Id == id);
-            if (judgment.StateId == (int)EJudgmentStates.OnayBekliyor)
+            BaseResponseDto response = new BaseResponseDto();
+            var judgment = _lawyerJudgmentDal.Get(p => p.Id == judgmentApprovalRequestDto.Id);
+
+
+
+            if (judgment is not null && judgmentApprovalRequestDto.StateId == (int)EJudgmentStates.Onaylandı)
             {
                 judgment.StateId = (int)EJudgmentStates.Onaylandı;
+                judgment.TBBComments = "Karar Onaylandı";
                 _lawyerJudgmentDal.Update(judgment);
-
+                response.Message = "Karar onaylandı";
+                response.HasError = false;
 
             }
+            else if (judgmentApprovalRequestDto.StateId == (int)EJudgmentStates.Reddedildi)
+            {
+                judgment.StateId = (int)EJudgmentStates.Reddedildi;
+                judgment.TBBComments = judgmentApprovalRequestDto.RejectMessage;
+                _lawyerJudgmentDal.Update(judgment);
+                response.Message = "Karar reddedilmiş";
+                response.HasError = false;
+            }
             else
-
+            {
+                response.Message = "Karar Yok";
                 response.HasError = true;
-            response.Message = "Hatalı ";
+            }
+
 
             return response;
 
 
-
-
-
         }
 
-     
+
 
         public ResponseDto DeclineJudgment(int id, string comment)
         {
@@ -105,7 +115,7 @@ namespace Karartek.Business.Concrete
             }
             else
 
-            response.HasError = true;
+                response.HasError = true;
             response.Message = "Hatalı ";
 
             return response;

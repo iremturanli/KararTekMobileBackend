@@ -1,9 +1,8 @@
-﻿using System.Linq;
-using System.Linq.Expressions;
-using Karartek.DataAccess.Abstract;
+﻿using Karartek.DataAccess.Abstract;
 using Karartek.DataAccess.Concrete.EntityFramework.Context;
 using Karartek.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Karartek.DataAccess.Concrete.EntityFramework
 {
@@ -12,9 +11,11 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
         public User GetUserByIdentity(string identityNumber)
         {
             using var context = new AppDbContext();
-            var user = context.Users.Include(x => x.UserType).SingleOrDefault(x => x.IdentityNumber == identityNumber);
+            var user = context.Users.Include(x => x.UserType).Include(c => c.City).ThenInclude(d => d.Districts).SingleOrDefault(x => x.IdentityNumber == identityNumber);
             return user;
         }
+
+
 
         public User Insert(User user)
         {
@@ -49,10 +50,11 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
             }
         }
 
-
-
-
-
-
+        public User GetUserById(int id)
+        {
+            using var context = new AppDbContext();
+            var user = context.Users.Where(x => x.Id == id).Include(x => x.UserType).Include(c => c.City).Include(d => d.District).SingleOrDefault();
+            return user;
+        }
     }
 }

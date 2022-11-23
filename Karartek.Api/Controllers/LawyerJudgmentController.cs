@@ -1,16 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Karartek.Business.Abstract;
 using Karartek.Entities.Dto;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Karartek.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class LawyerJudgmentController : ControllerBase
     {
         private ILawyerJudgmentService _lawyerJudgmentService;
@@ -23,15 +21,15 @@ namespace Karartek.Api.Controllers
 
 
         [HttpPost("Approval")]
-        public ActionResult ApproveJudgment(LawyerJudgmentDto lawyerJudgmentDto)
+        public ActionResult ApproveJudgment(JudgmentApprovalRequestDto judgmentApprovalRequestDto)
         {
 
-            var judgmentToApproval = _lawyerJudgmentService.ApproveJudgment(lawyerJudgmentDto.Id);
+            var judgmentToApproval = _lawyerJudgmentService.ApproveJudgment(judgmentApprovalRequestDto);
             if (judgmentToApproval is not null)
 
             {
                 return Ok(judgmentToApproval);
-               
+
             }
             else
 
@@ -59,9 +57,9 @@ namespace Karartek.Api.Controllers
         [HttpPost("AddLawyerJudgments")]
         public ActionResult AddLawyerJudgments(LawyerJudgmentDto lawyerJudgmentDto)
         {
-
+            lawyerJudgmentDto.UserId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var judgmentToAdd = _lawyerJudgmentService.AddLawyerJudgment(lawyerJudgmentDto);
-            if (judgmentToAdd )
+            if (judgmentToAdd)
             {
                 return Ok(judgmentToAdd);
 
@@ -78,7 +76,7 @@ namespace Karartek.Api.Controllers
         public ActionResult DeclineJudgment(LawyerJudgmentDto lawyerJudgmentDto)
         {
 
-            var judgmentToAdd = _lawyerJudgmentService.DeclineJudgment(lawyerJudgmentDto.Id,lawyerJudgmentDto.TBBComments);
+            var judgmentToAdd = _lawyerJudgmentService.DeclineJudgment(lawyerJudgmentDto.Id, lawyerJudgmentDto.TBBComments);
             if (judgmentToAdd is not null)
             {
                 return Ok(judgmentToAdd);
