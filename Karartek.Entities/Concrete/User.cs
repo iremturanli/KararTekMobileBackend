@@ -7,8 +7,8 @@ namespace Karartek.Entities.Concrete
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public int UserTypeId { get; set; }
-        public int City { get; set; }
-        public string? District { get; set; }
+        public int CityId { get; set; }
+        public int? DistrictId { get; set; }
         public string IdentityNumber { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public string Email { get; set; } = null!;
@@ -17,8 +17,9 @@ namespace Karartek.Entities.Concrete
         public Student? Student;
         public Lawyer? Lawyer;
         public UserType? UserType { get; set; } = null!;
-        public City_District? City_District { get; set; } = null!;
         public virtual ICollection<JudgmentPool>? JudgmentPools { get; set; } = null!;
+        public City City { get; set; }
+        //public District District { get; set; }
 
     }
 

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Karartek.Business.Abstract
 {
-    public interface ICity_DistrictService
+    public interface ICityService
     {
-        City_District GetCityDistrictById(int id);
-        City_DistrictResponseDto GetCityDistricts();
+        City GetCitiesById(int id);
+        CityResponseDto GetCities();
     }
 }

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Karartek.DataAccess.Abstract
 {
-    public interface ICity_DistrictDal
+    public interface ICityDal
     {
-        City_District Get(int id);
-        List<City_District> GetAll();
+        City Get(int id);
+        List<City> GetAll();
     }
 }

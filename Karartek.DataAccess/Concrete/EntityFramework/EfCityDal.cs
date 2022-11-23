@@ -6,19 +6,19 @@ using System.Linq.Expressions;
 
 namespace Karartek.DataAccess.Concrete.EntityFramework
 {
-    public class EfCity_DistrictDal : ICity_DistrictDal
+    public class EfCityDal : ICityDal
     {
-        public City_District Get(int id)
+        public City Get(int id)
         {
             using var context = new AppDbContext();
-            var cityDistrict = context.City_Districts.SingleOrDefault(x => x.Il_Ilce_Id == id);
-            return cityDistrict;
+            var city = context.Cities.SingleOrDefault(x => x.Id == id);
+            return city;
         }
 
-        public List<City_District> GetAll()
+        public List<City> GetAll()
         {
             using var context = new AppDbContext();
-            return context.City_Districts.ToList();
+            return context.Cities.ToList();
         }
     }
 }

@@ -14,7 +14,8 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
         public DbSet<Lawyer> Lawyers { get; set; }
         public DbSet<LawyerJudgment> LawyerJudgments { get; set; }
         public DbSet<Student> Students { get; set; }
-        public DbSet<City_District> City_Districts { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet <District> Districts { get; set; }
         
 
         public DbSet<SearchType> SearchTypes { get; set; }
@@ -41,7 +42,8 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<User>().Property(x => x.PasswordSalt).IsRequired();
             modelBuilder.Entity<User>().Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
             modelBuilder.Entity<User>().HasOne<UserType>(x => x.UserType).WithMany(x => x.Users).IsRequired().HasForeignKey(x => x.UserTypeId);
-            modelBuilder.Entity<User>().HasOne<City_District>(x => x.City_District).WithMany(x => x.Users).IsRequired().HasForeignKey(x => x.City);
+            modelBuilder.Entity<User>().HasOne<City>(x => x.City).WithMany(x => x.Users).IsRequired().HasForeignKey(x => x.CityId);
+            //modelBuilder.Entity<User>().HasOne<District>(x => x.District).WithMany(x => x.Users).IsRequired().HasForeignKey(x => x.DistrictId);
 
             modelBuilder.Entity<Student>().ToTable("Students");
             modelBuilder.Entity<Student>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
@@ -151,6 +153,22 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
 
             modelBuilder.Entity<JudgmentPool>().HasOne<LawyerJudgment>(x => x.LawyerJudgment).WithMany(x => x.JudgmentPools).IsRequired().HasForeignKey(x => x.LawyerJudgmentId);
             modelBuilder.Entity<JudgmentPool>().HasOne<SearchType>(x => x.SearchType).WithMany(x => x.JudgmentPools).IsRequired().HasForeignKey(x => x.SearchTypeId);
+
+            modelBuilder.Entity<City>().ToTable("City");
+            modelBuilder.Entity<City>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
+            modelBuilder.Entity<City>().Property(x => x.Name).IsRequired();
+            modelBuilder.Entity<City>().Property(x => x.OrderIndex).IsRequired();
+            modelBuilder.Entity<City>().Property(x => x.PlateCode).IsRequired();
+            modelBuilder.Entity<City>().HasData(CitySeeds.cities);
+
+            modelBuilder.Entity<District>().ToTable("Districts");
+            modelBuilder.Entity<District>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
+            modelBuilder.Entity<District>().Property(x => x.CityId).IsRequired();
+            modelBuilder.Entity<District>().Property(x => x.Name).IsRequired();
+            modelBuilder.Entity<District>().Property(x => x.OrderIndex).IsRequired();
+            modelBuilder.Entity<District>().HasOne<City>(x =>x.City).WithMany(x => x.Districts).IsRequired().HasForeignKey(x => x.CityId);
+            modelBuilder.Entity<District>().HasData(DistrictSeeds.districts);
+
 
 
         }

@@ -16,6 +16,5 @@ namespace Karartek.Entities.Concrete
         public int Il_Id { get; set; }
         public string Il_Ilce_Adi { get; set; } = null!;
 
-        public virtual ICollection<User>? Users { get; set; } = null!;
     }
 }

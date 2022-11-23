@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Karartek.Entities.Dto
 {
-    public class City_DistrictResponseDto
+    public class CityResponseDto
     {
 
         public bool HasError { get; set; }
         public string Message { get; set; }
-        public List<City_District> City_Districts { get; set; } = null!;
+        public List<City> Cities { get; set; } = null!;
 
     }
 

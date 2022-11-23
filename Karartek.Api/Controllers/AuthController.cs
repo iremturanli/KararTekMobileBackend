@@ -1,5 +1,6 @@
 ﻿using Karartek.Business.Abstract;
 using Karartek.Entities.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +12,7 @@ namespace Karartek.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class AuthController : ControllerBase
     {
         private IUserService _userService;
@@ -59,6 +61,7 @@ namespace Karartek.Api.Controllers
         }
 
         [HttpGet("GetUserInformation")]
+        [Authorize]
         public ActionResult GetUser()
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
