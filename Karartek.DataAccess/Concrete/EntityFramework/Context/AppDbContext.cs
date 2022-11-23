@@ -14,7 +14,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
         public DbSet<Lawyer> Lawyers { get; set; }
         public DbSet<LawyerJudgment> LawyerJudgments { get; set; }
         public DbSet<Student> Students { get; set; }
-        public DbSet<City_District> City_Districts { get; set; }
+
         
 
         public DbSet<SearchType> SearchTypes { get; set; }
@@ -41,7 +41,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<User>().Property(x => x.PasswordSalt).IsRequired();
             modelBuilder.Entity<User>().Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
             modelBuilder.Entity<User>().HasOne<UserType>(x => x.UserType).WithMany(x => x.Users).IsRequired().HasForeignKey(x => x.UserTypeId);
-            modelBuilder.Entity<User>().HasOne<City_District>(x => x.City_District).WithMany(x => x.Users).IsRequired().HasForeignKey(x => x.City);
+           
 
             modelBuilder.Entity<Student>().ToTable("Students");
             modelBuilder.Entity<Student>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
@@ -144,13 +144,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<JudgmentPool>().HasOne<Judgment>(x => x.Judgment).WithMany(x => x.JudgmentPools).IsRequired().HasForeignKey(x => x.JudgmentId);
             modelBuilder.Entity<JudgmentPool>().HasOne<User>(x => x.User).WithMany(x => x.JudgmentPools).IsRequired().HasForeignKey(x => x.UserId);
 
-            modelBuilder.Entity<City_District>().ToTable("City_District");
-            //id
-            modelBuilder.Entity<City_District>().Property(x => x.Il_Ilce_Id).UseIdentityColumn().ValueGeneratedOnAdd();
-            modelBuilder.Entity<City_District>().Property(x=> x.Il_Ilce_Turu_Id).IsRequired();
-            modelBuilder.Entity<City_District>().Property(x => x.Plaka_Kodu).IsRequired();
-            modelBuilder.Entity<City_District>().Property(x => x.Il_Id).IsRequired();
-            modelBuilder.Entity<City_District>().Property(x => x.Il_Ilce_Adi).IsRequired();
+           
 
             modelBuilder.Entity<JudgmentPool>().HasOne<LawyerJudgment>(x => x.LawyerJudgment).WithMany(x => x.JudgmentPools).IsRequired().HasForeignKey(x => x.LawyerJudgmentId);
             modelBuilder.Entity<JudgmentPool>().HasOne<SearchType>(x => x.SearchType).WithMany(x => x.JudgmentPools).IsRequired().HasForeignKey(x => x.SearchTypeId);

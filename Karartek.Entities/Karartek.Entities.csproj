@@ -8,10 +8,14 @@
 
   <ItemGroup>
     <Folder Include="ComplexTypes\" />
+    <Folder Include="Concrete\Enum\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Karartek.Core\Karartek.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Concrete\Enum\" />
+  </ItemGroup>
 </Project>

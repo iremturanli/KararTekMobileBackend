@@ -17,8 +17,10 @@ namespace Karartek.Entities.Concrete
         public string DecreeNo { get; set; } = null!;
         public string Decision { get; set; } = null!;
         public string TBBComments { get; set; } = null!;
+        public int UserId { get; set; }
         public int StateId { get; set; }
         public int Likes { get; set; }
+        public User? User { get; set; } = null!;
         public LawyerJudgmentState? LawyerJudgmentState { get; set; } = null!;
         public virtual ICollection<JudgmentPool>? JudgmentPools { get; set; } = null!;
 
