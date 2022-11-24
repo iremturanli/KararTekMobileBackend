@@ -11,10 +11,10 @@
         public string PhoneNumber { get; set; } = null!;
         public string BarRegisterNo { get; set; } = null!;
         public string Email { get; set; } = null!;
-        public string University { get; set; } = null!;
-        public string Faculty { get; set; } = null!;
-        public string Grade { get; set; } = null!;
-        public string StudentNumber { get; set; } = null!;
+        public string? University { get; set; } 
+        public string? Faculty { get; set; } 
+        public string? Grade { get; set; } 
+        public string? StudentNumber { get; set; }
 
 
     }

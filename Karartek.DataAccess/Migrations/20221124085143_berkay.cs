@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Karartek.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class berkay : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -401,15 +401,9 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-<<<<<<<< HEAD:Karartek.DataAccess/Migrations/20221124063743_initial.cs
-                    { 1, new DateTime(2022, 11, 24, 9, 37, 42, 211, DateTimeKind.Local).AddTicks(8594), 1, "Yargıtay" },
-                    { 2, new DateTime(2022, 11, 24, 9, 37, 42, 211, DateTimeKind.Local).AddTicks(8635), 2, "Danıştay" },
-                    { 3, new DateTime(2022, 11, 24, 9, 37, 42, 211, DateTimeKind.Local).AddTicks(8637), 3, "Anayasa Mahkemesi" }
-========
-                    { 1, new DateTime(2022, 11, 24, 9, 7, 24, 678, DateTimeKind.Local).AddTicks(1830), 1, "Yargıtay" },
-                    { 2, new DateTime(2022, 11, 24, 9, 7, 24, 678, DateTimeKind.Local).AddTicks(1860), 2, "Danıştay" },
-                    { 3, new DateTime(2022, 11, 24, 9, 7, 24, 678, DateTimeKind.Local).AddTicks(1870), 3, "Anayasa Mahkemesi" }
->>>>>>>> 98bd184ed712389ca2c0380aa459a3ce2bca75d2:Karartek.DataAccess/Migrations/20221124060725_initial.cs
+                    { 1, new DateTime(2022, 11, 24, 11, 51, 42, 818, DateTimeKind.Local).AddTicks(3399), 1, "Yargıtay" },
+                    { 2, new DateTime(2022, 11, 24, 11, 51, 42, 818, DateTimeKind.Local).AddTicks(3412), 2, "Danıştay" },
+                    { 3, new DateTime(2022, 11, 24, 11, 51, 42, 818, DateTimeKind.Local).AddTicks(3413), 3, "Anayasa Mahkemesi" }
                 });
 
             migrationBuilder.InsertData(
@@ -417,17 +411,10 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "StateId", "StateName" },
                 values: new object[,]
                 {
-<<<<<<<< HEAD:Karartek.DataAccess/Migrations/20221124063743_initial.cs
-                    { 1, new DateTime(2022, 11, 24, 9, 37, 42, 172, DateTimeKind.Local).AddTicks(4450), 1, "Onaya Gönderildi" },
-                    { 2, new DateTime(2022, 11, 24, 9, 37, 42, 174, DateTimeKind.Local).AddTicks(5555), 2, "Onay Bekliyor" },
-                    { 3, new DateTime(2022, 11, 24, 9, 37, 42, 174, DateTimeKind.Local).AddTicks(5568), 3, "Reddedildi" },
-                    { 4, new DateTime(2022, 11, 24, 9, 37, 42, 174, DateTimeKind.Local).AddTicks(5569), 4, "Onaylandı" }
-========
-                    { 1, new DateTime(2022, 11, 24, 9, 7, 24, 662, DateTimeKind.Local).AddTicks(9760), 1, "Onaya Gönderildi" },
-                    { 2, new DateTime(2022, 11, 24, 9, 7, 24, 673, DateTimeKind.Local).AddTicks(7460), 2, "Onay Bekliyor" },
-                    { 3, new DateTime(2022, 11, 24, 9, 7, 24, 673, DateTimeKind.Local).AddTicks(7490), 3, "Reddedildi" },
-                    { 4, new DateTime(2022, 11, 24, 9, 7, 24, 673, DateTimeKind.Local).AddTicks(7490), 4, "Onaylandı" }
->>>>>>>> 98bd184ed712389ca2c0380aa459a3ce2bca75d2:Karartek.DataAccess/Migrations/20221124060725_initial.cs
+                    { 1, new DateTime(2022, 11, 24, 11, 51, 42, 792, DateTimeKind.Local).AddTicks(3474), 1, "Onaya Gönderildi" },
+                    { 2, new DateTime(2022, 11, 24, 11, 51, 42, 815, DateTimeKind.Local).AddTicks(9211), 2, "Onay Bekliyor" },
+                    { 3, new DateTime(2022, 11, 24, 11, 51, 42, 815, DateTimeKind.Local).AddTicks(9220), 3, "Reddedildi" },
+                    { 4, new DateTime(2022, 11, 24, 11, 51, 42, 815, DateTimeKind.Local).AddTicks(9222), 4, "Onaylandı" }
                 });
 
             migrationBuilder.InsertData(
@@ -435,13 +422,8 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-<<<<<<<< HEAD:Karartek.DataAccess/Migrations/20221124063743_initial.cs
-                    { 1, new DateTime(2022, 11, 24, 9, 37, 42, 177, DateTimeKind.Local).AddTicks(2105), 1, "Avukatın Eklediği Kararlar" },
-                    { 2, new DateTime(2022, 11, 24, 9, 37, 42, 177, DateTimeKind.Local).AddTicks(2126), 2, "Yüksek Yargı Kararları" }
-========
-                    { 1, new DateTime(2022, 11, 24, 9, 7, 24, 677, DateTimeKind.Local).AddTicks(3270), 1, "Avukatın Eklediği Kararlar" },
-                    { 2, new DateTime(2022, 11, 24, 9, 7, 24, 677, DateTimeKind.Local).AddTicks(3310), 2, "Yüksek Yargı Kararları" }
->>>>>>>> 98bd184ed712389ca2c0380aa459a3ce2bca75d2:Karartek.DataAccess/Migrations/20221124060725_initial.cs
+                    { 1, new DateTime(2022, 11, 24, 11, 51, 42, 817, DateTimeKind.Local).AddTicks(8025), 1, "Avukatın Eklediği Kararlar" },
+                    { 2, new DateTime(2022, 11, 24, 11, 51, 42, 817, DateTimeKind.Local).AddTicks(8038), 2, "Yüksek Yargı Kararları" }
                 });
 
             migrationBuilder.InsertData(
@@ -449,15 +431,9 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-<<<<<<<< HEAD:Karartek.DataAccess/Migrations/20221124063743_initial.cs
-                    { 1, new DateTime(2022, 11, 24, 9, 37, 42, 176, DateTimeKind.Local).AddTicks(4483), 1, "Avukat-Avukat Stajyeri" },
-                    { 2, new DateTime(2022, 11, 24, 9, 37, 42, 176, DateTimeKind.Local).AddTicks(4510), 2, "Öğrenci" },
-                    { 3, new DateTime(2022, 11, 24, 9, 37, 42, 176, DateTimeKind.Local).AddTicks(4512), 3, "TBB Kullanıcısı" }
-========
-                    { 1, new DateTime(2022, 11, 24, 9, 7, 24, 676, DateTimeKind.Local).AddTicks(3830), 1, "Avukat-Avukat Stajyeri" },
-                    { 2, new DateTime(2022, 11, 24, 9, 7, 24, 676, DateTimeKind.Local).AddTicks(3890), 2, "Öğrenci" },
-                    { 3, new DateTime(2022, 11, 24, 9, 7, 24, 676, DateTimeKind.Local).AddTicks(3890), 3, "TBB Kullanıcısı" }
->>>>>>>> 98bd184ed712389ca2c0380aa459a3ce2bca75d2:Karartek.DataAccess/Migrations/20221124060725_initial.cs
+                    { 1, new DateTime(2022, 11, 24, 11, 51, 42, 817, DateTimeKind.Local).AddTicks(2952), 1, "Avukat-Avukat Stajyeri" },
+                    { 2, new DateTime(2022, 11, 24, 11, 51, 42, 817, DateTimeKind.Local).AddTicks(2966), 2, "Öğrenci" },
+                    { 3, new DateTime(2022, 11, 24, 11, 51, 42, 817, DateTimeKind.Local).AddTicks(2967), 3, "TBB Kullanıcısı" }
                 });
 
             migrationBuilder.InsertData(

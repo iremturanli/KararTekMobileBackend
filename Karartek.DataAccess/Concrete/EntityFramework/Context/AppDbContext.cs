@@ -25,9 +25,9 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // optionsBuilder.UseSqlServer(@"Server=(localdb)\KararTek;Encrypt=false;TrustServerCertificate=False;Integrated Security=true");
-           // optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=KararTek;Password=irem@123;Encrypt=false;TrustServerCertificate=False");
+            optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=KararTek;Password=irem@123;Encrypt=false;TrustServerCertificate=False");
 
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=KararTek;Trusted_Connection=true");
+            //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=KararTek;Trusted_Connection=true");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -38,6 +38,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<User>().Property(x => x.FirstName).HasMaxLength(100).IsRequired();
             modelBuilder.Entity<User>().Property(x => x.LastName).HasMaxLength(100).IsRequired();
             modelBuilder.Entity<User>().Property(x => x.IdentityNumber).HasMaxLength(11).IsRequired();
+            modelBuilder.Entity<User>().Property(x => x.PhoneNumber).IsRequired();
             modelBuilder.Entity<User>().Property(x => x.CreateDate).IsRequired();
             modelBuilder.Entity<User>().Property(x => x.PasswordHash).IsRequired();
             modelBuilder.Entity<User>().Property(x => x.PasswordSalt).IsRequired();
