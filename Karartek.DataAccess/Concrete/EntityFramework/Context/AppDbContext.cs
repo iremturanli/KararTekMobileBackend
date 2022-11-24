@@ -25,9 +25,9 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // optionsBuilder.UseSqlServer(@"Server=(localdb)\KararTek;Encrypt=false;TrustServerCertificate=False;Integrated Security=true");
-            optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=KararTek;Password=irem@123;Encrypt=false;TrustServerCertificate=False");
+            //optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=KararTek;Password=irem@123;Encrypt=false;TrustServerCertificate=False");
 
-            //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=KararTek;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=KararTek;Trusted_Connection=true");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,7 +45,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<User>().Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
             modelBuilder.Entity<User>().HasOne<UserType>(x => x.UserType).WithMany(x => x.Users).IsRequired().HasForeignKey(x => x.UserTypeId);
             modelBuilder.Entity<User>().HasOne<City>(x => x.City).WithMany(x => x.Users).IsRequired().HasForeignKey(x => x.CityId).OnDelete(DeleteBehavior.NoAction); ;
-            modelBuilder.Entity<User>().HasOne<District>(x => x.District).WithMany(x => x.Users).IsRequired().HasForeignKey(x => x.DistrictId).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<User>().HasOne<District>(x => x.District).WithMany(x => x.Users).HasForeignKey(x => x.DistrictId).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Student>().ToTable("Students");
             modelBuilder.Entity<Student>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
