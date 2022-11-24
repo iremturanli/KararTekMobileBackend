@@ -56,5 +56,13 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
             var user = context.Users.Where(x => x.Id == id).Include(x => x.UserType).Include(c => c.City).Include(d => d.District).SingleOrDefault();
             return user;
         }
+
+        public User GetUserByEmail(string email)
+        {
+            using var context = new AppDbContext();
+            var user = context.Users.Include(x => x.UserType).Include(c => c.City).ThenInclude(d => d.Districts).SingleOrDefault(x => x.Email == email);
+            return user;
+
+        }
     }
 }

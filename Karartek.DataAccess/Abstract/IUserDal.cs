@@ -5,6 +5,7 @@ namespace Karartek.DataAccess.Abstract
 {
     public interface IUserDal
     {
+        User GetUserByEmail(string email);
         User GetUserByIdentity(string identity);
         User GetUserById(int id);
         User Insert(User user);
