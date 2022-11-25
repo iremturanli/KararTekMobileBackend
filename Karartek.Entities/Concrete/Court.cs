@@ -5,7 +5,7 @@ namespace Karartek.Entities.Concrete
     {
         public Court()
         {
-            this.Commisions = new List<Commision>();
+            this.Judgments = new List<Judgment>();
         }
 
         public int Id { get; set; }

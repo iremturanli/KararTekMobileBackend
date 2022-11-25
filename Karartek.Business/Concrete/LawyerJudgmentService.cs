@@ -94,7 +94,10 @@ namespace Karartek.Business.Concrete
 
         }
 
-
+        public ResponseDto DeclineJudgment(int id, string comment)
+        {
+            throw new NotImplementedException();
+        }
 
         public bool DeleteDecree(int id)
         {
