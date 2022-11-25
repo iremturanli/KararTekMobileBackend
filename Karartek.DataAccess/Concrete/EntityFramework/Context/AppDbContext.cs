@@ -168,14 +168,14 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<Commision>().ToTable("Commisions");
             modelBuilder.Entity<Commision>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
             modelBuilder.Entity<Commision>().Property(x => x.Name).IsRequired();
-            modelBuilder.Entity<Commision>().HasData(CitySeeds.cities);//
+            modelBuilder.Entity<Commision>().HasData(CommisionSeeds.commisions);//
 
             modelBuilder.Entity<Court>().ToTable("Courts");
             modelBuilder.Entity<Court>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
             modelBuilder.Entity<Court>().Property(x => x.CommisionId).IsRequired();
             modelBuilder.Entity<Court>().Property(x => x.Name).IsRequired();
             modelBuilder.Entity<Court>().HasOne<Commision>(x => x.Commision).WithMany(x => x.Courts).IsRequired().HasForeignKey(x => x.CommisionId);
-            modelBuilder.Entity<Court>().HasData(DistrictSeeds.districts);//
+            modelBuilder.Entity<Court>().HasData(CourtSeeds.courts);//
 
 
 
