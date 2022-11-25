@@ -5,8 +5,8 @@ namespace Karartek.Entities.Concrete
     public class LawyerJudgment : BaseEntity
     {
 
-        public int CommisionId { get; set; } 
-        public int CourtId { get; set; } 
+        public int CommissionId { get; set; } 
+        public int? CourtId { get; set; } 
         public string Decree { get; set; } = null!;
         public string LawyerAssessment { get; set; } = null!;
         public string DecreeType { get; set; } = null!;
@@ -20,7 +20,7 @@ namespace Karartek.Entities.Concrete
         public int StateId { get; set; }
         public int Likes { get; set; }
         public User? User { get; set; } = null!;
-        public Commision? Commision { get; set; } = null!;
+        public Commission? Commision { get; set; } = null!;
         public Court? Court { get; set; }
         public LawyerJudgmentState? LawyerJudgmentState { get; set; } = null!;
         public virtual ICollection<JudgmentPool>? JudgmentPools { get; set; } = null!;

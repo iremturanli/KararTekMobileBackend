@@ -28,7 +28,7 @@ namespace Karartek.Business.Concrete
             };
             return result;
         }
-        public Commision GetCommisionById(int id)
+        public Commission GetCommisionById(int id)
         {
             return _commisionDal.Get(id);
         }

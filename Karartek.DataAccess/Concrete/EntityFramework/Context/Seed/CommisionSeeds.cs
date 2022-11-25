@@ -10,12 +10,12 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context.Seed
 {
     internal static class CommisionSeeds
     {
-        internal static readonly List<Commision> commisions = new List<Commision>()
+        internal static readonly List<Commission> commissions = new List<Commission>()
         {
-            new Commision(){ Id=0,Name="1. Ceza Dairesi"},
-            new Commision(){ Id=1,Name="10. Ceza Dairesi"},
-            new Commision(){ Id=2,Name="8. Hukuk Dairesi"},
-            new Commision(){ Id=3,Name="9. Ceza Dairesi"},
+            new Commission(){ Id=1,Name="1. Ceza Dairesi"},
+            new Commission(){ Id=2,Name="10. Ceza Dairesi"},
+            new Commission(){ Id=3,Name="8. Hukuk Dairesi"},
+            new Commission(){ Id=4,Name="9. Ceza Dairesi"}
         };
     }
 }
