@@ -2,11 +2,10 @@
 
 namespace Karartek.Entities.Dto
 {
-    public class UserTypeResponseDto
+    public class UserTypeResponseDto:BaseResponseDto
     {
 
-        public bool HasError { get; set; }
-        public string Message { get; set; }
+ 
         public List<UserType> UserTypes { get; set; } = null!;
 
     }

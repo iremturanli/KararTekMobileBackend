@@ -14,13 +14,12 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
         public DbSet<Lawyer> Lawyers { get; set; }
         public DbSet<LawyerJudgment> LawyerJudgments { get; set; }
         public DbSet<Student> Students { get; set; }
-
         public DbSet<City> Cities { get; set; }
         public DbSet<District> Districts { get; set; }
-
-
         public DbSet<SearchType> SearchTypes { get; set; }
         public DbSet<LawyerJudgmentState> LawyerJudgmentStates { get; set; }
+        public DbSet<Commision> Commisions { get; set; }
+        public DbSet<Court> Courts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -69,8 +68,8 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
 
             modelBuilder.Entity<Judgment>().ToTable("Judgments");
             modelBuilder.Entity<Judgment>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
-            modelBuilder.Entity<Judgment>().Property(x => x.CommisionName).HasMaxLength(100).IsRequired();
-            modelBuilder.Entity<Judgment>().Property(x => x.Court).HasMaxLength(100).IsRequired();
+            modelBuilder.Entity<Judgment>().Property(x => x.CommisionId) .IsRequired();
+            modelBuilder.Entity<Judgment>().Property(x => x.CourtId).IsRequired();
             modelBuilder.Entity<Judgment>().Property(x => x.Decree).HasMaxLength(9999999).IsRequired();
             modelBuilder.Entity<Judgment>().Property(x => x.DecreeType).HasMaxLength(100).IsRequired();
             modelBuilder.Entity<Judgment>().Property(x => x.MeritsYear).IsRequired();
@@ -82,12 +81,13 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<Judgment>().Property(x => x.CreateDate).IsRequired();
             modelBuilder.Entity<Judgment>().Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
             modelBuilder.Entity<Judgment>().HasOne<JudgmentType>(x => x.JudgmentType).WithMany(x => x.Judgments).IsRequired().HasForeignKey(x => x.JudgmentTypeId);
-
+            modelBuilder.Entity<Judgment>().HasOne<Commision>(x => x.Commision).WithMany(x => x.Judgments).IsRequired().HasForeignKey(x => x.CommisionId).OnDelete(DeleteBehavior.NoAction); ;
+            modelBuilder.Entity<Judgment>().HasOne<Court>(x => x.Court).WithMany(x => x.Judgments).HasForeignKey(x => x.CourtId).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<LawyerJudgment>().ToTable("LawyerJudgments");
             modelBuilder.Entity<LawyerJudgment>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
-            modelBuilder.Entity<LawyerJudgment>().Property(x => x.CommisionName).HasMaxLength(100).IsRequired();
-            modelBuilder.Entity<LawyerJudgment>().Property(x => x.Court).HasMaxLength(100).IsRequired();
+            modelBuilder.Entity<LawyerJudgment>().Property(x => x.CommisionId).IsRequired();
+            modelBuilder.Entity<LawyerJudgment>().Property(x => x.CourtId).IsRequired();
             modelBuilder.Entity<LawyerJudgment>().Property(x => x.Decree).HasMaxLength(9999999).IsRequired();
             modelBuilder.Entity<LawyerJudgment>().Property(x => x.LawyerAssessment).HasMaxLength(9999999).IsRequired();
             modelBuilder.Entity<LawyerJudgment>().Property(x => x.DecreeType).HasMaxLength(100).IsRequired();
@@ -156,6 +156,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<City>().Property(x => x.PlateCode).IsRequired();
             modelBuilder.Entity<City>().HasData(CitySeeds.cities);
 
+
             modelBuilder.Entity<District>().ToTable("Districts");
             modelBuilder.Entity<District>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
             modelBuilder.Entity<District>().Property(x => x.CityId).IsRequired();
@@ -163,6 +164,19 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<District>().Property(x => x.OrderIndex).IsRequired();
             modelBuilder.Entity<District>().HasOne<City>(x => x.City).WithMany(x => x.Districts).IsRequired().HasForeignKey(x => x.CityId);
             modelBuilder.Entity<District>().HasData(DistrictSeeds.districts);
+
+            modelBuilder.Entity<Commision>().ToTable("Commisions");
+            modelBuilder.Entity<Commision>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
+            modelBuilder.Entity<Commision>().Property(x => x.Name).IsRequired();
+            modelBuilder.Entity<Commision>().HasData(CitySeeds.cities);//
+
+            modelBuilder.Entity<Court>().ToTable("Courts");
+            modelBuilder.Entity<Court>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
+            modelBuilder.Entity<Court>().Property(x => x.CommisionId).IsRequired();
+            modelBuilder.Entity<Court>().Property(x => x.Name).IsRequired();
+            modelBuilder.Entity<Court>().HasOne<Commision>(x => x.Commision).WithMany(x => x.Courts).IsRequired().HasForeignKey(x => x.CommisionId);
+            modelBuilder.Entity<Court>().HasData(DistrictSeeds.districts);//
+
 
 
 

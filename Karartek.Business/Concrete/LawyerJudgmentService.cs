@@ -43,11 +43,7 @@ namespace Karartek.Business.Concrete
                     TBBComments = lawyerJudgmentDto.TBBComments,
                     CreateDate = DateTime.Now,
                     UserId = lawyerJudgmentDto.UserId,
-
-
-
-
-
+              
 
                 };
 
@@ -97,30 +93,6 @@ namespace Karartek.Business.Concrete
 
 
         }
-
-
-
-        public ResponseDto DeclineJudgment(int id, string comment)
-        {
-            ResponseDto response = new ResponseDto();
-            var judgment = _lawyerJudgmentDal.Get(p => p.Id == id);
-            if (judgment.StateId == (int)EJudgmentStates.OnayBekliyor)
-            {
-                judgment.StateId = (int)EJudgmentStates.Reddedildi;
-                judgment.TBBComments = comment;
-                _lawyerJudgmentDal.Update(judgment);
-
-
-
-            }
-            else
-
-                response.HasError = true;
-            response.Message = "Hatalı ";
-
-            return response;
-        }
-
 
 
 
