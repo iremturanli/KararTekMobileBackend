@@ -6,7 +6,7 @@ namespace Karartek.Business.Abstract
 {
     public interface ICommisionService
     {
-        Commision GetCommisionById(int id);
+        Commission GetCommisionById(int id);
         CommisionResponseDto GetCommision();
     }
 }

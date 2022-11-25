@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Karartek.Entities.Dto
 {
-    public class CommisionDto
+    public class CommissionDto
     {
         public int Id { get; set; }
         public int CommisionId { get; set; }

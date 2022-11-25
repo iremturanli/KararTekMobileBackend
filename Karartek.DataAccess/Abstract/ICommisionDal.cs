@@ -5,8 +5,8 @@ namespace Karartek.DataAccess.Abstract
 {
     public interface ICommisionDal
     {
-        Commision Get(int id);
-        List<Commision> GetAll();
+        Commission Get(int id);
+        List<Commission> GetAll();
     }
 }
 
