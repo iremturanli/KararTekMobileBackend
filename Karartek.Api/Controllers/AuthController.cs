@@ -27,8 +27,8 @@ namespace Karartek.Api.Controllers
                 return Ok(userToRegister);
 
             }
-
-            return Ok("Registeration Failed");
+            else
+            return BadRequest("Registeration Failed");
         }
         [HttpPost("login")]
         public ActionResult Login(UserForLogin userForLogin)
