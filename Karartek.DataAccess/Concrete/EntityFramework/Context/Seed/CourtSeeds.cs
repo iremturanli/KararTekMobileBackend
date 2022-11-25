@@ -11,7 +11,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context.Seed
     {
         internal static readonly List<Court> courts = new List<Court>()
         {
-            new Court() { Id = 0, CommisionId= 0 Name = "(BAKIRKÖY) DÖRDÜNCÜ AĞIR CEZA MAHKEMESİ" },
+            new Court() { Id = 0, CommisionId= 0, Name = "(BAKIRKÖY) DÖRDÜNCÜ AĞIR CEZA MAHKEMESİ" },
             new Court() { Id = 1, CommisionId=0, Name="(BAKIRKÖY) İKİNCİ AĞIR CEZA MAHKEMESİ" },
             new Court() { Id = 2, CommisionId=0,Name="(BAKIRKÖY) ONBİRİNCİ AĞIR CEZA MAHKEMESİ" },
             new Court() { Id = 3, CommisionId=1,Name="ÇOCUK AĞIR CEZA MAHKEMESİ"},
