@@ -24,9 +24,9 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // optionsBuilder.UseSqlServer(@"Server=(localdb)\KararTek;Encrypt=false;TrustServerCertificate=False;Integrated Security=true");
-            optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=KararTek;Password=irem@123;Encrypt=false;TrustServerCertificate=False");
+            //optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=KararTek;Password=irem@123;Encrypt=false;TrustServerCertificate=False");
 
-            //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=KararTek;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=KararTek1;Trusted_Connection=true");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -81,7 +81,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<Judgment>().Property(x => x.CreateDate).IsRequired();
             modelBuilder.Entity<Judgment>().Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
             modelBuilder.Entity<Judgment>().HasOne<JudgmentType>(x => x.JudgmentType).WithMany(x => x.Judgments).IsRequired().HasForeignKey(x => x.JudgmentTypeId);
-            modelBuilder.Entity<Judgment>().HasOne<Commission>(x => x.Commision).WithMany(x => x.Judgments).IsRequired().HasForeignKey(x => x.CommissionId).OnDelete(DeleteBehavior.NoAction); ;
+            modelBuilder.Entity<Judgment>().HasOne<Commission>(x => x.Commission).WithMany(x => x.Judgments).IsRequired().HasForeignKey(x => x.CommissionId).OnDelete(DeleteBehavior.NoAction); ;
             modelBuilder.Entity<Judgment>().HasOne<Court>(x => x.Court).WithMany(x => x.Judgments).HasForeignKey(x => x.CourtId).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<LawyerJudgment>().ToTable("LawyerJudgments");
@@ -102,7 +102,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<LawyerJudgment>().Property(x => x.Likes).IsRequired();
             modelBuilder.Entity<LawyerJudgment>().HasOne<LawyerJudgmentState>(x => x.LawyerJudgmentState).WithMany(x => x.LawyerJudgments).IsRequired().HasForeignKey(x => x.StateId);
             modelBuilder.Entity<LawyerJudgment>().HasOne<User>(x => x.User).WithMany(x => x.LawyerJudgments).IsRequired().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<LawyerJudgment>().HasOne<Commission>(x => x.Commision).WithMany(x => x.LawyerJudgments).IsRequired().HasForeignKey(x => x.CommissionId).OnDelete(DeleteBehavior.NoAction); ;
+            modelBuilder.Entity<LawyerJudgment>().HasOne<Commission>(x => x.Commission).WithMany(x => x.LawyerJudgments).IsRequired().HasForeignKey(x => x.CommissionId).OnDelete(DeleteBehavior.NoAction); ;
             modelBuilder.Entity<LawyerJudgment>().HasOne<Court>(x => x.Court).WithMany(x => x.LawyerJudgments).HasForeignKey(x => x.CourtId).OnDelete(DeleteBehavior.NoAction);
 
 

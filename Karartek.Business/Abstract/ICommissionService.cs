@@ -4,10 +4,10 @@ using Karartek.Entities.Dto;
 
 namespace Karartek.Business.Abstract
 {
-    public interface ICommisionService
+    public interface ICommissionService
     {
-        Commission GetCommisionById(int id);
-        CommisionResponseDto GetCommision();
+        Commission GetCommissionById(int id);
+        CommissionResponseDto GetCommission();
     }
 }
 

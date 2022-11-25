@@ -10,27 +10,27 @@ using System.Threading.Tasks;
 
 namespace Karartek.Business.Concrete
 {
-    public class CommisionService : ICommisionService
+    public class CommissionService : ICommissionService
     {
-        private ICommisionDal _commisionDal;
-        public CommisionService(ICommisionDal commisionDal)
+        private ICommissionDal _commissionDal;
+        public CommissionService(ICommissionDal commissionDal)
         {
-            _commisionDal = commisionDal;
+            _commissionDal = commissionDal;
         }
-        public CommisionResponseDto GetCommision()
+        public CommissionResponseDto GetCommission()
         {
-            var result = new CommisionResponseDto
+            var result = new CommissionResponseDto
             {
 
-                Commisions = _commisionDal.GetAll(),
+                Commissions = _commissionDal.GetAll(),
                 HasError = false,
                 Message = "Success"
             };
             return result;
         }
-        public Commission GetCommisionById(int id)
+        public Commission GetCommissionById(int id)
         {
-            return _commisionDal.Get(id);
+            return _commissionDal.Get(id);
         }
 
 

@@ -4,7 +4,7 @@ namespace Karartek.Entities.Dto
     public class JudgmentDto
     {
         public int JudgmentTypeId { get; set; }
-        public int CommisionId { get; set; } 
+        public int CommissionId { get; set; } 
         public int CourtId { get; set; } 
         public string Decree { get; set; } = null!;
         public string DecreeType { get; set; } = null!;

@@ -29,7 +29,7 @@ namespace Karartek.Business.Concrete
             {
                 judgment = new LawyerJudgment()
                 {
-                    CommisionId = lawyerJudgmentDto.CommisionId,
+                    CommissionId = lawyerJudgmentDto.CommissionId,
                     CourtId= lawyerJudgmentDto.CourtId,
                     Decree = lawyerJudgmentDto.Decree,
                     LawyerAssessment = lawyerJudgmentDto.LawyerAssessment,
@@ -116,7 +116,7 @@ namespace Karartek.Business.Concrete
                 var dto = new LawyerJudgmentDto()
                 {
                     Id = item.Id,
-                    CommisionId = item.CommisionId,
+                    CommissionId = item.CommissionId,
                     CourtId = item.CourtId,
                     Decision = item.Decision,
                     Decree = item.Decree,

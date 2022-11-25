@@ -40,7 +40,7 @@ namespace Karartek.Business.Concrete
             {
                 judgment = new Judgment()
                 {
-                    CommisionId = judgmentDto.CommisionId,
+                    CommissionId = judgmentDto.CommissionId,
                     CourtId = judgmentDto.CourtId,
                     Decree = judgmentDto.Decree,
                     DecreeType = judgmentDto.DecreeType,

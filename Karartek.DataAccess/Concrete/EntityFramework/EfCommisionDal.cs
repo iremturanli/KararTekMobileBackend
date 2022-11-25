@@ -6,13 +6,13 @@ using System.Linq.Expressions;
 
 namespace Karartek.DataAccess.Concrete.EntityFramework
 {
-    public class EfCommissionDal : ICommisionDal
+    public class EfCommissionDal : ICommissionDal
     {
         public Commission Get(int id)
         {
             using var context = new AppDbContext();
-            var commision = context.Commissions.SingleOrDefault(x => x.Id == id);
-            return commision;
+            var commission = context.Commissions.SingleOrDefault(x => x.Id == id);
+            return commission;
         }
 
         public List<Commission> GetAll()

@@ -29,7 +29,7 @@ namespace Karartek.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Commisions",
+                name: "Commissions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -40,7 +40,7 @@ namespace Karartek.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Commisions", x => x.Id);
+                    table.PrimaryKey("PK_Commissions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -143,9 +143,9 @@ namespace Karartek.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Courts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Courts_Commisions_CommissionId",
+                        name: "FK_Courts_Commissions_CommissionId",
                         column: x => x.CommissionId,
-                        principalTable: "Commisions",
+                        principalTable: "Commissions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -214,9 +214,9 @@ namespace Karartek.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Judgments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Judgments_Commisions_CommissionId",
+                        name: "FK_Judgments_Commissions_CommissionId",
                         column: x => x.CommissionId,
-                        principalTable: "Commisions",
+                        principalTable: "Commissions",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Judgments_Courts_CourtId",
@@ -258,9 +258,9 @@ namespace Karartek.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_LawyerJudgments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LawyerJudgments_Commisions_CommissionId",
+                        name: "FK_LawyerJudgments_Commissions_CommissionId",
                         column: x => x.CommissionId,
-                        principalTable: "Commisions",
+                        principalTable: "Commissions",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_LawyerJudgments_Courts_CourtId",
@@ -454,7 +454,7 @@ namespace Karartek.DataAccess.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Commisions",
+                table: "Commissions",
                 columns: new[] { "Id", "CreateDate", "IsDeleted", "Name" },
                 values: new object[,]
                 {
@@ -465,23 +465,13 @@ namespace Karartek.DataAccess.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Courts",
-                columns: new[] { "Id", "CommissionId", "CreateDate", "IsDeleted", "Name" },
-                values: new object[,]
-                {
-                    { 1, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "(BAKIRKÖY) DÖRDÜNCÜ AĞIR CEZA MAHKEMESİ" },
-                    { 2, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "(BAKIRKÖY) İKİNCİ AĞIR CEZA MAHKEMESİ" },
-                    { 3, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "(BAKIRKÖY) ONBİRİNCİ AĞIR CEZA MAHKEMESİ" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "JudgmentTypes",
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 25, 14, 40, 59, 66, DateTimeKind.Local).AddTicks(7660), 1, "Yargıtay" },
-                    { 2, new DateTime(2022, 11, 25, 14, 40, 59, 66, DateTimeKind.Local).AddTicks(7690), 2, "Danıştay" },
-                    { 3, new DateTime(2022, 11, 25, 14, 40, 59, 66, DateTimeKind.Local).AddTicks(7690), 3, "Anayasa Mahkemesi" }
+                    { 1, new DateTime(2022, 11, 25, 15, 8, 6, 637, DateTimeKind.Local).AddTicks(1030), 1, "Yargıtay" },
+                    { 2, new DateTime(2022, 11, 25, 15, 8, 6, 637, DateTimeKind.Local).AddTicks(1090), 2, "Danıştay" },
+                    { 3, new DateTime(2022, 11, 25, 15, 8, 6, 637, DateTimeKind.Local).AddTicks(1091), 3, "Anayasa Mahkemesi" }
                 });
 
             migrationBuilder.InsertData(
@@ -489,10 +479,10 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "StateId", "StateName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 25, 14, 40, 59, 54, DateTimeKind.Local).AddTicks(1140), 1, "Onaya Gönderildi" },
-                    { 2, new DateTime(2022, 11, 25, 14, 40, 59, 63, DateTimeKind.Local).AddTicks(2190), 2, "Onay Bekliyor" },
-                    { 3, new DateTime(2022, 11, 25, 14, 40, 59, 63, DateTimeKind.Local).AddTicks(2210), 3, "Reddedildi" },
-                    { 4, new DateTime(2022, 11, 25, 14, 40, 59, 63, DateTimeKind.Local).AddTicks(2220), 4, "Onaylandı" }
+                    { 1, new DateTime(2022, 11, 25, 15, 8, 6, 633, DateTimeKind.Local).AddTicks(5709), 1, "Onaya Gönderildi" },
+                    { 2, new DateTime(2022, 11, 25, 15, 8, 6, 634, DateTimeKind.Local).AddTicks(8576), 2, "Onay Bekliyor" },
+                    { 3, new DateTime(2022, 11, 25, 15, 8, 6, 634, DateTimeKind.Local).AddTicks(8584), 3, "Reddedildi" },
+                    { 4, new DateTime(2022, 11, 25, 15, 8, 6, 634, DateTimeKind.Local).AddTicks(8585), 4, "Onaylandı" }
                 });
 
             migrationBuilder.InsertData(
@@ -500,8 +490,8 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 25, 14, 40, 59, 66, DateTimeKind.Local).AddTicks(810), 1, "Avukatın Eklediği Kararlar" },
-                    { 2, new DateTime(2022, 11, 25, 14, 40, 59, 66, DateTimeKind.Local).AddTicks(910), 2, "Yüksek Yargı Kararları" }
+                    { 1, new DateTime(2022, 11, 25, 15, 8, 6, 636, DateTimeKind.Local).AddTicks(5781), 1, "Avukatın Eklediği Kararlar" },
+                    { 2, new DateTime(2022, 11, 25, 15, 8, 6, 636, DateTimeKind.Local).AddTicks(5795), 2, "Yüksek Yargı Kararları" }
                 });
 
             migrationBuilder.InsertData(
@@ -509,9 +499,9 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 25, 14, 40, 59, 65, DateTimeKind.Local).AddTicks(2020), 1, "Avukat-Avukat Stajyeri" },
-                    { 2, new DateTime(2022, 11, 25, 14, 40, 59, 65, DateTimeKind.Local).AddTicks(2060), 2, "Öğrenci" },
-                    { 3, new DateTime(2022, 11, 25, 14, 40, 59, 65, DateTimeKind.Local).AddTicks(2060), 3, "TBB Kullanıcısı" }
+                    { 1, new DateTime(2022, 11, 25, 15, 8, 6, 636, DateTimeKind.Local).AddTicks(651), 1, "Avukat-Avukat Stajyeri" },
+                    { 2, new DateTime(2022, 11, 25, 15, 8, 6, 636, DateTimeKind.Local).AddTicks(667), 2, "Öğrenci" },
+                    { 3, new DateTime(2022, 11, 25, 15, 8, 6, 636, DateTimeKind.Local).AddTicks(668), 3, "TBB Kullanıcısı" }
                 });
 
             migrationBuilder.InsertData(
@@ -519,12 +509,15 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CommissionId", "CreateDate", "IsDeleted", "Name" },
                 values: new object[,]
                 {
-                    { 4, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "ÇOCUK AĞIR CEZA MAHKEMESİ" },
-                    { 5, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "SULH CEZA MAHKEMESİ" },
-                    { 6, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "1- AKSEKİ ASLİYE CEZA MAHKEMESİ" },
-                    { 7, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "3. İCRA HUKUK MAHKEMESİ" },
-                    { 8, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "5. AİLE MAHKEMESİ" },
-                    { 9, 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "SULH CEZA MAHKEMESİ" }
+                    { 1, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "(BAKIRKÖY) DÖRDÜNCÜ AĞIR CEZA MAHKEMESİ" },
+                    { 2, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "(BAKIRKÖY) İKİNCİ AĞIR CEZA MAHKEMESİ" },
+                    { 3, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "(BAKIRKÖY) ONBİRİNCİ AĞIR CEZA MAHKEMESİ" },
+                    { 4, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "ÇOCUK AĞIR CEZA MAHKEMESİ" },
+                    { 5, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "SULH CEZA MAHKEMESİ" },
+                    { 6, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "1- AKSEKİ ASLİYE CEZA MAHKEMESİ" },
+                    { 7, 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "3. İCRA HUKUK MAHKEMESİ" },
+                    { 8, 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "5. AİLE MAHKEMESİ" },
+                    { 9, 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "SULH CEZA MAHKEMESİ" }
                 });
 
             migrationBuilder.InsertData(
@@ -1614,7 +1607,7 @@ namespace Karartek.DataAccess.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Commisions");
+                name: "Commissions");
 
             migrationBuilder.DropTable(
                 name: "Districts");

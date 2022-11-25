@@ -20,7 +20,7 @@ namespace Karartek.Entities.Concrete
         public int StateId { get; set; }
         public int Likes { get; set; }
         public User? User { get; set; } = null!;
-        public Commission? Commision { get; set; } = null!;
+        public Commission? Commission { get; set; } = null!;
         public Court? Court { get; set; }
         public LawyerJudgmentState? LawyerJudgmentState { get; set; } = null!;
         public virtual ICollection<JudgmentPool>? JudgmentPools { get; set; } = null!;

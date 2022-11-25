@@ -3,7 +3,7 @@ using Karartek.Entities.Concrete;
 
 namespace Karartek.DataAccess.Abstract
 {
-    public interface ICommisionDal
+    public interface ICommissionDal
     {
         Commission Get(int id);
         List<Commission> GetAll();
