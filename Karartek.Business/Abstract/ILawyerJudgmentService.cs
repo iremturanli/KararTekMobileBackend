@@ -11,7 +11,7 @@ namespace Karartek.Business.Abstract
         bool DeleteDecree(int id);
         ResponseDto Likes(int id);
         BaseResponseDto ApproveJudgment(JudgmentApprovalRequestDto judgmentApprovalRequestDto);
-        ResponseDto DeclineJudgment(int id, string comment);
+      
     }
 }
 

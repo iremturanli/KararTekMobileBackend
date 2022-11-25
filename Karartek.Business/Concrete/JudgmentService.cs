@@ -40,8 +40,8 @@ namespace Karartek.Business.Concrete
             {
                 judgment = new Judgment()
                 {
-                    CommisionName = judgmentDto.CommisionName,
-                    Court = judgmentDto.Court,
+                    CommisionId = judgmentDto.CommisionId,
+                    CourtId = judgmentDto.CourtId,
                     Decree = judgmentDto.Decree,
                     DecreeType = judgmentDto.DecreeType,
                     DecreeNo = judgmentDto.DecreeNo,
@@ -122,19 +122,20 @@ namespace Karartek.Business.Concrete
             }
 
         }
-            public List<Judgment> Filter(FilterDto filterDto)
+           /* public List<Judgment> Filter(FilterDto filterDto)
             {
-            return new List<Judgment>(_judgmentDal.GetAll().Where(x => (String.IsNullOrEmpty(filterDto.Decree)||x.Decree.ToLower().Contains(filterDto.Decree.ToLower()))&&(String.IsNullOrEmpty(filterDto.CommisionName)||x.CommisionName.ToLower().Contains(filterDto.CommisionName.ToLower()))&&));
-            }
-
-
-
-
-
-
-
-        }
-
+            return new List<Judgment>(_judgmentDal.GetAll().Where(x => (String.IsNullOrEmpty(filterDto.Decree)||x.Decree.ToLower().Contains(filterDto.Decree.ToLower()))&&(String.IsNullOrEmpty(filterDto.CommisionName)||x.CommisionName.ToLower().Contains(filterDto.CommisionName.ToLower()))));
+            */
     }
+
+
+
+
+
+
+
+       
+
+    
 }
 

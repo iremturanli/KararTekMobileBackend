@@ -6,8 +6,8 @@ namespace Karartek.Entities.Concrete
     public class Judgment : BaseEntity
     {
         public int JudgmentTypeId { get; set; }
-        public string CommisionId{ get; set; } = null!;
-        public string CourtId { get; set; } = null!;
+        public int CommisionId{ get; set; } 
+        public int CourtId { get; set; } 
         public string Decree { get; set; } = null!;
         public string DecreeType { get; set; } = null!;
         public string MeritsYear { get; set; } = null!;
