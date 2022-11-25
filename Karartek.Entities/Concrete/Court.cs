@@ -12,7 +12,7 @@ namespace Karartek.Entities.Concrete
         public int CommisionId { get; set; }
         public string Name { get; set; }
 
-        public Commision Commision { get; set; }
+        public Commision Commision{ get; set; }
 
         public IEnumerable<Judgment> Judgments { get; set; }
         public IEnumerable<LawyerJudgment> LawyerJudgments { get; set; }

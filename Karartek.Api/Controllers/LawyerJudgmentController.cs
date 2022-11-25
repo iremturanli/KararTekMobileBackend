@@ -72,22 +72,7 @@ namespace Karartek.Api.Controllers
 
 
 
-        [HttpPost("Decline")]
-        public ActionResult DeclineJudgment(LawyerJudgmentDto lawyerJudgmentDto)
-        {
-
-            var judgmentToAdd = _lawyerJudgmentService.DeclineJudgment(lawyerJudgmentDto.Id, lawyerJudgmentDto.TBBComments);
-            if (judgmentToAdd is not null)
-            {
-                return Ok(judgmentToAdd);
-
-            }
-            else
-
-            { return BadRequest("Hata"); }
-
-        }
-
+ 
 
 
 
