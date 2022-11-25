@@ -31,6 +31,13 @@ namespace Karartek.Business.Concrete
             var user = _userDal.GetUserById(id);
             UserResponseDto userResponseDto = new UserResponseDto();
             userResponseDto.Id = user.Id;
+            userResponseDto.IdentityNumber = user.IdentityNumber;
+            userResponseDto.FirstName = user.FirstName;
+            userResponseDto.LastName = user.LastName;
+            userResponseDto.PhoneNumber = user.PhoneNumber;
+            userResponseDto.BarRegisterNo = user.Lawyer.BarRegisterNo;
+            userResponseDto.University = user.Student.University;
+            userResponseDto.UserTypeId = user.UserTypeId;
             userResponseDto.CityId = user.CityId;
             userResponseDto.DistrictId = user.DistrictId;
             userResponseDto.DistrictName = user.District.Name;

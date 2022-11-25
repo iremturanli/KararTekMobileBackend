@@ -3,8 +3,8 @@
     public class LawyerJudgmentDto
     {
         public int Id { get; set; }
-        public string CommisionName { get; set; } = null!;
-        public string Court { get; set; } = null!;
+        public int CommisionId { get; set; } 
+        public int CourtId { get; set; } 
         public string Decree { get; set; } = null!;
         public string LawyerAssessment { get; set; } = null!;
         public string DecreeType { get; set; } = null!;

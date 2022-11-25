@@ -14,10 +14,10 @@ using System.Threading.Tasks;
 namespace Karartek.Business.Concrete
 
 {
-    
+
 
     public class JudgmentService : IJudgmentService
-        
+
     {
         private readonly IJudgmentDal _judgmentDal;
 
@@ -27,13 +27,13 @@ namespace Karartek.Business.Concrete
         }
 
         public bool AddJudgment(JudgmentDto judgmentDto)
-            
+
         {
             var judgment = _judgmentDal.GetJudgmentByDecreeNo(judgmentDto.DecreeNo, judgmentDto.DecreeYear);
 
             if (judgment is not null)
             {
-             
+
                 return false;
             }
             else
@@ -48,12 +48,12 @@ namespace Karartek.Business.Concrete
                     DecreeYear = judgmentDto.DecreeYear,
                     MeritsNo = judgmentDto.MeritsNo,
                     MeritsYear = judgmentDto.MeritsYear,
-                    JudgmentTypeId=judgmentDto.JudgmentTypeId,
-                    Decision=judgmentDto.Decision
-                                    
+                    JudgmentTypeId = judgmentDto.JudgmentTypeId,
+                    Decision = judgmentDto.Decision
+
                 };
-                
-                
+
+
             }
             var result = _judgmentDal.Insert(judgment);
             if (result != null)
@@ -79,7 +79,7 @@ namespace Karartek.Business.Concrete
         public List<Judgment> GetbyKeyword(string keyword)
         {
             var result = _judgmentDal.GetAll(p => p.Decree.Contains(keyword));
-            Console.WriteLine(  result);
+            Console.WriteLine(result);
             return result;
         }
         public List<Judgment> GetYargıtayJudgments()
@@ -99,18 +99,18 @@ namespace Karartek.Business.Concrete
         public ResponseDto Likes(int id)
         {
             ResponseDto response = new ResponseDto();
-            var judgmentToLike = _judgmentDal.Get(p=>p.Id==id);
-            if(judgmentToLike!=null)
+            var judgmentToLike = _judgmentDal.Get(p => p.Id == id);
+            if (judgmentToLike != null)
             {
-               judgmentToLike.Likes++;
+                judgmentToLike.Likes++;
                 _judgmentDal.Update(judgmentToLike);
                 Console.WriteLine(judgmentToLike.Likes);
 
                 response.HasError = false;
                 response.Message = judgmentToLike.Likes + "Beğeni "; //mantıksız
-                
+
                 return response;
-             
+
 
             }
             else
@@ -120,7 +120,15 @@ namespace Karartek.Business.Concrete
                 return response;
 
             }
-       
+
+        }
+            public List<Judgment> Filter(FilterDto filterDto)
+            {
+            return new List<Judgment>(_judgmentDal.GetAll().Where(x => (String.IsNullOrEmpty(filterDto.Decree)||x.Decree.ToLower().Contains(filterDto.Decree.ToLower()))&&(String.IsNullOrEmpty(filterDto.CommisionName)||x.CommisionName.ToLower().Contains(filterDto.CommisionName.ToLower()))&&));
+            }
+
+
+
 
 
 
@@ -130,4 +138,3 @@ namespace Karartek.Business.Concrete
     }
 }
 
- 
