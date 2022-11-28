@@ -82,20 +82,37 @@ namespace Karartek.Business.Concrete
             Console.WriteLine(result);
             return result;
         }
-        public List<Judgment> GetYargıtayJudgments()
+
+        public List<Judgment> GetJudgmentsByType(string keyword,JudgmentDto judgmentDto)
         {
-            return new List<Judgment>(_judgmentDal.GetAll(p => p.JudgmentTypeId == 1));
+            if (judgmentDto.JudgmentTypeId==1)
+            {
+                return new List<Judgment>(_judgmentDal.GetAll(p => p.JudgmentTypeId == 1 && p.Decree.Contains(keyword) && p.Decision.Contains(keyword)));
+            }
+
+            else if(judgmentDto.JudgmentTypeId==2)
+            {
+                return new List<Judgment>(_judgmentDal.GetAll(p => p.JudgmentTypeId == 2 && p.Decree.Contains(keyword) && p.Decision.Contains(keyword)));
+
+            }
+            else
+            {
+                return new List<Judgment>(_judgmentDal.GetAll(p => p.JudgmentTypeId == 3 && p.Decree.Contains(keyword) && p.Decision.Contains(keyword)));
+            }
+
         }
 
-        public List<Judgment> GetDanistayJudgments()
-        {
-            return new List<Judgment>(_judgmentDal.GetAll(p => p.JudgmentTypeId == 2));
-        }
-        public List<Judgment> GetAnayasaMahkemeJudgments()
-        {
-            return new List<Judgment>(_judgmentDal.GetAll(p => p.JudgmentTypeId == 3));
-        }
+          
 
+      /*  public List<Judgment> GetDanistayJudgments(string keyword)
+        {
+            return new List<Judgment>(_judgmentDal.GetAll(p => p.JudgmentTypeId == 2 && p.Decree.Contains(keyword)&& p.Decision.Contains(keyword)));
+        }
+        public List<Judgment> GetAnayasaMahkemeJudgments(string keyword)
+        {
+            return new List<Judgment>(_judgmentDal.GetAll(p => p.JudgmentTypeId == 3&& p.Decree.Contains(keyword) && p.Decision.Contains(keyword)));
+        }
+      */
         public ResponseDto Likes(int id)
         {
             ResponseDto response = new ResponseDto();
@@ -122,10 +139,12 @@ namespace Karartek.Business.Concrete
             }
 
         }
-           /* public List<Judgment> Filter(FilterDto filterDto)
-            {
-            return new List<Judgment>(_judgmentDal.GetAll().Where(x => (String.IsNullOrEmpty(filterDto.Decree)||x.Decree.ToLower().Contains(filterDto.Decree.ToLower()))&&(String.IsNullOrEmpty(filterDto.CommisionName)||x.CommisionName.ToLower().Contains(filterDto.CommisionName.ToLower()))));
-            */
+
+    
+        /* public List<Judgment> Filter(FilterDto filterDto)
+{
+return new List<Judgment>(_judgmentDal.GetAll().Where(x => (String.IsNullOrEmpty(filterDto.Decree)||x.Decree.ToLower().Contains(filterDto.Decree.ToLower()))&&(String.IsNullOrEmpty(filterDto.CommisionName)||x.CommisionName.ToLower().Contains(filterDto.CommisionName.ToLower()))));
+*/
     }
 
 

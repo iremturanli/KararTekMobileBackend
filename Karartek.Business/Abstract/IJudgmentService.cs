@@ -14,9 +14,10 @@ namespace Karartek.Business.Abstract
  
         bool AddJudgment(JudgmentDto judgmentDto);
         List<Judgment> GetAll();
-        public List<Judgment> GetYargıtayJudgments();
-        public List<Judgment> GetDanistayJudgments();
-        public List<Judgment> GetAnayasaMahkemeJudgments();
+        //public List<Judgment> GetYargıtayJudgments(string keyword);
+        //public List<Judgment> GetDanistayJudgments(string keyword);
+        //public List<Judgment> GetAnayasaMahkemeJudgments(string keyword);
+        public List<Judgment> GetJudgmentsByType(string keyword, JudgmentDto judgmentDto);
         List<Judgment> GetbyKeyword(string keyword);
         bool DeleteDecree(int id);
         ResponseDto Likes(int id);

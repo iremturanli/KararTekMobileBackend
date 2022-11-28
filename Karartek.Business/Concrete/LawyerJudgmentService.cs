@@ -41,6 +41,7 @@ namespace Karartek.Business.Concrete
                     StateId = (int)EJudgmentStates.OnayBekliyor,
                     Decision = lawyerJudgmentDto.Decision,
                     TBBComments = lawyerJudgmentDto.TBBComments,
+                    JudgmentDate=lawyerJudgmentDto.JudgmentDate,//?
                     CreateDate = DateTime.Now,
                     UserId = lawyerJudgmentDto.UserId,
               
