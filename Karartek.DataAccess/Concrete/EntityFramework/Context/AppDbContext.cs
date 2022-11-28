@@ -78,6 +78,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<Judgment>().Property(x => x.DecreeNo).IsRequired();
             modelBuilder.Entity<Judgment>().Property(x => x.Decision).IsRequired();
             modelBuilder.Entity<Judgment>().Property(x => x.Likes).IsRequired();
+            modelBuilder.Entity<Judgment>().Property(x => x.JudgmentDate).IsRequired();
             modelBuilder.Entity<Judgment>().Property(x => x.CreateDate).IsRequired();
             modelBuilder.Entity<Judgment>().Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
             modelBuilder.Entity<Judgment>().HasOne<JudgmentType>(x => x.JudgmentType).WithMany(x => x.Judgments).IsRequired().HasForeignKey(x => x.JudgmentTypeId);
@@ -100,6 +101,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<LawyerJudgment>().Property(x => x.TBBComments).HasMaxLength(99999);
             modelBuilder.Entity<LawyerJudgment>().Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
             modelBuilder.Entity<LawyerJudgment>().Property(x => x.Likes).IsRequired();
+            modelBuilder.Entity<LawyerJudgment>().Property(x => x.JudgmentDate).IsRequired();//??
             modelBuilder.Entity<LawyerJudgment>().HasOne<LawyerJudgmentState>(x => x.LawyerJudgmentState).WithMany(x => x.LawyerJudgments).IsRequired().HasForeignKey(x => x.StateId);
             modelBuilder.Entity<LawyerJudgment>().HasOne<User>(x => x.User).WithMany(x => x.LawyerJudgments).IsRequired().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<LawyerJudgment>().HasOne<Commission>(x => x.Commission).WithMany(x => x.LawyerJudgments).IsRequired().HasForeignKey(x => x.CommissionId).OnDelete(DeleteBehavior.NoAction); ;

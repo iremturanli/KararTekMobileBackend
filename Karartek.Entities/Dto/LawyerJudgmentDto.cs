@@ -17,6 +17,7 @@
         public int UserId { get; set; }
         public int StateId { get; set; }
         public int Likes { get; set; }
+        public DateTime JudgmentDate { get; set; }
     }
 }
 

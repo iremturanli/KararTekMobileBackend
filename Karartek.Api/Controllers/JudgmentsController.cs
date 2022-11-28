@@ -2,6 +2,7 @@
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace Karartek.Api.Controllers
 {
@@ -43,31 +44,24 @@ namespace Karartek.Api.Controllers
 
 
         }
-        [HttpGet("YargitayJudgments")]
-        public List<Judgment> GetYargitayJudgments()
+
+
+        [HttpGet("GetJudgmentByType")]
+
+        public List<Judgment> GetAll(string keyword, JudgmentDto judgmentDto)
+
+
         {
-            var judgments = _judgmentService.GetYargıtayJudgments();
+            var judgments = _judgmentService.GetJudgmentsByType(keyword, judgmentDto);
             return judgments;
+
 
 
         }
 
-        [HttpGet("DanistayJudgments")]
-        public List<Judgment> GetDanistayJudgments()
-        {
-            var judgments = _judgmentService.GetDanistayJudgments();
-            return judgments;
 
 
-        }
-        [HttpGet("AnayasaMahkemeJudgments")]
-        public List<Judgment> GetAnayasaMahkemeJudgments()
-        {
-            var judgments = _judgmentService.GetAnayasaMahkemeJudgments();
-            return judgments;
 
-
-        }
 
         [HttpGet("GetByKeyword/{{keyword}}")]
         public List<Judgment> GetbyKeyword(string keyword)

@@ -3,14 +3,14 @@ using Karartek.Core.Entities;
 
 namespace Karartek.Entities.Concrete
 {
-    public class Court:BaseEntity
+    public class Court
     {
         public Court()
         {
             this.Judgments = new List<Judgment>();
         }
 
- 
+        public int Id { get; set; }
         public int CommissionId { get; set; }
         public string Name { get; set; }
 
