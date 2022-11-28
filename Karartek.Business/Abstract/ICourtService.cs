@@ -7,7 +7,7 @@ namespace Karartek.Business.Abstract
     public interface ICourtService
     {
         Court GetCourtById(int id);
-        CourtResponseDto GetCourt();
+        CourtResponseDto GetCourt(CommissionDto commissionDto);
     }
 }
 

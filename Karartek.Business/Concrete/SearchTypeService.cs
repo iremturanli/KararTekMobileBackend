@@ -16,7 +16,7 @@ namespace Karartek.Business.Concrete
         }
 
 
-        public bool AddSearchType(SearchType searchType)
+        public bool AddSearchType(SearchTypeDto searchType)
         {
             var searchTypeEntity = new SearchType
             {

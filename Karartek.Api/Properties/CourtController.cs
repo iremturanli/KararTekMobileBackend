@@ -1,4 +1,4 @@
-using Karartek.Business.Abstract;
+ using Karartek.Business.Abstract;
 using Karartek.Business.Concrete;
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
@@ -20,9 +20,9 @@ namespace Karartek.Api.Properties
         }
 
         [HttpGet("GetAll")]
-        public CourtResponseDto GetAll()
+        public CourtResponseDto GetAll([FromRoute] CommissionDto commissionDto)
         {
-            var courtToSearch = _courtService.GetCourt();
+            var courtToSearch = _courtService.GetCourt(commissionDto);
             return courtToSearch;
         }
 

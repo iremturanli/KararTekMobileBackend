@@ -1,6 +1,9 @@
 ﻿using Karartek.DataAccess.Abstract;
 using Karartek.DataAccess.Concrete.EntityFramework.Context;
 using Karartek.Entities.Concrete;
+using Karartek.Entities.Dto;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
 
 
@@ -15,10 +18,11 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
             return court;
         }
 
-        public List<Court> GetAll()
+        public List<Court> GetAll(CommissionDto commissionDto)
         {
             using var context = new AppDbContext();
-            return context.Courts.ToList();
+            var courtList= context.Courts.Include(x => x.CommissionId==commissionDto.Id);
+            return courtList.ToList();
         }
     }
 }

@@ -41,6 +41,8 @@ builder.Services.AddSingleton<ICityService,CityService>();
 builder.Services.AddSingleton<ICityDal,EfCityDal>();
 builder.Services.AddSingleton<ICommissionService, CommissionService>();
 builder.Services.AddSingleton<ICommissionDal, EfCommissionDal>();
+builder.Services.AddSingleton<ICourtService, CourtService>();
+builder.Services.AddSingleton<ICourtDal, EfCourtDal>();
 
 
 
