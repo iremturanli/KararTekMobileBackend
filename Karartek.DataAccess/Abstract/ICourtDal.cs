@@ -7,7 +7,7 @@ namespace Karartek.DataAccess.Abstract
     public interface ICourtDal
     {
         Court Get(int id);
-        List<Court> GetAll(CommissionDto commissionDto);
+        List<Court> GetAll(int id);
         
 
         

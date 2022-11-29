@@ -17,13 +17,13 @@ namespace Karartek.Business.Concrete
         {
             _courtDal = courtDal;
         }
-        public CourtResponseDto GetCourt(CommissionDto commissionDto)
+        public CourtResponseDto GetCourt(int id)
         {
 
             var result = new CourtResponseDto
             {
 
-                Courts = _courtDal.GetAll(commissionDto),
+                Courts = _courtDal.GetAll(id),
                 HasError = false,
                 Message = "Success"
             };

@@ -5,7 +5,7 @@ using Karartek.Entities.Dto;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Expressions;
-
+using System.Security.Cryptography.X509Certificates;
 
 namespace Karartek.DataAccess.Concrete.EntityFramework
 {
@@ -18,10 +18,10 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
             return court;
         }
 
-        public List<Court> GetAll(CommissionDto commissionDto)
+        public List<Court> GetAll(int id)
         {
             using var context = new AppDbContext();
-            var courtList= context.Courts.Include(x => x.CommissionId==commissionDto.Id);
+            var courtList= context.Courts.Where(x => x.CommissionId == id);
             return courtList.ToList();
         }
     }
