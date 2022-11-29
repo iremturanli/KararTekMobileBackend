@@ -29,4 +29,7 @@
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer.Design" />
     <None Remove="Migrations\" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
 </Project>

@@ -94,7 +94,7 @@ namespace Karartek.Business.Concrete
             var listDto = new List<JudgmentResponseListDto>();
         
             foreach (var item in result){
-            
+
                 var dto = new JudgmentResponseListDto()
                 {
                     CommissionName = item.Commission.Name,
