@@ -467,9 +467,9 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 29, 11, 11, 15, 364, DateTimeKind.Local).AddTicks(9562), 1, "Yargıtay" },
-                    { 2, new DateTime(2022, 11, 29, 11, 11, 15, 364, DateTimeKind.Local).AddTicks(9583), 2, "Danıştay" },
-                    { 3, new DateTime(2022, 11, 29, 11, 11, 15, 364, DateTimeKind.Local).AddTicks(9584), 3, "Anayasa Mahkemesi" }
+                    { 1, new DateTime(2022, 11, 29, 12, 6, 28, 994, DateTimeKind.Local).AddTicks(5450), 1, "Yargıtay" },
+                    { 2, new DateTime(2022, 11, 29, 12, 6, 28, 994, DateTimeKind.Local).AddTicks(5530), 2, "Danıştay" },
+                    { 3, new DateTime(2022, 11, 29, 12, 6, 28, 994, DateTimeKind.Local).AddTicks(5540), 3, "Anayasa Mahkemesi" }
                 });
 
             migrationBuilder.InsertData(
@@ -477,10 +477,10 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "StateId", "StateName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 29, 11, 11, 15, 359, DateTimeKind.Local).AddTicks(458), 1, "Onaya Gönderildi" },
-                    { 2, new DateTime(2022, 11, 29, 11, 11, 15, 360, DateTimeKind.Local).AddTicks(9646), 2, "Onay Bekliyor" },
-                    { 3, new DateTime(2022, 11, 29, 11, 11, 15, 360, DateTimeKind.Local).AddTicks(9657), 3, "Reddedildi" },
-                    { 4, new DateTime(2022, 11, 29, 11, 11, 15, 360, DateTimeKind.Local).AddTicks(9659), 4, "Onaylandı" }
+                    { 1, new DateTime(2022, 11, 29, 12, 6, 28, 978, DateTimeKind.Local).AddTicks(9440), 1, "Onaya Gönderildi" },
+                    { 2, new DateTime(2022, 11, 29, 12, 6, 28, 989, DateTimeKind.Local).AddTicks(1600), 2, "Onay Bekliyor" },
+                    { 3, new DateTime(2022, 11, 29, 12, 6, 28, 989, DateTimeKind.Local).AddTicks(1630), 3, "Reddedildi" },
+                    { 4, new DateTime(2022, 11, 29, 12, 6, 28, 989, DateTimeKind.Local).AddTicks(1630), 4, "Onaylandı" }
                 });
 
             migrationBuilder.InsertData(
@@ -488,8 +488,8 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 29, 11, 11, 15, 364, DateTimeKind.Local).AddTicks(1675), 1, "Avukatın Eklediği Kararlar" },
-                    { 2, new DateTime(2022, 11, 29, 11, 11, 15, 364, DateTimeKind.Local).AddTicks(1688), 2, "Yüksek Yargı Kararları" }
+                    { 1, new DateTime(2022, 11, 29, 12, 6, 28, 993, DateTimeKind.Local).AddTicks(3930), 1, "Avukatın Eklediği Kararlar" },
+                    { 2, new DateTime(2022, 11, 29, 12, 6, 28, 993, DateTimeKind.Local).AddTicks(3980), 2, "Yüksek Yargı Kararları" }
                 });
 
             migrationBuilder.InsertData(
@@ -497,9 +497,9 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 29, 11, 11, 15, 363, DateTimeKind.Local).AddTicks(4513), 1, "Avukat-Avukat Stajyeri" },
-                    { 2, new DateTime(2022, 11, 29, 11, 11, 15, 363, DateTimeKind.Local).AddTicks(4566), 2, "Öğrenci" },
-                    { 3, new DateTime(2022, 11, 29, 11, 11, 15, 363, DateTimeKind.Local).AddTicks(4567), 3, "TBB Kullanıcısı" }
+                    { 1, new DateTime(2022, 11, 29, 12, 6, 28, 992, DateTimeKind.Local).AddTicks(2930), 1, "Avukat-Avukat Stajyeri" },
+                    { 2, new DateTime(2022, 11, 29, 12, 6, 28, 992, DateTimeKind.Local).AddTicks(3010), 2, "Öğrenci" },
+                    { 3, new DateTime(2022, 11, 29, 12, 6, 28, 992, DateTimeKind.Local).AddTicks(3010), 3, "TBB Kullanıcısı" }
                 });
 
             migrationBuilder.InsertData(
