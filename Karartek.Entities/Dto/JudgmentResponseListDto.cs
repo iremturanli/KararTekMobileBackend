@@ -23,7 +23,7 @@ namespace Karartek.Entities.Dto
         public string CommissionName { get; set; } = null!;
         public string? CourtName { get; set; }
         public string JudgmentTypeName { get; set; } = null!;
-            public DateTime CreateDate { get; set; }
+   
 
     }
 }
