@@ -3,7 +3,6 @@ using Karartek.Business.Abstract;
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
-using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace Karartek.Api.Controllers
 {
@@ -81,7 +80,7 @@ namespace Karartek.Api.Controllers
 
 
         }
-        [HttpGet("JudgmentsToLike{{id}}")]
+        [HttpGet("JudgmentsToLike/{id}")]
         public bool JudgmentsToLike(int id)
         {
             _judgmentService.Likes(id);
