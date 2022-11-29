@@ -18,7 +18,7 @@ namespace Karartek.Business.Abstract
         IDataResult <List<JudgmentResponseListDto>> GetJudgmentsByType(FilterDto filterDto);
         List<Judgment> GetbyKeyword(string keyword);
         bool DeleteDecree(int id);
-        ResponseDto Likes(int id);
+        IResult Likes(int id);
 
     }
 }

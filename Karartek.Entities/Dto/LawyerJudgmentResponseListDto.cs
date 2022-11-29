@@ -1,13 +1,9 @@
 ﻿using System;
-using Karartek.Entities.Concrete;
-
 namespace Karartek.Entities.Dto
 {
-    public class JudgmentResponseListDto
+    public class LawyerJudgmentResponseListDto
     {
-        
         public int Id { get; set; }
-        public int JudgmentTypeId { get; set; }
         public int CommissionId { get; set; }
         public int? CourtId { get; set; }
         public string Decree { get; set; } = null!;
@@ -17,13 +13,17 @@ namespace Karartek.Entities.Dto
         public string DecreeYear { get; set; } = null!;
         public string DecreeNo { get; set; } = null!;
         public string Decision { get; set; } = null!;
-        public int Likes { get; set; }
+        public string TBBComments { get; set; } = null!;
+        public int Likes { get; set; } //avukat ismi olacak mı
         public DateTime JudgmentDate { get; set; }
         public DateTime CreateDate { get; set; } = DateTime.Now;
         public string CommissionName { get; set; } = null!;
         public string? CourtName { get; set; }
-        public string JudgmentTypeName { get; set; } = null!;
-   
+        public int? UserId { get; set; }
+        public string? StateName { get; set; }
+        public string? UserName { get; set; }
+        public string? LastName { get; set; }
+
 
     }
 }

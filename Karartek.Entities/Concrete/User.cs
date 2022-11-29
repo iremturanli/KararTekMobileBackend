@@ -17,7 +17,6 @@ namespace Karartek.Entities.Concrete
         public Student? Student;
         public Lawyer? Lawyer;
         public UserType? UserType { get; set; } = null!;
-
         public City? City { get; set; } = null!;
         public District? District { get; set; }
         public virtual ICollection<JudgmentPool>? JudgmentPools { get; set; } = null!;

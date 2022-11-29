@@ -2,12 +2,14 @@
 using Karartek.Business.Abstract;
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Karartek.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
 
     public class JudgmentsController : ControllerBase
     {
@@ -60,9 +62,6 @@ namespace Karartek.Api.Controllers
         }
 
 
-
-
-
         [HttpGet("GetByKeyword/{{keyword}}")]
         public List<Judgment> GetbyKeyword(string keyword)
         {
@@ -81,11 +80,16 @@ namespace Karartek.Api.Controllers
 
         }
         [HttpGet("JudgmentsToLike/{id}")]
-        public bool JudgmentsToLike(int id)
+        public ActionResult JudgmentsToLike(int id)
         {
-            _judgmentService.Likes(id);
-            return true;
-
+            var result=_judgmentService.Likes(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else {
+                return Ok(result);
+                    }
 
         }
 

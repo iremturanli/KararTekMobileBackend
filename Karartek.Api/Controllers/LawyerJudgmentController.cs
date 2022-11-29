@@ -1,4 +1,6 @@
+using Core.Utilities.Results;
 using Karartek.Business.Abstract;
+using Karartek.Business.Concrete;
 using Karartek.Entities.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -71,8 +73,38 @@ namespace Karartek.Api.Controllers
         }
 
 
+        [HttpGet("GetLawyerJudgmentByUserId")]
 
- 
+        public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentByUserId()
+
+
+        {
+            var UserId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var judgments = _lawyerJudgmentService.GetLawyerJudgmentsByUserId(UserId);
+            return judgments;
+
+
+
+        }
+
+        [HttpGet("GetAllLawyerJudgments")]
+
+        public IDataResult<List<LawyerJudgmentResponseListDto>> GetAllLawyerJudgments()
+
+
+        {
+            var judgments = _lawyerJudgmentService.GetAllLawyerJudgments();
+            return judgments;
+
+
+
+        }
+
+
+
+
+
+
 
 
 
