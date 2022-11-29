@@ -16,13 +16,13 @@ namespace Karartek.Business.Concrete
         }
 
 
-        public bool AddSearchType(SearchTypeDto searchType)
+        public bool AddSearchType(SearchTypeDto searchTypeDto)
         {
             var searchTypeEntity = new SearchType
             {
-                TypeName = searchType.TypeName,
+                TypeName = searchTypeDto.TypeName,
                 CreateDate = DateTime.Now,
-                TypeId = searchType.TypeId,
+                TypeId = searchTypeDto.TypeId,
 
             };
             return _searchTypeDal.AddSearchType(searchTypeEntity);
