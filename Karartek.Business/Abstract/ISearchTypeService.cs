@@ -6,7 +6,7 @@ namespace Karartek.Business.Abstract
 {
     public interface ISearchTypeService
     {
-        bool AddSearchType(SearchType searchType);
+        bool AddSearchType(SearchTypeDto searchTypeDto);
         bool DeleteSearchType(SearchType searchType);
         SearchType GetSearchTypeById(int id);
         bool UpdateSearchType(SearchType searchType);

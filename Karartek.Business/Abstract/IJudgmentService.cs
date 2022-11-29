@@ -1,4 +1,5 @@
-﻿using Karartek.Entities.Concrete;
+﻿using Core.Utilities.Results;
+using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,7 @@ namespace Karartek.Business.Abstract
  
         bool AddJudgment(JudgmentDto judgmentDto);
         List<Judgment> GetAll();
-        //public List<Judgment> GetYargıtayJudgments(string keyword);
-        //public List<Judgment> GetDanistayJudgments(string keyword);
-        //public List<Judgment> GetAnayasaMahkemeJudgments(string keyword);
-        public List<Judgment> GetJudgmentsByType(string keyword, JudgmentDto judgmentDto);
+        IDataResult <List<JudgmentResponseListDto>> GetJudgmentsByType(FilterDto filterDto);
         List<Judgment> GetbyKeyword(string keyword);
         bool DeleteDecree(int id);
         ResponseDto Likes(int id);

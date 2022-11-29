@@ -1,4 +1,5 @@
-﻿using Karartek.Business.Abstract;
+﻿using Core.Utilities.Results;
+using Karartek.Business.Abstract;
 using Karartek.DataAccess.Abstract;
 using Karartek.DataAccess.Concrete.EntityFramework;
 using Karartek.Entities.Concrete;
@@ -20,10 +21,12 @@ namespace Karartek.Business.Concrete
 
     {
         private readonly IJudgmentDal _judgmentDal;
+        private readonly ILawyerJudgmentDal _lawyerjudgmentDal;
 
-        public JudgmentService(IJudgmentDal judgmentDal)
+        public JudgmentService(IJudgmentDal judgmentDal, ILawyerJudgmentDal lawyerjudgmentDal)
         {
             _judgmentDal = judgmentDal;
+            _lawyerjudgmentDal = lawyerjudgmentDal;
         }
 
         public bool AddJudgment(JudgmentDto judgmentDto)
@@ -49,6 +52,7 @@ namespace Karartek.Business.Concrete
                     MeritsNo = judgmentDto.MeritsNo,
                     MeritsYear = judgmentDto.MeritsYear,
                     JudgmentTypeId = judgmentDto.JudgmentTypeId,
+                    JudgmentDate=judgmentDto.JudgmentDate,
                     Decision = judgmentDto.Decision
 
                 };
@@ -83,36 +87,53 @@ namespace Karartek.Business.Concrete
             return result;
         }
 
-        public List<Judgment> GetJudgmentsByType(string keyword,JudgmentDto judgmentDto)
+        public IDataResult <List<JudgmentResponseListDto>> GetJudgmentsByType(FilterDto filterDto)
         {
-            if (judgmentDto.JudgmentTypeId==1)
-            {
-                return new List<Judgment>(_judgmentDal.GetAll(p => p.JudgmentTypeId == 1 && p.Decree.Contains(keyword) && p.Decision.Contains(keyword)));
+
+            var result = _judgmentDal.GetAll(p=>p.JudgmentTypeId==filterDto.judgmentTypeId && p.Decree.Contains(filterDto.keyword));
+            var listDto = new List<JudgmentResponseListDto>();
+        
+            foreach (var item in result){
+            
+                var dto = new JudgmentResponseListDto()
+                {
+                    CommissionName = item.Commission.Name,
+                    CourtName = item.Court.Name,
+                    JudgmentTypeName = item.JudgmentType.TypeName,
+                    CommissionId = item.CommissionId,
+                    CourtId = item.CourtId,
+                    Decision = item.Decision,
+                    Decree = item.Decree,
+                    DecreeNo = item.DecreeNo,
+                    DecreeType = item.DecreeType,
+                    DecreeYear = item.DecreeYear,
+                    Id = item.Id,
+                    JudgmentDate = item.JudgmentDate,
+                    JudgmentTypeId = item.JudgmentTypeId,
+                    Likes = item.Likes,
+                    MeritsNo = item.MeritsNo,
+                    MeritsYear = item.MeritsYear
+                };
+
+            listDto.Add(dto);
+
+
             }
 
-            else if(judgmentDto.JudgmentTypeId==2)
-            {
-                return new List<Judgment>(_judgmentDal.GetAll(p => p.JudgmentTypeId == 2 && p.Decree.Contains(keyword) && p.Decision.Contains(keyword)));
 
+
+            if (result!=null)
+            {
+               return new SuccessDataResult<List<JudgmentResponseListDto>>(listDto,"");
             }
+
             else
             {
-                return new List<Judgment>(_judgmentDal.GetAll(p => p.JudgmentTypeId == 3 && p.Decree.Contains(keyword) && p.Decision.Contains(keyword)));
+                return new ErrorDataResult<List<JudgmentResponseListDto>>("Not Found");
             }
 
-        }
 
-          
-
-      /*  public List<Judgment> GetDanistayJudgments(string keyword)
-        {
-            return new List<Judgment>(_judgmentDal.GetAll(p => p.JudgmentTypeId == 2 && p.Decree.Contains(keyword)&& p.Decision.Contains(keyword)));
         }
-        public List<Judgment> GetAnayasaMahkemeJudgments(string keyword)
-        {
-            return new List<Judgment>(_judgmentDal.GetAll(p => p.JudgmentTypeId == 3&& p.Decree.Contains(keyword) && p.Decision.Contains(keyword)));
-        }
-      */
         public ResponseDto Likes(int id)
         {
             ResponseDto response = new ResponseDto();
@@ -140,7 +161,7 @@ namespace Karartek.Business.Concrete
 
         }
 
-    
+
         /* public List<Judgment> Filter(FilterDto filterDto)
 {
 return new List<Judgment>(_judgmentDal.GetAll().Where(x => (String.IsNullOrEmpty(filterDto.Decree)||x.Decree.ToLower().Contains(filterDto.Decree.ToLower()))&&(String.IsNullOrEmpty(filterDto.CommisionName)||x.CommisionName.ToLower().Contains(filterDto.CommisionName.ToLower()))));
@@ -153,8 +174,8 @@ return new List<Judgment>(_judgmentDal.GetAll().Where(x => (String.IsNullOrEmpty
 
 
 
-       
 
-    
+
+
 }
 

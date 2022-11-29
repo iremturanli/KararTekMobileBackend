@@ -40,11 +40,11 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
             {
                 return filter == null
                     ? context.Set<Judgment>().ToList()
-                    : context.Set<Judgment>().Where(filter).ToList();
+                    : context.Set<Judgment>().Include(x=>x.Commission).Include(x=>x.Court).Include(x=>x.JudgmentType).Where(filter).ToList();
 
             }
         }
-
+        
         public Judgment GetJudgmentByDecreeNo(string decreeNo,string decreeYear)
         {
             using (AppDbContext context = new AppDbContext())

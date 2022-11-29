@@ -1,4 +1,5 @@
-﻿using Karartek.Business.Abstract;
+﻿using Core.Utilities.Results;
+using Karartek.Business.Abstract;
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
@@ -46,13 +47,13 @@ namespace Karartek.Api.Controllers
         }
 
 
-        [HttpGet("GetJudgmentByType")]
+        [HttpPost("GetJudgmentByType")]
 
-        public List<Judgment> GetAll(string keyword, JudgmentDto judgmentDto)
+        public IDataResult<List<JudgmentResponseListDto>> GetJudgmentByType([FromBody] FilterDto filterDto)
 
 
         {
-            var judgments = _judgmentService.GetJudgmentsByType(keyword, judgmentDto);
+            var judgments = _judgmentService.GetJudgmentsByType(filterDto);
             return judgments;
 
 
