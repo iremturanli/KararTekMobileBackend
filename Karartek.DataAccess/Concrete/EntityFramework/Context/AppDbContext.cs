@@ -23,7 +23,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // optionsBuilder.UseSqlServer(@"Server=(localdb)\KararTek;Encrypt=false;TrustServerCertificate=False;Integrated Security=true");
+            // optionsBuilder.UseSqlServer(@"Server=(localdb)\KararTekDemo;database=KararTek;Encrypt=false;TrustServerCertificate=False;Integrated Security=true");
             optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=KararTek;Password=irem@123;Encrypt=false;TrustServerCertificate=False");
 
             //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=KararTek1;Trusted_Connection=true");
@@ -68,7 +68,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
 
             modelBuilder.Entity<Judgment>().ToTable("Judgments");
             modelBuilder.Entity<Judgment>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
-            modelBuilder.Entity<Judgment>().Property(x => x.CommissionId) .IsRequired();
+            modelBuilder.Entity<Judgment>().Property(x => x.CommissionId).IsRequired();
             modelBuilder.Entity<Judgment>().Property(x => x.CourtId).IsRequired();
             modelBuilder.Entity<Judgment>().Property(x => x.Decree).HasMaxLength(9999999).IsRequired();
             modelBuilder.Entity<Judgment>().Property(x => x.DecreeType).HasMaxLength(100).IsRequired();
