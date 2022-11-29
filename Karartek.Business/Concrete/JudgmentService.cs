@@ -112,7 +112,9 @@ namespace Karartek.Business.Concrete
                     JudgmentTypeId = item.JudgmentTypeId,
                     Likes = item.Likes,
                     MeritsNo = item.MeritsNo,
-                    MeritsYear = item.MeritsYear
+                    MeritsYear = item.MeritsYear,
+                    CreateDate =item.CreateDate,   
+                    
                 };
 
             listDto.Add(dto);

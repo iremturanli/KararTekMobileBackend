@@ -24,9 +24,9 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // optionsBuilder.UseSqlServer(@"Server=(localdb)\KararTekDemo;database=KararTek;Encrypt=false;TrustServerCertificate=False;Integrated Security=true");
-            optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=KararTek;Password=irem@123;Encrypt=false;TrustServerCertificate=False");
+            //optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=KararTek;Password=irem@123;Encrypt=false;TrustServerCertificate=False");
 
-          //  optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=KararTek2;Trusted_Connection=true");
+          optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=KararTek2;Trusted_Connection=true");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
