@@ -99,6 +99,18 @@ namespace Karartek.Api.Controllers
 
 
         }
+        [HttpPost("GetLawyerJudgmentsByType")]
+
+        public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByType([FromBody] FilterDto filterDto)
+
+
+        {
+            var judgments = _lawyerJudgmentService.GetLawyerJudgmentsByType(filterDto);
+            return judgments;
+
+
+
+        }
 
 
 
