@@ -1,4 +1,5 @@
- using Karartek.Business.Abstract;
+using Core.Utilities.Results;
+using Karartek.Business.Abstract;
 using Karartek.Business.Concrete;
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
@@ -20,9 +21,9 @@ namespace Karartek.Api.Properties
         }
 
         [HttpGet("GetAll")]
-        public CourtResponseDto GetAll( int id)
+        public IDataResult<List<CourtResponseListDto>> GetAllbyId(int id)
         {
-            var courtToSearch = _courtService.GetCourt(id);
+            var courtToSearch = _courtService.GetAllbyId(id);
             return courtToSearch;
         }
 

@@ -1,5 +1,7 @@
-﻿using Karartek.Business.Abstract;
+﻿using Core.Utilities.Results;
+using Karartek.Business.Abstract;
 using Karartek.DataAccess.Abstract;
+using Karartek.DataAccess.Concrete.EntityFramework;
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
 using System;
@@ -17,17 +19,39 @@ namespace Karartek.Business.Concrete
         {
             _courtDal = courtDal;
         }
-        public CourtResponseDto GetCourt(int id)
+        public IDataResult<List<CourtResponseListDto>> GetAllbyId(int id)
         {
 
-            var result = new CourtResponseDto
+            var result = _courtDal.GetAll(id);
+            var listDto = new List<CourtResponseListDto>();
+
+            foreach (var item in result)
             {
 
-                Courts = _courtDal.GetAll(id),
-                HasError = false,
-                Message = "Success"
-            };
-            return result;
+                var dto = new CourtResponseListDto()
+                {
+                    Name = item.Name,
+                    Id = item.Id,
+                };
+
+                listDto.Add(dto);
+
+
+            }
+
+
+
+            if (result != null)
+            {
+                return new SuccessDataResult<List<CourtResponseListDto>>(listDto, "Success!");
+            }
+
+            else
+            {
+                return new ErrorDataResult<List<CourtResponseListDto>>("Not Found");
+            }
+
+
         }
         public Court GetCourtById(int id)
         {
