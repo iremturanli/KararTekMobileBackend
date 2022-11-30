@@ -7,7 +7,7 @@ namespace Karartek.Entities.Dto
 
         public bool HasError { get; set; }
         public string Message { get; set; } = null!;
-        public List<Court> Courts { get; set; } = null!;
+        public List<CourtDto> Courts { get; set; } = null!;
 
     }
 

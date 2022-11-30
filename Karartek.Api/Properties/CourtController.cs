@@ -19,7 +19,7 @@ namespace Karartek.Api.Properties
             _courtService = courtService;
         }
 
-        [HttpPost("GetAll/{{id}}")]
+        [HttpGet("GetAll")]
         public CourtResponseDto GetAll( int id)
         {
             var courtToSearch = _courtService.GetCourt(id);
