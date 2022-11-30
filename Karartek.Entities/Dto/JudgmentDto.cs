@@ -15,6 +15,7 @@ namespace Karartek.Entities.Dto
         public string Decision { get; set; } = null!;
         public int Likes { get; set; }
         public DateTime JudgmentDate { get; set; }
+        public DateTime CreateDate { get; set; }
 
 
 

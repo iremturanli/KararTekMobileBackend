@@ -4,6 +4,7 @@ using Karartek.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using Karartek.DataAccess.Abstract;
+using System.Linq;
 
 namespace Karartek.DataAccess.Concrete
 {
@@ -34,8 +35,8 @@ namespace Karartek.DataAccess.Concrete
             using (AppDbContext context = new AppDbContext())
             {
                 return filter == null
-                    ? context.Set<LawyerJudgment>().ToList()
-                    : context.Set<LawyerJudgment>().Where(filter).ToList();
+                    ? context.Set<LawyerJudgment>().Include(x => x.Commission).Include(x => x.Court).Include(x => x.LawyerJudgmentState).Include(x => x.User).ToList()
+                    : context.Set<LawyerJudgment>().Include(x => x.Commission).Include(x => x.Court).Include(x=>x.LawyerJudgmentState).Include(x => x.User).Where(filter).ToList();
 
             }
         }

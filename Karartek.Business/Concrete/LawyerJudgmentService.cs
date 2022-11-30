@@ -1,5 +1,7 @@
-﻿using Karartek.Business.Abstract;
+﻿using Core.Utilities.Results;
+using Karartek.Business.Abstract;
 using Karartek.DataAccess.Abstract;
+using Karartek.DataAccess.Concrete.EntityFramework;
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Concrete.Enum;
 using Karartek.Entities.Dto;
@@ -94,11 +96,58 @@ namespace Karartek.Business.Concrete
 
 
         }
-
-        public ResponseDto DeclineJudgment(int id, string comment)
+        public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByUserId(int id)
         {
-            throw new NotImplementedException();
+
+            var result = _lawyerJudgmentDal.GetAll(p => p.UserId ==id);
+            var listDto = new List<LawyerJudgmentResponseListDto>();
+
+            foreach (var item in result)
+            {
+
+                var dto = new LawyerJudgmentResponseListDto()
+                {
+                    CommissionName = item.Commission.Name,
+                    CourtName = item.Court.Name,
+                    CommissionId = item.CommissionId,
+                    CourtId = item.CourtId,
+                    Decision = item.Decision,
+                    Decree = item.Decree,
+                    DecreeNo = item.DecreeNo,
+                    DecreeType = item.DecreeType,
+                    DecreeYear = item.DecreeYear,
+                    Id = item.Id,
+                    JudgmentDate = item.JudgmentDate,
+                    Likes = item.Likes,
+                    MeritsNo = item.MeritsNo,
+                    MeritsYear = item.MeritsYear,
+                    CreateDate = item.CreateDate,
+                    TBBComments=item.TBBComments,
+                    UserId=item.UserId,
+                    StateName=item.LawyerJudgmentState.StateName
+                };
+
+                listDto.Add(dto);
+
+
+            }
+
+
+
+            if (result != null)
+            {
+                return new SuccessDataResult<List<LawyerJudgmentResponseListDto>>(listDto, "Success!");
+            }
+
+            else
+            {
+                return new ErrorDataResult<List<LawyerJudgmentResponseListDto>>("Not Found");
+            }
+
+
         }
+
+
 
         public bool DeleteDecree(int id)
         {
@@ -107,16 +156,20 @@ namespace Karartek.Business.Concrete
             return true;
         }
 
-        public List<LawyerJudgmentDto> GetAll()
+
+        public IDataResult<List<LawyerJudgmentResponseListDto>> GetAllLawyerJudgments()
         {
-            var data = new List<LawyerJudgmentDto>();
+
             var result = _lawyerJudgmentDal.GetAll();
+            var listDto = new List<LawyerJudgmentResponseListDto>();
 
             foreach (var item in result)
             {
-                var dto = new LawyerJudgmentDto()
+
+                var dto = new LawyerJudgmentResponseListDto()
                 {
-                    Id = item.Id,
+                    CommissionName = item.Commission.Name,
+                    CourtName = item.Court.Name,
                     CommissionId = item.CommissionId,
                     CourtId = item.CourtId,
                     Decision = item.Decision,
@@ -124,21 +177,73 @@ namespace Karartek.Business.Concrete
                     DecreeNo = item.DecreeNo,
                     DecreeType = item.DecreeType,
                     DecreeYear = item.DecreeYear,
-                    LawyerAssessment = item.LawyerAssessment,
+                    Id = item.Id,
+                    JudgmentDate = item.JudgmentDate,
                     Likes = item.Likes,
                     MeritsNo = item.MeritsNo,
                     MeritsYear = item.MeritsYear,
-                    StateId = item.StateId,
-                    TBBComments = item.TBBComments
-
+                    CreateDate = item.CreateDate,
+                    TBBComments = item.TBBComments,
+                    UserId = item.UserId,
+                    StateName = item.LawyerJudgmentState.StateName,
+                    UserName=item.User.FirstName,
+                    LastName=item.User.LastName
+                    
                 };
 
-                data.Add(dto);
+                listDto.Add(dto);
+
+
             }
 
 
-            return data;
+
+            if (result != null)
+            {
+                return new SuccessDataResult<List<LawyerJudgmentResponseListDto>>(listDto, "Success!");
+            }
+
+            else
+            {
+                return new ErrorDataResult<List<LawyerJudgmentResponseListDto>>("Not Found");
+            }
+
+
         }
+
+         public List<LawyerJudgmentDto> GetAll()
+         {
+             var data = new List<LawyerJudgmentDto>();
+             var result = _lawyerJudgmentDal.GetAll();
+
+             foreach (var item in result)
+             {
+                 var dto = new LawyerJudgmentDto()
+                 {
+                     Id = item.Id,
+                     CommissionId = item.CommissionId,
+                     CourtId = item.CourtId,
+                     Decision = item.Decision,
+                     Decree = item.Decree,
+                     DecreeNo = item.DecreeNo,
+                     DecreeType = item.DecreeType,
+                     DecreeYear = item.DecreeYear,
+                     LawyerAssessment = item.LawyerAssessment,
+                     Likes = item.Likes,
+                     MeritsNo = item.MeritsNo,
+                     MeritsYear = item.MeritsYear,
+                     StateId = item.StateId,
+                     TBBComments = item.TBBComments
+
+                 };
+
+                 data.Add(dto);
+             }
+
+
+             return data;
+        
+    }
 
         public List<LawyerJudgment> GetbyKeyword(string keyword)
         {
@@ -147,7 +252,55 @@ namespace Karartek.Business.Concrete
             return result;
         }
 
-        public ResponseDto Likes(int id)
+        public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByType(FilterDto filterDto)//yap
+        {
+
+            var result = _lawyerJudgmentDal.GetAll(p => p.Decree.Contains(filterDto.keyword));
+            var listDto = new List<LawyerJudgmentResponseListDto>();
+
+            foreach (var item in result)
+            {
+
+                var dto = new LawyerJudgmentResponseListDto()
+                {
+                    CommissionName = item.Commission.Name,
+                    CourtName = item.Court.Name,
+                    CommissionId = item.CommissionId,
+                    CourtId = item.CourtId,
+                    Decision = item.Decision,
+                    Decree = item.Decree,
+                    DecreeNo = item.DecreeNo,
+                    DecreeType = item.DecreeType,
+                    DecreeYear = item.DecreeYear,
+                    Id = item.Id,
+                    JudgmentDate = item.JudgmentDate,
+                    TBBComments = item.TBBComments,
+                    Likes = item.Likes,
+                    MeritsNo = item.MeritsNo,
+                    MeritsYear = item.MeritsYear,
+                    CreateDate = item.CreateDate,
+
+                };
+
+                listDto.Add(dto);
+
+
+            }
+
+            if (result != null)
+            {
+                return new SuccessDataResult<List<LawyerJudgmentResponseListDto>>(listDto, "");
+            }
+
+            else
+            {
+                return new ErrorDataResult<List<LawyerJudgmentResponseListDto>>("Not Found");
+            }
+        }
+
+
+
+            public ResponseDto Likes(int id)
         {
             ResponseDto response = new ResponseDto();
             var judgmentToLike = _lawyerJudgmentDal.Get(p => p.Id == id);
@@ -172,6 +325,8 @@ namespace Karartek.Business.Concrete
 
             }
         }
+
+     
     }
 }
 

@@ -53,7 +53,10 @@ namespace Karartek.Business.Concrete
                     MeritsYear = judgmentDto.MeritsYear,
                     JudgmentTypeId = judgmentDto.JudgmentTypeId,
                     JudgmentDate=judgmentDto.JudgmentDate,
-                    Decision = judgmentDto.Decision
+                    Decision = judgmentDto.Decision,
+                    CreateDate=DateTime.Now
+
+     
 
                 };
 
@@ -113,8 +116,7 @@ namespace Karartek.Business.Concrete
                     Likes = item.Likes,
                     MeritsNo = item.MeritsNo,
                     MeritsYear = item.MeritsYear,
-                    CreateDate =item.CreateDate,   
-                    
+                    CreateDate = item.CreateDate
                 };
 
             listDto.Add(dto);
@@ -126,7 +128,7 @@ namespace Karartek.Business.Concrete
 
             if (result!=null)
             {
-               return new SuccessDataResult<List<JudgmentResponseListDto>>(listDto,"");
+               return new SuccessDataResult<List<JudgmentResponseListDto>>(listDto,"Success!");
             }
 
             else
@@ -136,28 +138,24 @@ namespace Karartek.Business.Concrete
 
 
         }
-        public ResponseDto Likes(int id)
+
+        
+
+        public IResult Likes(int id)
         {
-            ResponseDto response = new ResponseDto();
             var judgmentToLike = _judgmentDal.Get(p => p.Id == id);
             if (judgmentToLike != null)
             {
                 judgmentToLike.Likes++;
                 _judgmentDal.Update(judgmentToLike);
                 Console.WriteLine(judgmentToLike.Likes);
-
-                response.HasError = false;
-                response.Message = judgmentToLike.Likes + "Beğeni "; //mantıksız
-
-                return response;
+                return new SuccessResult("Success!");
 
 
             }
             else
             {
-                response.HasError = true;
-                response.Message = "İşlem Hatalı"; //mantıksız
-                return response;
+                return new ErrorResult("Failed");
 
             }
 
