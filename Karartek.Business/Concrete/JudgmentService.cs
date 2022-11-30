@@ -146,7 +146,7 @@ namespace Karartek.Business.Concrete
             var judgmentToLike = _judgmentDal.Get(p => p.Id == id);
             if (judgmentToLike != null)
             {
-                if(check)
+                if(check==true)
                 {
 
                     judgmentToLike.Likes++;

@@ -80,9 +80,9 @@ namespace Karartek.Api.Controllers
 
         }
         [HttpPost("{id}")]
-        public ActionResult JudgmentsToLike(int id)
+        public ActionResult JudgmentsToLike(int id, bool check)
         {
-            var result=_judgmentService.Likes(id);
+            var result=_judgmentService.Likes(id,check);
             if (result.Success)
             {
                 return Ok(result);
