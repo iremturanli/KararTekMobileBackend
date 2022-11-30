@@ -187,8 +187,9 @@ namespace Karartek.Business.Concrete
                     UserId = item.UserId,
                     StateName = item.LawyerJudgmentState.StateName,
                     UserName=item.User.FirstName,
-                    LastName=item.User.LastName
-                    
+                    LastName=item.User.LastName,
+                    LawyerAssesment = item.LawyerAssessment
+
                 };
 
                 listDto.Add(dto);
@@ -274,11 +275,16 @@ namespace Karartek.Business.Concrete
                     DecreeYear = item.DecreeYear,
                     Id = item.Id,
                     JudgmentDate = item.JudgmentDate,
-                    TBBComments = item.TBBComments,
                     Likes = item.Likes,
                     MeritsNo = item.MeritsNo,
                     MeritsYear = item.MeritsYear,
                     CreateDate = item.CreateDate,
+                    TBBComments = item.TBBComments,
+                    UserId = item.UserId,
+                    StateName = item.LawyerJudgmentState.StateName,
+                    UserName = item.User.FirstName,
+                    LastName = item.User.LastName,
+                    LawyerAssesment=item.LawyerAssessment
 
                 };
 
