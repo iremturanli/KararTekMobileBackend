@@ -79,7 +79,7 @@ namespace Karartek.Api.Controllers
 
 
         }
-        [HttpGet("JudgmentsToLike/{id}")]
+        [HttpPost("{id}")]
         public ActionResult JudgmentsToLike(int id)
         {
             var result=_judgmentService.Likes(id);
