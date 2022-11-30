@@ -141,15 +141,29 @@ namespace Karartek.Business.Concrete
 
         
 
-        public IResult Likes(int id)
+        public IResult Likes(int id, bool check)
         {
             var judgmentToLike = _judgmentDal.Get(p => p.Id == id);
             if (judgmentToLike != null)
             {
-                judgmentToLike.Likes++;
-                _judgmentDal.Update(judgmentToLike);
-                Console.WriteLine(judgmentToLike.Likes);
-                return new SuccessResult("Success!");
+                if(check)
+                {
+
+                    judgmentToLike.Likes++;
+                    _judgmentDal.Update(judgmentToLike);
+                    Console.WriteLine(judgmentToLike.Likes);
+                    return new SuccessResult("Success!");
+
+                }
+                else
+                {
+
+                    judgmentToLike.Likes--;
+                    _judgmentDal.Update(judgmentToLike);
+                    Console.WriteLine(judgmentToLike.Likes);
+                    return new SuccessResult("Likes count decreased");
+                }
+
 
 
             }
@@ -161,11 +175,6 @@ namespace Karartek.Business.Concrete
 
         }
 
-
-        /* public List<Judgment> Filter(FilterDto filterDto)
-{
-return new List<Judgment>(_judgmentDal.GetAll().Where(x => (String.IsNullOrEmpty(filterDto.Decree)||x.Decree.ToLower().Contains(filterDto.Decree.ToLower()))&&(String.IsNullOrEmpty(filterDto.CommisionName)||x.CommisionName.ToLower().Contains(filterDto.CommisionName.ToLower()))));
-*/
     }
 
 
