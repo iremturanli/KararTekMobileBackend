@@ -6,7 +6,7 @@ namespace Karartek.Business.Abstract
 {
     public interface ILawyerJudgmentService
     {
-        bool AddLawyerJudgment(LawyerJudgmentDto judgmentDto);
+        BaseResponseDto AddLawyerJudgment(LawyerJudgmentDto judgmentDto);
         List<LawyerJudgmentDto> GetAll();
         List<LawyerJudgment> GetbyKeyword(string keyword);
         bool DeleteDecree(int id);

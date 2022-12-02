@@ -4,6 +4,7 @@ using Karartek.Business.Concrete;
 using Karartek.Entities.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
 using System.Security.Claims;
 
 namespace Karartek.Api.Controllers
@@ -61,7 +62,7 @@ namespace Karartek.Api.Controllers
         {
             lawyerJudgmentDto.UserId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var judgmentToAdd = _lawyerJudgmentService.AddLawyerJudgment(lawyerJudgmentDto);
-            if (judgmentToAdd)
+            if (judgmentToAdd is not null)
             {
                 return Ok(judgmentToAdd);
 

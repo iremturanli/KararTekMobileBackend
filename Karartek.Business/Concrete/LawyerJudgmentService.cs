@@ -18,14 +18,15 @@ namespace Karartek.Business.Concrete
             _lawyerJudgmentDal = lawyerJudgmentDal;
         }
 
-        public bool AddLawyerJudgment(LawyerJudgmentDto lawyerJudgmentDto)
+        public BaseResponseDto AddLawyerJudgment(LawyerJudgmentDto lawyerJudgmentDto)
         {
             var judgment = _lawyerJudgmentDal.GetLawyerJudgmentByDecreeNo(lawyerJudgmentDto.DecreeNo, lawyerJudgmentDto.DecreeYear);
+            BaseResponseDto response=new BaseResponseDto();
 
             if (judgment is not null)
             {
-
-                return false;
+                response.HasError=true;
+                
             }
             else
             {
@@ -42,23 +43,26 @@ namespace Karartek.Business.Concrete
                     MeritsYear = lawyerJudgmentDto.MeritsYear,
                     StateId = (int)EJudgmentStates.OnayBekliyor,
                     Decision = lawyerJudgmentDto.Decision,
-                    TBBComments = lawyerJudgmentDto.TBBComments,
+                
                     JudgmentDate=lawyerJudgmentDto.JudgmentDate,//?
                     CreateDate = DateTime.Now,
                     UserId = lawyerJudgmentDto.UserId,
-              
+                    Likes=lawyerJudgmentDto.Likes=0,
+                    TBBComments = String.Empty,
+
+
 
                 };
 
-
+               
             }
             var result = _lawyerJudgmentDal.Insert(judgment);//add
             if (result != null)
             {
-                return true;
+                response.HasError = false;
 
             }
-            return false;
+            return response;
         }
 
         public BaseResponseDto ApproveJudgment(JudgmentApprovalRequestDto judgmentApprovalRequestDto)
@@ -256,7 +260,7 @@ namespace Karartek.Business.Concrete
         public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByType(FilterDto filterDto)//yap
         {
 
-            var result = _lawyerJudgmentDal.GetAll(p => p.Decree.Contains(filterDto.keyword));
+            var result = _lawyerJudgmentDal.GetAll(p => p.Decree.Contains(filterDto.keyword)&& p.StateId== (int)EJudgmentStates.Onaylandı);
             var listDto = new List<LawyerJudgmentResponseListDto>();
 
             foreach (var item in result)
