@@ -14,7 +14,7 @@
         public string? DecreeNo { get; set; } 
         public string? Decision { get; set; } 
         public string? TBBComments { get; set; } 
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         public int? StateId { get; set; }
         public int? Likes { get; set; }
         public DateTime? JudgmentDate { get; set; }

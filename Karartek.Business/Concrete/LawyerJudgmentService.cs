@@ -25,11 +25,13 @@ namespace Karartek.Business.Concrete
         public BaseResponseDto AddLawyerJudgment(LawyerJudgmentDto lawyerJudgmentDto)
         {
             var judgment = _lawyerJudgmentDal.GetLawyerJudgmentByDecreeNo(lawyerJudgmentDto.DecreeNo, lawyerJudgmentDto.DecreeYear);
-            BaseResponseDto response=new BaseResponseDto();
+            BaseResponseDto response = new BaseResponseDto();
 
             if (judgment is not null)
             {
                 response.HasError = true;
+                
+                
             }
             else
             {
@@ -46,30 +48,29 @@ namespace Karartek.Business.Concrete
                     MeritsYear = lawyerJudgmentDto.MeritsYear,
                     StateId = (int)EJudgmentStates.OnayBekliyor,
                     Decision = lawyerJudgmentDto.Decision,
-
-                    JudgmentDate=lawyerJudgmentDto.JudgmentDate,//?
+                    TBBComments = lawyerJudgmentDto.TBBComments,
+                    JudgmentDate = lawyerJudgmentDto.JudgmentDate,//?
                     CreateDate = DateTime.Now,
                     UserId = lawyerJudgmentDto.UserId,
-                    Likes = lawyerJudgmentDto.Likes = 0,
-                    TBBComments = String.Empty,
 
 
                 };
 
+             
 
             }
             var result = _lawyerJudgmentDal.Insert(judgment);//add
             if (result != null)
             {
                 var userJudgement = _userJudgmentStatisticDal.Get(p => p.UserId == judgment.UserId);
-                if (userJudgement != null)
+                if(userJudgement != null)
                 {
                     userJudgement.JudgmentCount += 1;
                     _userJudgmentStatisticDal.Update(userJudgement);
                 }
                 else
                 {
-                    var user = _userService.GetUser(judgment.UserId);
+                var user = _userService.GetUser(judgment.UserId);
 
                     var statistics = new UserJudgmentStatistic()
                     {
@@ -79,15 +80,20 @@ namespace Karartek.Business.Concrete
                         CityName = user.City.Name,
                         UserTypeId = user.UserTypeId,
                         UserTypeName = user.UserType.TypeName,
+                        LawyerJudgmentId = judgment.Id,
                         JudgmentCount = 1
                     };
 
                     _userJudgmentStatisticDal.Insert(statistics);
                 }
 
-                return true;
+                response.HasError = false;
+                return response;
+
             }
-            return false;
+
+            response.HasError=true;
+            return response;
         }
 
         public BaseResponseDto ApproveJudgment(JudgmentApprovalRequestDto judgmentApprovalRequestDto)
@@ -154,7 +160,7 @@ namespace Karartek.Business.Concrete
                     TBBComments = item.TBBComments,
                     UserId = item.UserId,
                     StateName = item.LawyerJudgmentState.StateName,
-                    StateId = item.StateId,
+                    StateId = item.LawyerJudgmentState.StateId,
                     UserName = item.User.FirstName,
                     LastName = item.User.LastName,
                     LawyerAssesment = item.LawyerAssessment
@@ -226,7 +232,7 @@ namespace Karartek.Business.Concrete
                     UserName = item.User.FirstName,
                     LastName = item.User.LastName,
                     LawyerAssesment = item.LawyerAssessment,
-                    StateId = item.StateId
+                    StateId = item.LawyerJudgmentState.StateId
 
                 };
 
@@ -294,7 +300,7 @@ namespace Karartek.Business.Concrete
         public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByType(FilterDto filterDto)//yap
         {
 
-            var result = _lawyerJudgmentDal.GetAll(p => p.Decree.Contains(filterDto.keyword)&& p.StateId== (int)EJudgmentStates.Onaylandı);
+            var result = _lawyerJudgmentDal.GetAll(p => p.Decree.Contains(filterDto.keyword));
             var listDto = new List<LawyerJudgmentResponseListDto>();
 
             foreach (var item in result)

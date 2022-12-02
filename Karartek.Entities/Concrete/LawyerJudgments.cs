@@ -17,7 +17,7 @@ namespace Karartek.Entities.Concrete
         public string? Decision { get; set; }
         public string? TBBComments { get; set; } 
         public DateTime? JudgmentDate { get; set; }
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         public int? StateId { get; set; }
         public int? Likes { get; set; }
         public User? User { get; set; } = null!;

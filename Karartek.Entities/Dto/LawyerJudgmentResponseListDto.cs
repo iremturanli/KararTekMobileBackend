@@ -4,6 +4,7 @@ namespace Karartek.Entities.Dto
     public class LawyerJudgmentResponseListDto
     {
         public int Id { get; set; }
+        public int StateId { get; set; }
         public int? CommissionId { get; set; }
         public int? CourtId { get; set; }
         public string? Decree { get; set; } 
