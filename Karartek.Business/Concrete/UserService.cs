@@ -35,19 +35,27 @@ namespace Karartek.Business.Concrete
             userResponseDto.FirstName = user.FirstName;
             userResponseDto.LastName = user.LastName;
             userResponseDto.PhoneNumber = user.PhoneNumber;
-            userResponseDto.BarRegisterNo = user.Lawyer.BarRegisterNo;
-            userResponseDto.University = user.Student.University;
+            userResponseDto.BarRegisterNo = user.Lawyer == null ? String.Empty : user.Lawyer.BarRegisterNo; //profilim fakülte
+            userResponseDto.University = user.Student == null? String.Empty: user.Student.University;
             userResponseDto.UserTypeId = user.UserTypeId;
             userResponseDto.CityId = user.CityId;
             userResponseDto.DistrictId = user.DistrictId;
             userResponseDto.DistrictName = user.District.Name;
             userResponseDto.CityName = user.City.Name;
+            userResponseDto.UserTypeName = user.UserType.TypeName;
             return userResponseDto;
 
 
 
 
         }
+
+        public User GetUser(int id)
+        {
+            var user = _userDal.GetUserById(id);
+            return user;
+        }
+
         public User GetUserByIdentity(string identity)
 
         {

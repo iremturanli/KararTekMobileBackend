@@ -43,7 +43,7 @@ builder.Services.AddSingleton<ICommissionService, CommissionService>();
 builder.Services.AddSingleton<ICommissionDal, EfCommissionDal>();
 builder.Services.AddSingleton<ICourtService, CourtService>();
 builder.Services.AddSingleton<ICourtDal, EfCourtDal>();
-
+builder.Services.AddSingleton<IUserJudgmentStatisticDal, EfUserJudgmentStatisticDal>();
 
 
 builder.Services.AddSwaggerGen(options => {

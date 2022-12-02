@@ -18,5 +18,6 @@
         public string Faculty { get; set; } = null!;
         public string Grade { get; set; } = null!;
         public string StudentNumber { get; set; } = null!;
+        public string UserTypeName { get; set; } = null!;
     }
 }

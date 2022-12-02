@@ -10,8 +10,6 @@ namespace Karartek.Business.Abstract
         ResponseDto ForgotMyPassword(ForgotMyPasswordDto forgotMyPasswordDto);
         User GetUserByIdentity(string userIdentity);
         UserResponseDto GetUserById(int id);
-
-
-
+        User GetUser(int id);
     }
 }

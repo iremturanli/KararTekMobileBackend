@@ -20,12 +20,13 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
         public DbSet<LawyerJudgmentState> LawyerJudgmentStates { get; set; }
         public DbSet<Commission> Commissions { get; set; }
         public DbSet<Court> Courts { get; set; }
+        public DbSet<UserJudgmentStatistic> UserJudgmentStatistics { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // optionsBuilder.UseSqlServer(@"Server=(localdb)\KararTekDemo;database=KararTek;Encrypt=false;TrustServerCertificate=False;Integrated Security=true");
-            //optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=KararTek;Password=irem@123;Encrypt=false;TrustServerCertificate=False");
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=KararTek3;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=KararTek;Password=irem@123;Encrypt=false;TrustServerCertificate=False");
+            //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=KararTek3;Trusted_Connection=true");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -179,6 +180,22 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<Court>().Property(x => x.Name).IsRequired();
             modelBuilder.Entity<Court>().HasOne<Commission>(x => x.Commission).WithMany(x => x.Courts).IsRequired().HasForeignKey(x => x.CommissionId);
             modelBuilder.Entity<Court>().HasData(CourtSeeds.courts);//
+
+            modelBuilder.Entity<UserJudgmentStatistic>().ToTable("UserJudgmentStatistics");
+            modelBuilder.Entity<UserJudgmentStatistic>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
+            modelBuilder.Entity<UserJudgmentStatistic>().Property(x => x.UserId).IsRequired();
+            modelBuilder.Entity<UserJudgmentStatistic>().Property(x => x.UserTypeId).IsRequired();
+            modelBuilder.Entity<UserJudgmentStatistic>().Property(x => x.UserTypeName).IsRequired();
+            modelBuilder.Entity<UserJudgmentStatistic>().Property(x => x.LawyerJudgmentId).IsRequired();
+            modelBuilder.Entity<UserJudgmentStatistic>().Property(x => x.UserName).IsRequired();
+            modelBuilder.Entity<UserJudgmentStatistic>().Property(x => x.LastName).IsRequired();
+            modelBuilder.Entity<UserJudgmentStatistic>().Property(x => x.CityName).IsRequired();
+            modelBuilder.Entity<UserJudgmentStatistic>().Property(x => x.JudgmentCount).IsRequired();
+            modelBuilder.Entity<UserJudgmentStatistic>().Property(x => x.CreateDate).IsRequired();
+            modelBuilder.Entity<UserJudgmentStatistic>().Property(x => x.IsDeleted).IsRequired();
+
+
+
 
 
 

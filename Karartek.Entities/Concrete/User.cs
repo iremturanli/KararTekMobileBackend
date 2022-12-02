@@ -14,6 +14,7 @@ namespace Karartek.Entities.Concrete
         public string Email { get; set; } = null!;
         public byte[] PasswordHash { get; set; } = null!;
         public byte[] PasswordSalt { get; set; } = null!;
+        public UserJudgmentStatistic userJudgmentStatistic { get; set; } = null!;
         public Student? Student;
         public Lawyer? Lawyer;
         public UserType? UserType { get; set; } = null!;

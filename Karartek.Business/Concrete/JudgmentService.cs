@@ -116,7 +116,9 @@ namespace Karartek.Business.Concrete
                     Likes = item.Likes,
                     MeritsNo = item.MeritsNo,
                     MeritsYear = item.MeritsYear,
-                    CreateDate = item.CreateDate
+                    CreateDate = item.CreateDate,
+               
+                  
                 };
 
             listDto.Add(dto);
@@ -175,6 +177,7 @@ namespace Karartek.Business.Concrete
 
         }
 
+      
     }
 
 
