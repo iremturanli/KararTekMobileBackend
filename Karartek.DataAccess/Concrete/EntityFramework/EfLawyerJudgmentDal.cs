@@ -45,7 +45,7 @@ namespace Karartek.DataAccess.Concrete
         {
             using (AppDbContext context = new AppDbContext())
             {
-                var judgment = context.LawyerJudgments.SingleOrDefault(x => x.DecreeNo == decreeNo && x.DecreeYear == decreeYear);
+                var judgment = context.LawyerJudgments.Include(x=>x.User).SingleOrDefault(x => x.DecreeNo == decreeNo && x.DecreeYear == decreeYear);
                 return judgment;
 
 

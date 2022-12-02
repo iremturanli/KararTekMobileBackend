@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Karartek.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class statistic : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -87,6 +87,28 @@ namespace Karartek.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SearchTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserJudgmentStatistics",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    LawyerJudgmentId = table.Column<int>(type: "int", nullable: false),
+                    UserTypeId = table.Column<int>(type: "int", nullable: false),
+                    UserTypeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CityName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    JudgmentCount = table.Column<int>(type: "int", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserJudgmentStatistics", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -467,9 +489,9 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 30, 10, 45, 27, 524, DateTimeKind.Local).AddTicks(1606), 1, "Yargıtay" },
-                    { 2, new DateTime(2022, 11, 30, 10, 45, 27, 524, DateTimeKind.Local).AddTicks(1642), 2, "Danıştay" },
-                    { 3, new DateTime(2022, 11, 30, 10, 45, 27, 524, DateTimeKind.Local).AddTicks(1644), 3, "Anayasa Mahkemesi" }
+                    { 1, new DateTime(2022, 12, 1, 17, 5, 4, 553, DateTimeKind.Local).AddTicks(1630), 1, "Yargıtay" },
+                    { 2, new DateTime(2022, 12, 1, 17, 5, 4, 553, DateTimeKind.Local).AddTicks(1660), 2, "Danıştay" },
+                    { 3, new DateTime(2022, 12, 1, 17, 5, 4, 553, DateTimeKind.Local).AddTicks(1660), 3, "Anayasa Mahkemesi" }
                 });
 
             migrationBuilder.InsertData(
@@ -477,10 +499,10 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "StateId", "StateName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 30, 10, 45, 27, 481, DateTimeKind.Local).AddTicks(3504), 1, "Onaya Gönderildi" },
-                    { 2, new DateTime(2022, 11, 30, 10, 45, 27, 521, DateTimeKind.Local).AddTicks(6730), 2, "Onay Bekliyor" },
-                    { 3, new DateTime(2022, 11, 30, 10, 45, 27, 521, DateTimeKind.Local).AddTicks(6743), 3, "Reddedildi" },
-                    { 4, new DateTime(2022, 11, 30, 10, 45, 27, 521, DateTimeKind.Local).AddTicks(6744), 4, "Onaylandı" }
+                    { 1, new DateTime(2022, 12, 1, 17, 5, 4, 539, DateTimeKind.Local).AddTicks(7050), 1, "Onaya Gönderildi" },
+                    { 2, new DateTime(2022, 12, 1, 17, 5, 4, 549, DateTimeKind.Local).AddTicks(5520), 2, "Onay Bekliyor" },
+                    { 3, new DateTime(2022, 12, 1, 17, 5, 4, 549, DateTimeKind.Local).AddTicks(5540), 3, "Reddedildi" },
+                    { 4, new DateTime(2022, 12, 1, 17, 5, 4, 549, DateTimeKind.Local).AddTicks(5550), 4, "Onaylandı" }
                 });
 
             migrationBuilder.InsertData(
@@ -488,8 +510,8 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 30, 10, 45, 27, 523, DateTimeKind.Local).AddTicks(6127), 1, "Avukatın Eklediği Kararlar" },
-                    { 2, new DateTime(2022, 11, 30, 10, 45, 27, 523, DateTimeKind.Local).AddTicks(6141), 2, "Yüksek Yargı Kararları" }
+                    { 1, new DateTime(2022, 12, 1, 17, 5, 4, 552, DateTimeKind.Local).AddTicks(4320), 1, "Avukatın Eklediği Kararlar" },
+                    { 2, new DateTime(2022, 12, 1, 17, 5, 4, 552, DateTimeKind.Local).AddTicks(4350), 2, "Yüksek Yargı Kararları" }
                 });
 
             migrationBuilder.InsertData(
@@ -497,9 +519,9 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 30, 10, 45, 27, 523, DateTimeKind.Local).AddTicks(853), 1, "Avukat-Avukat Stajyeri" },
-                    { 2, new DateTime(2022, 11, 30, 10, 45, 27, 523, DateTimeKind.Local).AddTicks(869), 2, "Öğrenci" },
-                    { 3, new DateTime(2022, 11, 30, 10, 45, 27, 523, DateTimeKind.Local).AddTicks(870), 3, "TBB Kullanıcısı" }
+                    { 1, new DateTime(2022, 12, 1, 17, 5, 4, 551, DateTimeKind.Local).AddTicks(6810), 1, "Avukat-Avukat Stajyeri" },
+                    { 2, new DateTime(2022, 12, 1, 17, 5, 4, 551, DateTimeKind.Local).AddTicks(6910), 2, "Öğrenci" },
+                    { 3, new DateTime(2022, 12, 1, 17, 5, 4, 551, DateTimeKind.Local).AddTicks(6920), 3, "TBB Kullanıcısı" }
                 });
 
             migrationBuilder.InsertData(
@@ -1582,6 +1604,9 @@ namespace Karartek.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Students");
+
+            migrationBuilder.DropTable(
+                name: "UserJudgmentStatistics");
 
             migrationBuilder.DropTable(
                 name: "Judgments");

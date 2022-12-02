@@ -10,7 +10,7 @@ namespace Karartek.Business.Abstract
         List<LawyerJudgmentDto> GetAll();
         List<LawyerJudgment> GetbyKeyword(string keyword);
         bool DeleteDecree(int id);
-        ResponseDto Likes(int id);
+        IResult Likes(int id, bool check);
         BaseResponseDto ApproveJudgment(JudgmentApprovalRequestDto judgmentApprovalRequestDto);
         IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByUserId(int id);
         IDataResult<List<LawyerJudgmentResponseListDto>> GetAllLawyerJudgments();

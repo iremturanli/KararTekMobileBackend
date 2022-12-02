@@ -12,10 +12,14 @@ namespace Karartek.Business.Concrete
     {
 
         private readonly ILawyerJudgmentDal _lawyerJudgmentDal;
+        private readonly IUserJudgmentStatisticDal _userJudgmentStatisticDal;
+        private readonly IUserService _userService;
 
-        public LawyerJudgmentService(ILawyerJudgmentDal lawyerJudgmentDal)
+        public LawyerJudgmentService(ILawyerJudgmentDal lawyerJudgmentDal,IUserJudgmentStatisticDal userJudgmentStatisticDal, IUserService userService)
         {
             _lawyerJudgmentDal = lawyerJudgmentDal;
+            _userJudgmentStatisticDal = userJudgmentStatisticDal;
+            _userService = userService;
         }
 
         public BaseResponseDto AddLawyerJudgment(LawyerJudgmentDto lawyerJudgmentDto)
@@ -25,15 +29,14 @@ namespace Karartek.Business.Concrete
 
             if (judgment is not null)
             {
-                response.HasError=true;
-                
+                response.HasError = true;
             }
             else
             {
                 judgment = new LawyerJudgment()
                 {
                     CommissionId = lawyerJudgmentDto.CommissionId,
-                    CourtId= lawyerJudgmentDto.CourtId,
+                    CourtId = lawyerJudgmentDto.CourtId,
                     Decree = lawyerJudgmentDto.Decree,
                     LawyerAssessment = lawyerJudgmentDto.LawyerAssessment,
                     DecreeType = lawyerJudgmentDto.DecreeType,
@@ -43,26 +46,48 @@ namespace Karartek.Business.Concrete
                     MeritsYear = lawyerJudgmentDto.MeritsYear,
                     StateId = (int)EJudgmentStates.OnayBekliyor,
                     Decision = lawyerJudgmentDto.Decision,
-                
+
                     JudgmentDate=lawyerJudgmentDto.JudgmentDate,//?
                     CreateDate = DateTime.Now,
                     UserId = lawyerJudgmentDto.UserId,
-                    Likes=lawyerJudgmentDto.Likes=0,
+                    Likes = lawyerJudgmentDto.Likes = 0,
                     TBBComments = String.Empty,
-
 
 
                 };
 
-               
+
             }
             var result = _lawyerJudgmentDal.Insert(judgment);//add
             if (result != null)
             {
-                response.HasError = false;
+                var userJudgement = _userJudgmentStatisticDal.Get(p => p.UserId == judgment.UserId);
+                if (userJudgement != null)
+                {
+                    userJudgement.JudgmentCount += 1;
+                    _userJudgmentStatisticDal.Update(userJudgement);
+                }
+                else
+                {
+                    var user = _userService.GetUser(judgment.UserId);
 
+                    var statistics = new UserJudgmentStatistic()
+                    {
+                        UserId = user.Id,
+                        UserName = user.FirstName,
+                        LastName = user.LastName,
+                        CityName = user.City.Name,
+                        UserTypeId = user.UserTypeId,
+                        UserTypeName = user.UserType.TypeName,
+                        JudgmentCount = 1
+                    };
+
+                    _userJudgmentStatisticDal.Insert(statistics);
+                }
+
+                return true;
             }
-            return response;
+            return false;
         }
 
         public BaseResponseDto ApproveJudgment(JudgmentApprovalRequestDto judgmentApprovalRequestDto)
@@ -103,7 +128,7 @@ namespace Karartek.Business.Concrete
         public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByUserId(int id)
         {
 
-            var result = _lawyerJudgmentDal.GetAll(p => p.UserId ==id);
+            var result = _lawyerJudgmentDal.GetAll(p => p.UserId == id);
             var listDto = new List<LawyerJudgmentResponseListDto>();
 
             foreach (var item in result)
@@ -126,9 +151,16 @@ namespace Karartek.Business.Concrete
                     MeritsNo = item.MeritsNo,
                     MeritsYear = item.MeritsYear,
                     CreateDate = item.CreateDate,
-                    TBBComments=item.TBBComments,
-                    UserId=item.UserId,
-                    StateName=item.LawyerJudgmentState.StateName
+                    TBBComments = item.TBBComments,
+                    UserId = item.UserId,
+                    StateName = item.LawyerJudgmentState.StateName,
+                    StateId = item.StateId,
+                    UserName = item.User.FirstName,
+                    LastName = item.User.LastName,
+                    LawyerAssesment = item.LawyerAssessment
+
+
+
                 };
 
                 listDto.Add(dto);
@@ -166,6 +198,7 @@ namespace Karartek.Business.Concrete
 
             var result = _lawyerJudgmentDal.GetAll();
             var listDto = new List<LawyerJudgmentResponseListDto>();
+   
 
             foreach (var item in result)
             {
@@ -190,9 +223,10 @@ namespace Karartek.Business.Concrete
                     TBBComments = item.TBBComments,
                     UserId = item.UserId,
                     StateName = item.LawyerJudgmentState.StateName,
-                    UserName=item.User.FirstName,
-                    LastName=item.User.LastName,
-                    LawyerAssesment = item.LawyerAssessment
+                    UserName = item.User.FirstName,
+                    LastName = item.User.LastName,
+                    LawyerAssesment = item.LawyerAssessment,
+                    StateId = item.StateId
 
                 };
 
@@ -216,39 +250,39 @@ namespace Karartek.Business.Concrete
 
         }
 
-         public List<LawyerJudgmentDto> GetAll()
-         {
-             var data = new List<LawyerJudgmentDto>();
-             var result = _lawyerJudgmentDal.GetAll();
+        public List<LawyerJudgmentDto> GetAll()
+        {
+            var data = new List<LawyerJudgmentDto>();
+            var result = _lawyerJudgmentDal.GetAll();
 
-             foreach (var item in result)
-             {
-                 var dto = new LawyerJudgmentDto()
-                 {
-                     Id = item.Id,
-                     CommissionId = item.CommissionId,
-                     CourtId = item.CourtId,
-                     Decision = item.Decision,
-                     Decree = item.Decree,
-                     DecreeNo = item.DecreeNo,
-                     DecreeType = item.DecreeType,
-                     DecreeYear = item.DecreeYear,
-                     LawyerAssessment = item.LawyerAssessment,
-                     Likes = item.Likes,
-                     MeritsNo = item.MeritsNo,
-                     MeritsYear = item.MeritsYear,
-                     StateId = item.StateId,
-                     TBBComments = item.TBBComments
+            foreach (var item in result)
+            {
+                var dto = new LawyerJudgmentDto()
+                {
+                    Id = item.Id,
+                    CommissionId = item.CommissionId,
+                    CourtId = item.CourtId,
+                    Decision = item.Decision,
+                    Decree = item.Decree,
+                    DecreeNo = item.DecreeNo,
+                    DecreeType = item.DecreeType,
+                    DecreeYear = item.DecreeYear,
+                    LawyerAssessment = item.LawyerAssessment,
+                    Likes = item.Likes,
+                    MeritsNo = item.MeritsNo,
+                    MeritsYear = item.MeritsYear,
+                    StateId = item.StateId,
+                    TBBComments = item.TBBComments
 
-                 };
+                };
 
-                 data.Add(dto);
-             }
+                data.Add(dto);
+            }
 
 
-             return data;
-        
-    }
+            return data;
+
+        }
 
         public List<LawyerJudgment> GetbyKeyword(string keyword)
         {
@@ -288,7 +322,7 @@ namespace Karartek.Business.Concrete
                     StateName = item.LawyerJudgmentState.StateName,
                     UserName = item.User.FirstName,
                     LastName = item.User.LastName,
-                    LawyerAssesment=item.LawyerAssessment
+                    LawyerAssesment = item.LawyerAssessment
 
                 };
 
@@ -309,35 +343,40 @@ namespace Karartek.Business.Concrete
         }
 
 
-
-            public ResponseDto Likes(int id)
+        public IResult Likes(int id, bool check)
         {
-            ResponseDto response = new ResponseDto();
             var judgmentToLike = _lawyerJudgmentDal.Get(p => p.Id == id);
             if (judgmentToLike != null)
             {
-                judgmentToLike.Likes++;
-                _lawyerJudgmentDal.Update(judgmentToLike);
-                Console.WriteLine(judgmentToLike.Likes);
+                if (check == true)
+                {
 
-                response.HasError = false;
-                response.Message = judgmentToLike.Likes + "Beğeni "; //mantıksız
+                    judgmentToLike.Likes++;
+                    _lawyerJudgmentDal.Update(judgmentToLike);
+                    Console.WriteLine(judgmentToLike.Likes);
+                    return new SuccessResult("Success!");
 
-                return response;
+                }
+                else
+                {
+
+                    judgmentToLike.Likes--;
+                    _lawyerJudgmentDal.Update(judgmentToLike);
+                    Console.WriteLine(judgmentToLike.Likes);
+                    return new SuccessResult("Likes count decreased");
+                }
+
 
 
             }
             else
             {
-                response.HasError = true;
-                response.Message = "İşlem Hatalı"; //mantıksız
-                return response;
+                return new ErrorResult("Failed");
 
             }
-        }
 
-     
+
+        }
     }
 }
-
 

@@ -62,7 +62,7 @@ namespace Karartek.Api.Controllers
         }
 
 
-        [HttpGet("GetByKeyword/{{keyword}}")]
+        [HttpGet("GetByKeyword/{keyword}")]
         public List<Judgment> GetbyKeyword(string keyword)
         {
             var judgmentToSearch = _judgmentService.GetbyKeyword(keyword);
@@ -71,7 +71,7 @@ namespace Karartek.Api.Controllers
 
         }
 
-        [HttpGet("DeleteDecree/{{id}}")]
+        [HttpGet("DeleteDecree/{id}")]
         public bool DeleteDecree(int id)
         {
             _judgmentService.DeleteDecree(id);
@@ -79,8 +79,8 @@ namespace Karartek.Api.Controllers
 
 
         }
-        [HttpPost("JudgmentToLike")]
-        public ActionResult JudgmentsToLike([FromQuery]int id, bool check)
+        [HttpPost("LawyerJudgmentToLike")]
+        public ActionResult JudgmentsToLike([FromQuery] int id,bool check)
         {
             var result=_judgmentService.Likes(id,check);
             if (result.Success)
