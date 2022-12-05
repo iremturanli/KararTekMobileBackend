@@ -5,6 +5,10 @@ using System.Security.Claims;
 
 namespace Karartek.Api.Controllers
 {
+    
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private IUserService _userService;
@@ -15,7 +19,7 @@ namespace Karartek.Api.Controllers
         }
 
         [HttpGet("GetUserInformation")]
-        [Authorize]
+        
         public ActionResult GetUser()
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
