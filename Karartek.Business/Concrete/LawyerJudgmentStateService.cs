@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using Karartek.Business.Abstract;
 using Karartek.DataAccess.Abstract;
 using Karartek.DataAccess.Concrete.EntityFramework;

@@ -125,11 +125,12 @@ namespace Karartek.Business.Concrete
                 judgment.StateId = (int)EJudgmentStates.Reddedildi;
                 judgment.TBBComments = judgmentApprovalRequestDto.RejectMessage;
                 _lawyerJudgmentDal.Update(judgment);
-                var statistic = _userJudgmentStatisticDal.Get(p => p.UserId == judgment.UserId);
+                var statistic=_userJudgmentStatisticDal.Get(p => p.UserId == judgment.UserId);
                 statistic.JudgmentCount--;
                 _userJudgmentStatisticDal.Update(statistic);
                 response.Message = "Karar reddedilmiş";
                 response.HasError = false;
+
             }
             else
             {

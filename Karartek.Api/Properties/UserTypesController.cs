@@ -23,7 +23,7 @@ namespace Karartek.Api.Controllers
             return userTypeToSearch;
         }
 
-        [HttpGet("GetById/{{id}}")]
+        [HttpGet("GetById/{id}")]
         public UserType GetById(int id)
         {
             var userTypeToSearch = _userTypeService.GetUserTypeById(id);

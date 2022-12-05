@@ -13,7 +13,7 @@ namespace Karartek.Business.Concrete
         private readonly IUserJudgmentStatisticDal _userJudgmentStatisticDal;
       
 
-        //
+        
 
 
         public UserJudgmentStatisticService(IUserJudgmentStatisticDal userJudgmentStatisticDal)
