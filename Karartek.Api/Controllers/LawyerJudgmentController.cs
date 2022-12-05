@@ -1,6 +1,7 @@
 using Core.Utilities.Results;
 using Karartek.Business.Abstract;
 using Karartek.Business.Concrete;
+using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,12 @@ namespace Karartek.Api.Controllers
     public class LawyerJudgmentController : ControllerBase
     {
         private ILawyerJudgmentService _lawyerJudgmentService;
+        private IUserJudgmentStatisticService _userJudgmentStatisticService;
 
-        public LawyerJudgmentController(ILawyerJudgmentService lawyerJudgmentService)
+        public LawyerJudgmentController(ILawyerJudgmentService lawyerJudgmentService,IUserJudgmentStatisticService userJudgmentStatisticService)
         {
             _lawyerJudgmentService = lawyerJudgmentService;
+            _userJudgmentStatisticService = userJudgmentStatisticService;
         }
 
 
@@ -107,6 +110,20 @@ namespace Karartek.Api.Controllers
 
         {
             var judgments = _lawyerJudgmentService.GetLawyerJudgmentsByType(filterDto);
+            return judgments;
+
+
+
+        }
+
+
+        [HttpGet("GetJudgmentsCount")]
+
+        public IDataResult<List<UserJudgmentStatistic>> GetJudgmentsCount()
+
+
+        {
+            var judgments = _userJudgmentStatisticService.GetAll();
             return judgments;
 
 

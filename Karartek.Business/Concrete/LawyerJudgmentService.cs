@@ -48,10 +48,16 @@ namespace Karartek.Business.Concrete
                     MeritsYear = lawyerJudgmentDto.MeritsYear,
                     StateId = (int)EJudgmentStates.OnayBekliyor,
                     Decision = lawyerJudgmentDto.Decision,
-                    TBBComments = lawyerJudgmentDto.TBBComments,
-                    JudgmentDate = lawyerJudgmentDto.JudgmentDate,//?
+                    TBBComments = String.Empty,
+                    JudgmentDate = lawyerJudgmentDto.JudgmentDate,
                     CreateDate = DateTime.Now,
                     UserId = lawyerJudgmentDto.UserId,
+                    Likes = 0
+                    
+
+
+                    
+               
 
 
                 };
@@ -88,11 +94,13 @@ namespace Karartek.Business.Concrete
                 }
 
                 response.HasError = false;
+                response.Message = "Success";
                 return response;
 
             }
 
             response.HasError=true;
+            response.Message = "Adding Failed";
             return response;
         }
 
