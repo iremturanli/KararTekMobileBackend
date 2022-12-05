@@ -23,6 +23,16 @@ namespace Karartek.Business.Concrete
         private string RandomPassword;
         private string NewRandomPassword;
 
+        //
+
+
+        public UserService(IUserDal userDal, ILawyerDal lawyerDal, IStudentDal studentDal, IConfiguration configuration)
+        {
+            _userDal = userDal;
+            _studentDal = studentDal;
+            _lawyerDal = lawyerDal;
+            _configuration = configuration;
+        }
 
 
         public IDataResult<List<UserResponseDto>> GetUserById(int id)
@@ -83,14 +93,6 @@ namespace Karartek.Business.Concrete
         }
 
 
-
-        public UserService(IUserDal userDal, ILawyerDal lawyerDal, IStudentDal studentDal, IConfiguration configuration)
-        {
-            _userDal = userDal;
-            _studentDal = studentDal;
-            _lawyerDal = lawyerDal;
-            _configuration = configuration;
-        }
 
 
 
