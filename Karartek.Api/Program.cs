@@ -39,6 +39,8 @@ builder.Services.AddSingleton<ILawyerJudgmentStateDal, EfLawyerJudgmentStateDal>
 builder.Services.AddSingleton<ILawyerJudgmentStateService, LawyerJudgmentStateService>();
 builder.Services.AddSingleton<ICityService,CityService>();
 builder.Services.AddSingleton<ICityDal,EfCityDal>();
+builder.Services.AddSingleton<IDistrictService, DistrictService>();
+builder.Services.AddSingleton<IDistrictDal,EfDistrictDal>();
 builder.Services.AddSingleton<ICommissionService, CommissionService>();
 builder.Services.AddSingleton<ICommissionDal, EfCommissionDal>();
 builder.Services.AddSingleton<ICourtService, CourtService>();

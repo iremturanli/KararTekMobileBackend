@@ -1,8 +1,8 @@
 ﻿namespace Karartek.Entities.Dto
 {
-    public class CourtResponseListDto
+    public class DistrictResponseListDto
     {
         public int Id { get; set; }
-        public string? Name {get; set; }
+        public string? Name { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Karartek.Entities.Concrete;
+﻿using Core.Utilities.Results;
+using Karartek.Entities.Concrete;
+using Karartek.Entities.Dto;
 using System.Linq.Expressions;
 
 namespace Karartek.DataAccess.Abstract
@@ -7,7 +9,7 @@ namespace Karartek.DataAccess.Abstract
     {
         User GetUserByEmail(string email);
         User GetUserByIdentity(string identity);
-        User GetUserById(int id);
+        List<User> GetUserById(int id);
         User Insert(User user);
         User userForForgotPassword(string identityNumber, byte[] passwordHash, byte[] passwordSalt);
         User Get(Expression<Func<User, bool>>? filter = null);

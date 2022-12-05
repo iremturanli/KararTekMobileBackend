@@ -1,4 +1,5 @@
-﻿using Karartek.DataAccess.Abstract;
+﻿using Core.Utilities.Results;
+using Karartek.DataAccess.Abstract;
 using Karartek.DataAccess.Concrete.EntityFramework.Context;
 using Karartek.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
@@ -50,10 +51,11 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
             }
         }
 
-        public User GetUserById(int id)
+        public List<User> GetUserById(int id)
         {
+            
             using var context = new AppDbContext();
-            var user = context.Users.Where(x => x.Id == id).Include(x => x.UserType).Include(c => c.City).Include(d => d.District).Include(l=>l.Lawyer).Include(s => s.Student).SingleOrDefault();
+            var user = context.Users.Where(x => x.Id == id).Include(x => x.UserType).Include(c => c.City).Include(d => d.District).Include(l=>l.Lawyer).Include(s => s.Student).ToList();
             return user;
         }
 

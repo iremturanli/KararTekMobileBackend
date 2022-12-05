@@ -1,4 +1,5 @@
-﻿using Karartek.Business.Abstract;
+﻿using Core.Utilities.Results;
+using Karartek.Business.Abstract;
 using Karartek.DataAccess.Abstract;
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
@@ -24,26 +25,39 @@ namespace Karartek.Business.Concrete
 
 
 
-        public UserResponseDto GetUserById(int id)
+        public IDataResult<List<UserResponseDto>> GetUserById(int id)
 
         {
             //TODO:Add remaining Dtos
-            var user = _userDal.GetUserById(id);
-            UserResponseDto userResponseDto = new UserResponseDto();
-            userResponseDto.Id = user.Id;
-            userResponseDto.IdentityNumber = user.IdentityNumber;
-            userResponseDto.FirstName = user.FirstName;
-            userResponseDto.LastName = user.LastName;
-            userResponseDto.PhoneNumber = user.PhoneNumber;
-            userResponseDto.BarRegisterNo = user.Lawyer == null ? String.Empty : user.Lawyer.BarRegisterNo; //profilim fakülte
-            userResponseDto.University = user.Student == null? String.Empty: user.Student.University;
-            userResponseDto.UserTypeId = user.UserTypeId;
-            userResponseDto.CityId = user.CityId;
-            userResponseDto.DistrictId = user.DistrictId;
-            userResponseDto.DistrictName = user.District.Name;
-            userResponseDto.CityName = user.City.Name;
-            userResponseDto.UserTypeName = user.UserType.TypeName;
-            return userResponseDto;
+            var result = _userDal.GetUserById(id);
+            var listDto = new List<UserResponseDto>();
+            foreach (var item in result)
+            {
+                var dto = new UserResponseDto()
+                {
+                    Id = item.Id,
+                    IdentityNumber = item.IdentityNumber,
+                    FirstName = item.FirstName,
+                    LastName = item.LastName,
+                    PhoneNumber = item.PhoneNumber,
+                    BarRegisterNo = item.Lawyer == null ? String.Empty : item.Lawyer.BarRegisterNo, //profilim fakülte
+                    University = item.Student == null ? String.Empty : item.Student.University,
+                    UserTypeId = item.UserTypeId,
+                    CityId = item.CityId,
+                    DistrictId = item.DistrictId,
+                    DistrictName = item.District.Name,
+                    CityName = item.City.Name,
+                    UserTypeName = item.UserType.TypeName,
+                    Email = item.Email,
+                    Faculty = item.Student == null ? String.Empty : item.Student.Faculty,
+                    Grade = item.Student == null ? String.Empty : item.Student.Grade,
+                    StudentNumber = item.Student == null ? String.Empty : item.Student.StudentNumber
+                };
+                listDto.Add(dto);
+            }
+            return new SuccessDataResult<List<UserResponseDto>>(listDto, "Success!");
+
+
 
 
 
@@ -52,9 +66,12 @@ namespace Karartek.Business.Concrete
 
         public User GetUser(int id)
         {
-            var user = _userDal.GetUserById(id);
-            return user;
+           throw new NotImplementedException();
         }
+        //IDataResult<List<User>> GetUserInfo(int id)
+        //{
+        //    throw new NotSupportedException();
+        //}
 
         public User GetUserByIdentity(string identity)
 

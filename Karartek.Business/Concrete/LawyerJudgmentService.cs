@@ -48,10 +48,11 @@ namespace Karartek.Business.Concrete
                     MeritsYear = lawyerJudgmentDto.MeritsYear,
                     StateId = (int)EJudgmentStates.OnayBekliyor,
                     Decision = lawyerJudgmentDto.Decision,
-                    TBBComments = lawyerJudgmentDto.TBBComments,
                     JudgmentDate = lawyerJudgmentDto.JudgmentDate,//?
                     CreateDate = DateTime.Now,
                     UserId = lawyerJudgmentDto.UserId,
+                    Likes = lawyerJudgmentDto.Likes = 0,
+                    TBBComments = String.Empty,
 
 
                 };
@@ -202,7 +203,7 @@ namespace Karartek.Business.Concrete
         public IDataResult<List<LawyerJudgmentResponseListDto>> GetAllLawyerJudgments()
         {
 
-            var result = _lawyerJudgmentDal.GetAll();
+            var result = _lawyerJudgmentDal.GetAll(p => p.StateId==(int)EJudgmentStates.OnayBekliyor);
             var listDto = new List<LawyerJudgmentResponseListDto>();
    
 
