@@ -146,7 +146,24 @@ namespace Karartek.Api.Controllers
 
         }
 
-   
+        [HttpPost("GetLawyerJudgmentsByFilter")]
+
+        public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentByUserId(FilterDetailDto filterDetailDto)
+
+
+        {
+            var UserId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+  
+            var filterJudgments = _lawyerJudgmentService.GetLawyerJudgmentsByFilter(UserId,filterDetailDto);
+            return filterJudgments;
+
+
+
+        }
+
+
+
+
 
 
 
