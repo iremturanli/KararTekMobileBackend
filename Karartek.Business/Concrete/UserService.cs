@@ -22,6 +22,7 @@ namespace Karartek.Business.Concrete
         private readonly ILawyerDal _lawyerDal;
         private string RandomPassword;
         private string NewRandomPassword;
+        private string NewPassword;
 
         //
 
@@ -370,7 +371,52 @@ namespace Karartek.Business.Concrete
 
         }
 
+        public ResponseDto ChangePassword(ChangePasswordDto changePasswordDto, )
+        {
+            
+            //ResponseDto response = new ResponseDto();
+            //NewPassword = changePasswordDto.newPassword;
+            //var user = _userDal.GetUserByIdentity(identityNumber);
 
+            //if (user is null || user.PasswordHash != forgotMyPasswordDto.Email || user.IdentityNumber != forgotMyPasswordDto.IdentityNumber)
+            //{
+            //    response.HasError = true;
+            //    response.Message = "Bilgilerinizi kontrol ediniz."; //mantıksız
+            //    return response;
+
+
+
+            //}
+
+            //else
+            //{
+
+            //    CreatePasswordHash(NewRandomPassword, out byte[] passwordHash, out byte[] passwordSalt);
+            //    var userToResetPassword = _userDal.userForForgotPassword(forgotMyPasswordDto.IdentityNumber, passwordHash, passwordSalt);
+
+
+            //    SmtpClient client = new SmtpClient("smtp.yandex.com.tr", 587);
+            //    MailMessage message = new MailMessage();
+            //    message.From = new MailAddress("karartek@yandex.com");
+            //    message.To.Add(userToResetPassword.Email);
+            //    message.Subject = "Merhaba Sayın " + userToResetPassword.FirstName + " " + userToResetPassword.LastName;
+            //    message.Body = "Yeni uygulama şifreniz: " + NewRandomPassword;
+            //    client.UseDefaultCredentials = false;
+            //    client.EnableSsl = true; // Encryption
+            //    client.Credentials = new System.Net.NetworkCredential("karartek@yandex.com", "plbobupzzvaxxgpw");
+
+            //    client.Send(message);
+
+
+
+            //    //We create Token here
+
+            //    response.HasError = false;
+            //    response.Message = "Şifre Sıfırlama İşlemi Başarılı";
+            //    return response;
+            //}
+
+        }
     }
 
 

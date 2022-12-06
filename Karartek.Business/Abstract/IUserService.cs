@@ -12,7 +12,8 @@ namespace Karartek.Business.Abstract
         User GetUserByIdentity(string userIdentity);
         IDataResult<List<UserResponseDto>> GetUserById(int id);
         User GetUser(int id);
-        //IDataResult<List<User>> GetUserInfo(int id);    
+        //IDataResult<List<User>> GetUserInfo(int id);
+        ResponseDto ChangePassword(ChangePasswordDto changePasswordDto,string identityNumber);
 
     }
 }
