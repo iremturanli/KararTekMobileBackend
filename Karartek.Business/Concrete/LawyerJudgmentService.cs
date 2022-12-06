@@ -329,8 +329,72 @@ namespace Karartek.Business.Concrete
 
 
 
+        public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByFilterKK(int id, FilterDetailDtoKK filterDetailDtoKK)
+        {
 
-       public List<LawyerJudgmentDto> GetAll()
+
+            var resultFilter = _lawyerJudgmentDal.GetAll(p => p.UserId == id).Where(result => (String.IsNullOrEmpty(filterDetailDtoKK.MeritsNo) || result.MeritsNo==filterDetailDtoKK.MeritsNo) && (String.IsNullOrEmpty(filterDetailDtoKK.DecreeNo) || result.DecreeNo ==filterDetailDtoKK.DecreeNo) && (String.IsNullOrEmpty(filterDetailDtoKK.Decree)|| result.Decree.Contains(filterDetailDtoKK.Decree.ToLower()) || result.Decree.Contains(filterDetailDtoKK.Decree) && String.IsNullOrEmpty(filterDetailDtoKK.Decision) || result.Decision.Contains(filterDetailDtoKK.Decision) || result.Decision.Contains(filterDetailDtoKK.Decision.ToLower()) && String.IsNullOrEmpty(filterDetailDtoKK.LawyerAssesment) || result.LawyerAssessment.Contains(filterDetailDtoKK.LawyerAssesment) || result.LawyerAssessment.Contains(filterDetailDtoKK.LawyerAssesment.ToLower()) && filterDetailDtoKK.JudgmentStateId.HasValue || result.StateId == filterDetailDtoKK.JudgmentStateId && result.JudgmentDate >= filterDetailDtoKK.StartDate && result.JudgmentDate <= filterDetailDtoKK.FinishDate));
+
+            var listDto = new List<LawyerJudgmentResponseListDto>();
+
+            foreach (var item in resultFilter)
+            {
+
+                var dto = new LawyerJudgmentResponseListDto()
+                {
+                    CommissionName = item.Commission.Name,
+                    CourtName = item.Court.Name,
+                    CommissionId = item.CommissionId,
+                    CourtId = item.CourtId,
+                    Decision = item.Decision,
+                    Decree = item.Decree,
+                    DecreeNo = item.DecreeNo,
+                    DecreeType = item.DecreeType,
+                    DecreeYear = item.DecreeYear,
+                    Id = item.Id,
+                    JudgmentDate = item.JudgmentDate,
+                    Likes = item.Likes,
+                    MeritsNo = item.MeritsNo,
+                    MeritsYear = item.MeritsYear,
+                    CreateDate = item.CreateDate,
+                    TBBComments = item.TBBComments,
+                    UserId = item.UserId,
+                    StateName = item.LawyerJudgmentState.StateName,
+                    StateId = item.LawyerJudgmentState.StateId,
+                    UserName = item.User.FirstName,
+                    LastName = item.User.LastName,
+                    LawyerAssesment = item.LawyerAssessment
+
+
+
+                };
+
+                listDto.Add(dto);
+
+            }
+
+
+            if (resultFilter != null)
+            {
+                return new SuccessDataResult<List<LawyerJudgmentResponseListDto>>(listDto, "Success!");
+            }
+
+            else
+            {
+                return new ErrorDataResult<List<LawyerJudgmentResponseListDto>>("Not Found");
+            }
+
+
+
+        }
+
+
+
+
+
+
+
+        public List<LawyerJudgmentDto> GetAll()
         {
             var data = new List<LawyerJudgmentDto>();
             var result = _lawyerJudgmentDal.GetAll();
