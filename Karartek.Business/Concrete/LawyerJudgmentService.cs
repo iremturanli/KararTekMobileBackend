@@ -14,12 +14,14 @@ namespace Karartek.Business.Concrete
         private readonly ILawyerJudgmentDal _lawyerJudgmentDal;
         private readonly IUserJudgmentStatisticDal _userJudgmentStatisticDal;
         private readonly IUserService _userService;
+        private readonly IUserLikeDal _userLikeDal;
 
-        public LawyerJudgmentService(ILawyerJudgmentDal lawyerJudgmentDal,IUserJudgmentStatisticDal userJudgmentStatisticDal, IUserService userService)
+        public LawyerJudgmentService(ILawyerJudgmentDal lawyerJudgmentDal,IUserJudgmentStatisticDal userJudgmentStatisticDal, IUserService userService,IUserLikeDal userLikeDal)
         {
             _lawyerJudgmentDal = lawyerJudgmentDal;
             _userJudgmentStatisticDal = userJudgmentStatisticDal;
             _userService = userService;
+            _userLikeDal = userLikeDal;
         }
 
         public BaseResponseDto AddLawyerJudgment(LawyerJudgmentDto lawyerJudgmentDto)
@@ -272,7 +274,7 @@ namespace Karartek.Business.Concrete
         {
 
             
-            var resultFilter = _lawyerJudgmentDal.GetAll(p => p.UserId == id).Where(result =>String.IsNullOrEmpty(filterDetailDto.MeritsNoFirst)|| String.IsNullOrEmpty(filterDetailDto.MeritsNoLast) || Int32.Parse(result.MeritsNo) >= Int32.Parse(filterDetailDto.MeritsNoFirst) || Int32.Parse(result.MeritsNo) <= Int32.Parse(filterDetailDto.MeritsNoLast) && String.IsNullOrEmpty(filterDetailDto.DecreeNoFirst)||String.IsNullOrEmpty(filterDetailDto.DecreeNoLast)||Int32.Parse(result.DecreeNo) >= Int32.Parse(filterDetailDto.DecreeNoFirst) || Int32.Parse(result.DecreeNo) <= Int32.Parse(filterDetailDto.DecreeNoLast) && String.IsNullOrEmpty(filterDetailDto.MeritsYear)||result.MeritsYear.Contains(filterDetailDto.MeritsYear) && String.IsNullOrEmpty(filterDetailDto.DecreeYear)||result.DecreeYear.Contains(filterDetailDto.DecreeYear) && String.IsNullOrEmpty(filterDetailDto.Decree)||result.Decree.Contains(filterDetailDto.Decree) || result.Decree.Contains(filterDetailDto.Decree.ToLower()) && String.IsNullOrEmpty(filterDetailDto.Decision)||result.Decision.Contains(filterDetailDto.Decision) || result.Decision.Contains(filterDetailDto.Decision.ToLower()) && String.IsNullOrEmpty(filterDetailDto.LawyerAssesment)||result.LawyerAssessment.Contains(filterDetailDto.LawyerAssesment) || result.LawyerAssessment.Contains(filterDetailDto.LawyerAssesment.ToLower()) && filterDetailDto.JudgmentStateId.HasValue||result.StateId == filterDetailDto.JudgmentStateId && result.JudgmentDate >= filterDetailDto.StartDate && result.JudgmentDate <= filterDetailDto.FinishDate);
+            var resultFilter = _lawyerJudgmentDal.GetAll(p => p.UserId == id).Where(result =>String.IsNullOrEmpty(filterDetailDto.MeritsNoFirst)|| String.IsNullOrEmpty(filterDetailDto.MeritsNoLast) || Int32.Parse(result.MeritsNo) >= Int32.Parse(filterDetailDto.MeritsNoFirst) || Int32.Parse(result.MeritsNo) <= Int32.Parse(filterDetailDto.MeritsNoLast) && String.IsNullOrEmpty(filterDetailDto.DecreeNoFirst)||String.IsNullOrEmpty(filterDetailDto.DecreeNoLast)||Int32.Parse(result.DecreeNo) >= Int32.Parse(filterDetailDto.DecreeNoFirst) || Int32.Parse(result.DecreeNo) <= Int32.Parse(filterDetailDto.DecreeNoLast) && String.IsNullOrEmpty(filterDetailDto.MeritsYear)||result.MeritsYear.Contains(filterDetailDto.MeritsYear) && String.IsNullOrEmpty(filterDetailDto.DecreeYear)||result.DecreeYear.Contains(filterDetailDto.DecreeYear) && String.IsNullOrEmpty(filterDetailDto.Decree)||result.Decree.Contains(filterDetailDto.Decree) || result.Decree.Contains(filterDetailDto.Decree.ToLower()) && String.IsNullOrEmpty(filterDetailDto.Decision)||result.Decision.Contains(filterDetailDto.Decision) || result.Decision.Contains(filterDetailDto.Decision.ToLower()) && String.IsNullOrEmpty(filterDetailDto.LawyerAssesment)||result.LawyerAssessment.Contains(filterDetailDto.LawyerAssesment) || result.LawyerAssessment.Contains(filterDetailDto.LawyerAssesment.ToLower()) && (!filterDetailDto.JudgmentStateId.HasValue||result.StateId == filterDetailDto.JudgmentStateId) && (result.JudgmentDate >= filterDetailDto.StartDate && result.JudgmentDate <= filterDetailDto.FinishDate));
 
             var listDto = new List<LawyerJudgmentResponseListDto>();
 
@@ -333,7 +335,13 @@ namespace Karartek.Business.Concrete
         {
 
 
-            var resultFilter = _lawyerJudgmentDal.GetAll(p => p.UserId == id).Where(result => (String.IsNullOrEmpty(filterDetailDtoKK.MeritsNo) || result.MeritsNo==filterDetailDtoKK.MeritsNo) && (String.IsNullOrEmpty(filterDetailDtoKK.DecreeNo) || result.DecreeNo ==filterDetailDtoKK.DecreeNo) && (String.IsNullOrEmpty(filterDetailDtoKK.Decree)|| result.Decree.Contains(filterDetailDtoKK.Decree.ToLower()) || result.Decree.Contains(filterDetailDtoKK.Decree) && String.IsNullOrEmpty(filterDetailDtoKK.Decision) || result.Decision.Contains(filterDetailDtoKK.Decision) || result.Decision.Contains(filterDetailDtoKK.Decision.ToLower()) && String.IsNullOrEmpty(filterDetailDtoKK.LawyerAssesment) || result.LawyerAssessment.Contains(filterDetailDtoKK.LawyerAssesment) || result.LawyerAssessment.Contains(filterDetailDtoKK.LawyerAssesment.ToLower()) && filterDetailDtoKK.JudgmentStateId.HasValue || result.StateId == filterDetailDtoKK.JudgmentStateId && result.JudgmentDate >= filterDetailDtoKK.StartDate && result.JudgmentDate <= filterDetailDtoKK.FinishDate));
+            var resultFilter = _lawyerJudgmentDal.GetAll(p => p.UserId == id).Where(result => (String.IsNullOrEmpty(filterDetailDtoKK.MeritsNo) || result.MeritsNo==filterDetailDtoKK.MeritsNo)
+            && (String.IsNullOrEmpty(filterDetailDtoKK.DecreeNo) || result.DecreeNo ==filterDetailDtoKK.DecreeNo)
+            && (String.IsNullOrEmpty(filterDetailDtoKK.Decree)|| result.Decree.Contains(filterDetailDtoKK.Decree.ToLower()))
+            && (String.IsNullOrEmpty(filterDetailDtoKK.Decision) || result.Decision.Contains(filterDetailDtoKK.Decision.ToLower()))
+            && (String.IsNullOrEmpty(filterDetailDtoKK.LawyerAssesment) || result.LawyerAssessment.Contains(filterDetailDtoKK.LawyerAssesment.ToLower()))
+            && (!filterDetailDtoKK.JudgmentStateId.HasValue || result.StateId == filterDetailDtoKK.JudgmentStateId )&& (result.JudgmentDate >= filterDetailDtoKK.StartDate
+            && result.JudgmentDate <= filterDetailDtoKK.FinishDate));
 
             var listDto = new List<LawyerJudgmentResponseListDto>();
 
@@ -490,6 +498,8 @@ namespace Karartek.Business.Concrete
         public IResult Likes(int id, bool check)
         {
             var judgmentToLike = _lawyerJudgmentDal.Get(p => p.Id == id);
+            var userLikes = new UserLike();
+
             if (judgmentToLike != null)
             {
                 if (check == true)
@@ -498,7 +508,15 @@ namespace Karartek.Business.Concrete
                     judgmentToLike.Likes++;
                     _lawyerJudgmentDal.Update(judgmentToLike);
                     Console.WriteLine(judgmentToLike.Likes);
+
+                    userLikes.UserId = judgmentToLike.UserId;
+                    userLikes.isLike = true;
+                    userLikes.LawyerJudgmentId = judgmentToLike.Id;
+                    _userLikeDal.Insert(userLikes);
+                
                     return new SuccessResult("Success!");
+
+
 
                 }
                 else
@@ -507,6 +525,10 @@ namespace Karartek.Business.Concrete
                     judgmentToLike.Likes--;
                     _lawyerJudgmentDal.Update(judgmentToLike);
                     Console.WriteLine(judgmentToLike.Likes);
+
+                    userLikes=_userLikeDal.Get(p => p.UserId == judgmentToLike.UserId && p.LawyerJudgmentId == judgmentToLike.Id);
+                    userLikes.isLike = false;
+                    _userLikeDal.Update(userLikes);
                     return new SuccessResult("Likes count decreased");
                 }
 

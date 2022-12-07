@@ -9,9 +9,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
 {
     public class EfUserJudgmentStatisticDal:IUserJudgmentStatisticDal
     {
-        public EfUserJudgmentStatisticDal()
-        {
-        }
+
 
         public UserJudgmentStatistic Get(Expression<Func<UserJudgmentStatistic, bool>>? filter = null)
         {
