@@ -512,6 +512,7 @@ namespace Karartek.Business.Concrete
                     userLikes.UserId = judgmentToLike.UserId;
                     userLikes.isLike = true;
                     userLikes.LawyerJudgmentId = judgmentToLike.Id;
+                    userLikes.SearchTypeId = (int)ESearchTypes.AvukatınEklediğiKararlar;
                     _userLikeDal.Insert(userLikes);
                 
                     return new SuccessResult("Success!");

@@ -7,8 +7,10 @@ namespace Karartek.Entities.Concrete
     {
         public int UserId { get; set; }
         public int LawyerJudgmentId { get; set; }
+        public int SearchTypeId { get; set; }
         public bool isLike { get; set; }
         public User? User { get; set; } = null!;
+        public SearchType? SearchType { get; set; } = null!;
     }
 }
 
