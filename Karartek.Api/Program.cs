@@ -47,6 +47,8 @@ builder.Services.AddSingleton<ICourtService, CourtService>();
 builder.Services.AddSingleton<ICourtDal, EfCourtDal>();
 builder.Services.AddSingleton<IUserJudgmentStatisticDal, EfUserJudgmentStatisticDal>();
 builder.Services.AddSingleton<IUserJudgmentStatisticService, UserJudgmentStatisticService>();
+builder.Services.AddSingleton<IUserLikeDal, EfUserLikeDal>();
+builder.Services.AddSingleton<IUserLikeService, UserLikeService>();
 
 
 builder.Services.AddSwaggerGen(options => {

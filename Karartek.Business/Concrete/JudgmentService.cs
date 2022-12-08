@@ -2,7 +2,9 @@
 using Karartek.Business.Abstract;
 using Karartek.DataAccess.Abstract;
 using Karartek.DataAccess.Concrete.EntityFramework;
+using Karartek.DataAccess.Concrete.EntityFramework.Context;
 using Karartek.Entities.Concrete;
+using Karartek.Entities.Concrete.Enum;
 using Karartek.Entities.Dto;
 using System;
 using System.Collections.Generic;
@@ -22,11 +24,13 @@ namespace Karartek.Business.Concrete
     {
         private readonly IJudgmentDal _judgmentDal;
         private readonly ILawyerJudgmentDal _lawyerjudgmentDal;
+        private readonly IUserLikeDal _userLikeDal;
 
-        public JudgmentService(IJudgmentDal judgmentDal, ILawyerJudgmentDal lawyerjudgmentDal)
+        public JudgmentService(IJudgmentDal judgmentDal, ILawyerJudgmentDal lawyerjudgmentDal,IUserLikeDal userLikeDal)
         {
             _judgmentDal = judgmentDal;
             _lawyerjudgmentDal = lawyerjudgmentDal;
+            _userLikeDal = userLikeDal;
         }
 
         public bool AddJudgment(JudgmentDto judgmentDto)
@@ -143,9 +147,10 @@ namespace Karartek.Business.Concrete
 
         
 
-        public IResult Likes(int id, bool check)
+        public IResult Likes(int id, bool check,int userId)
         {
             var judgmentToLike = _judgmentDal.Get(p => p.Id == id);
+            var userLikes = new UserLike();
             if (judgmentToLike != null)
             {
                 if(check==true)
@@ -154,6 +159,13 @@ namespace Karartek.Business.Concrete
                     judgmentToLike.Likes++;
                     _judgmentDal.Update(judgmentToLike);
                     Console.WriteLine(judgmentToLike.Likes);
+
+                    userLikes.UserId = userId;
+                    userLikes.isLike = true;
+                    userLikes.LawyerJudgmentId = judgmentToLike.Id;
+                    userLikes.SearchTypeId = (int)ESearchTypes.YuksekYargiKararları;
+                    _userLikeDal.Insert(userLikes);
+
                     return new SuccessResult("Success!");
 
                 }

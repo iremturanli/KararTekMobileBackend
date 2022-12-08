@@ -21,6 +21,9 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
         public DbSet<Commission> Commissions { get; set; }
         public DbSet<Court> Courts { get; set; }
         public DbSet<UserJudgmentStatistic> UserJudgmentStatistics { get; set; }
+        public DbSet<UserLike> UserLikes { get; set; }
+
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -194,6 +197,15 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<UserJudgmentStatistic>().Property(x => x.CreateDate).IsRequired();
             modelBuilder.Entity<UserJudgmentStatistic>().Property(x => x.IsDeleted).IsRequired();
 
+
+            modelBuilder.Entity<UserLike>().ToTable("UserLikes");
+            modelBuilder.Entity<UserLike>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
+            modelBuilder.Entity<UserLike>().HasOne<User>(x => x.User).WithMany(x => x.UserLikes).IsRequired().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<UserLike>().HasOne<SearchType>(x => x.SearchType).WithMany(x => x.UserLikes).IsRequired().HasForeignKey(x => x.SearchTypeId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<UserLike>().Property(x => x.LawyerJudgmentId).IsRequired();
+            modelBuilder.Entity<UserLike>().Property(x => x.isLike).IsRequired();
+            modelBuilder.Entity<UserLike>().Property(x => x.CreateDate).IsRequired();
+            modelBuilder.Entity<UserLike>().Property(x => x.IsDeleted).IsRequired();
 
 
 

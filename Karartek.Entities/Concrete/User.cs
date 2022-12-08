@@ -22,17 +22,11 @@ namespace Karartek.Entities.Concrete
         public District? District { get; set; }
         public virtual ICollection<JudgmentPool>? JudgmentPools { get; set; } = null!;
         public virtual ICollection<LawyerJudgment>? LawyerJudgments { get; set; } = null!;
+        public virtual ICollection<UserLike>? UserLikes { get; set; } = null!;
 
     }
 
-    /*
-     *
-     * 1: Oğrenci,
-     * 2: Aukat,
-     * 3: ... 
-     * 
-     * 
-     */
+  
 
 
 }
