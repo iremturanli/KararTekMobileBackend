@@ -511,8 +511,8 @@ namespace Karartek.Business.Concrete
 
                     userLikes.UserId = judgmentToLike.UserId;
                     userLikes.isLike = true;
-                    userLikes.LawyerJudgmentId = judgmentToLike.Id;
-                    userLikes.SearchTypeId = (int)ESearchTypes.AvukatınEklediğiKararlar;
+                    userLikes.JudgmentId = judgmentToLike.Id;
+                    userLikes.TypeId = (int)ESearchTypes.AvukatınEklediğiKararlar;
                     _userLikeDal.Insert(userLikes);
                 
                     return new SuccessResult("Success!");
@@ -527,7 +527,7 @@ namespace Karartek.Business.Concrete
                     _lawyerJudgmentDal.Update(judgmentToLike);
                     Console.WriteLine(judgmentToLike.Likes);
 
-                    userLikes=_userLikeDal.Get(p => p.UserId == judgmentToLike.UserId && p.LawyerJudgmentId == judgmentToLike.Id);
+                    userLikes=_userLikeDal.Get(p => p.UserId == judgmentToLike.UserId && p.JudgmentId == judgmentToLike.Id);
                     userLikes.isLike = false;
                     _userLikeDal.Update(userLikes);
                     return new SuccessResult("Likes count decreased");

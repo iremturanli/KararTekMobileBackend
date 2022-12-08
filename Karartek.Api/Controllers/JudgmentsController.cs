@@ -1,4 +1,5 @@
-﻿using Core.Utilities.Results;
+﻿using System.Security.Claims;
+using Core.Utilities.Results;
 using Karartek.Business.Abstract;
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
@@ -82,7 +83,8 @@ namespace Karartek.Api.Controllers
         [HttpPost("JudgmentToLike")]
         public ActionResult JudgmentsToLike([FromQuery] int id,bool check)
         {
-            var result=_judgmentService.Likes(id,check);
+            var userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var result=_judgmentService.Likes(id,check,userId);
             if (result.Success)
             {
                 return Ok(result);
