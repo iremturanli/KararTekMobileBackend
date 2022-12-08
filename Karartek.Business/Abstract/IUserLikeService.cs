@@ -6,7 +6,8 @@ namespace Karartek.Business.Abstract
 {
     public interface IUserLikeService
     {
-        IDataResult<List<UserLike>> GetAll();
+
+        public IDataResult<List<UserLike>> GetAll(int id, int searchTypeId);
     }
 }
 

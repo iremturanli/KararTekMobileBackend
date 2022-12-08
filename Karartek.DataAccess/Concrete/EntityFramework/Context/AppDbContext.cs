@@ -201,7 +201,8 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<UserLike>().ToTable("UserLikes");
             modelBuilder.Entity<UserLike>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
             modelBuilder.Entity<UserLike>().HasOne<User>(x => x.User).WithMany(x => x.UserLikes).IsRequired().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<UserLike>().Property(x => x.LawyerJudgmentId).IsRequired();
+            modelBuilder.Entity<UserLike>().Property(x => x.TypeId).IsRequired();
+            modelBuilder.Entity<UserLike>().Property(x => x.JudgmentId).IsRequired();
             modelBuilder.Entity<UserLike>().Property(x => x.isLike).IsRequired();
             modelBuilder.Entity<UserLike>().Property(x => x.CreateDate).IsRequired();
             modelBuilder.Entity<UserLike>().Property(x => x.IsDeleted).IsRequired();
