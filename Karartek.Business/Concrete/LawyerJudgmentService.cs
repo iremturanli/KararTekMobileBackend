@@ -332,8 +332,16 @@ namespace Karartek.Business.Concrete
         public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByFilterKK(int id, FilterDetailDtoKK filterDetailDtoKK)
         {
 
+            
+               var resultFilter = _lawyerJudgmentDal.GetAll(p => p.UserId == id).Where(result => (String.IsNullOrEmpty(filterDetailDtoKK.MeritsNo) || result.MeritsNo == filterDetailDtoKK.MeritsNo)
+               && (String.IsNullOrEmpty(filterDetailDtoKK.DecreeNo) || result.DecreeNo == filterDetailDtoKK.DecreeNo) 
+               && (String.IsNullOrEmpty(filterDetailDtoKK.Decree) || result.Decree.Contains(filterDetailDtoKK.Decree.ToLower())) 
+               && (String.IsNullOrEmpty(filterDetailDtoKK.Decision) || result.Decision.Contains(filterDetailDtoKK.Decision.ToLower()))
+               && (String.IsNullOrEmpty(filterDetailDtoKK.LawyerAssesment) || result.LawyerAssessment.Contains(filterDetailDtoKK.LawyerAssesment.ToLower())) 
+               && (!filterDetailDtoKK.JudgmentStateId.HasValue || result.StateId == filterDetailDtoKK.JudgmentStateId) && (!filterDetailDtoKK.StartDate.HasValue ||  result.JudgmentDate >= filterDetailDtoKK.StartDate) 
+               && (!filterDetailDtoKK.FinishDate.HasValue || result.JudgmentDate <= filterDetailDtoKK.FinishDate));
 
-            var resultFilter = _lawyerJudgmentDal.GetAll(p => p.UserId == id).Where(result => (String.IsNullOrEmpty(filterDetailDtoKK.MeritsNo) || result.MeritsNo==filterDetailDtoKK.MeritsNo) && (String.IsNullOrEmpty(filterDetailDtoKK.DecreeNo) || result.DecreeNo ==filterDetailDtoKK.DecreeNo) && (String.IsNullOrEmpty(filterDetailDtoKK.Decree)|| result.Decree.Contains(filterDetailDtoKK.Decree.ToLower()) || result.Decree.Contains(filterDetailDtoKK.Decree) && String.IsNullOrEmpty(filterDetailDtoKK.Decision) || result.Decision.Contains(filterDetailDtoKK.Decision) || result.Decision.Contains(filterDetailDtoKK.Decision.ToLower()) && String.IsNullOrEmpty(filterDetailDtoKK.LawyerAssesment) || result.LawyerAssessment.Contains(filterDetailDtoKK.LawyerAssesment) || result.LawyerAssessment.Contains(filterDetailDtoKK.LawyerAssesment.ToLower()) && filterDetailDtoKK.JudgmentStateId.HasValue || result.StateId == filterDetailDtoKK.JudgmentStateId && result.JudgmentDate >= filterDetailDtoKK.StartDate && result.JudgmentDate <= filterDetailDtoKK.FinishDate));
+
 
             var listDto = new List<LawyerJudgmentResponseListDto>();
 

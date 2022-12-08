@@ -163,7 +163,7 @@ namespace Karartek.Business.Concrete
                 message.From = new MailAddress("karartek@yandex.com");
                 message.To.Add(userToResetPassword.Email);
                 message.Subject = "Merhaba Sayın " + userToResetPassword.FirstName + " " + userToResetPassword.LastName;
-                message.Body = "Yeni uygulama şifreniz: " + NewRandomPassword;
+                message.Body = "Yeni uygulama şifreniz: " + NewRandomPassword +"\n"+ "Şifrenizi uygulamaya girişinizin ardından Profilim menüsüne girerek değiştirebilirsiniz.";
                 client.UseDefaultCredentials = false;
                 client.EnableSsl = true; // Encryption
                 client.Credentials = new System.Net.NetworkCredential("karartek@yandex.com", "plbobupzzvaxxgpw");
@@ -290,10 +290,10 @@ namespace Karartek.Business.Concrete
 
             string allowedChars = "";
             allowedChars = "1,2,3,4,5,6,7,8,9,0";
-            allowedChars += "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
-            allowedChars += "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z";
-            allowedChars += "1,2,3,4,5,6,7,8,9,0";
-            allowedChars += "!,#,$,%,&,(,),_,-,+,=,|,<,>,.,?,/";//özelkarakter
+            //allowedChars += "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
+            //allowedChars += "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z";
+            //allowedChars += "1,2,3,4,5,6,7,8,9,0";
+            //allowedChars += "!,#,$,%,&,(,),_,-,+,=,|,<,>,.,?,/";//özelkarakter
 
 
             char[] sep = {
@@ -371,50 +371,54 @@ namespace Karartek.Business.Concrete
 
         }
 
-        public ResponseDto ChangePassword(ChangePasswordDto changePasswordDto, )
+        public ResponseDto ChangePassword(ChangePasswordDto changePasswordDto, int id )
         {
+
+            ResponseDto response = new ResponseDto();
             
-            //ResponseDto response = new ResponseDto();
-            //NewPassword = changePasswordDto.newPassword;
-            //var user = _userDal.GetUserByIdentity(identityNumber);
+            NewPassword = changePasswordDto.newPassword;
+            var user = _userDal.Get(p=> p.Id == id);
+            string userId = id.ToString();
+            CreatePasswordHash(changePasswordDto.currentPassword, out byte[] passwordHash, out byte[] passwordSalt);
 
-            //if (user is null || user.PasswordHash != forgotMyPasswordDto.Email || user.IdentityNumber != forgotMyPasswordDto.IdentityNumber)
-            //{
-            //    response.HasError = true;
-            //    response.Message = "Bilgilerinizi kontrol ediniz."; //mantıksız
-            //    return response;
-
-
-
-            //}
-
-            //else
-            //{
-
-            //    CreatePasswordHash(NewRandomPassword, out byte[] passwordHash, out byte[] passwordSalt);
-            //    var userToResetPassword = _userDal.userForForgotPassword(forgotMyPasswordDto.IdentityNumber, passwordHash, passwordSalt);
-
-
-            //    SmtpClient client = new SmtpClient("smtp.yandex.com.tr", 587);
-            //    MailMessage message = new MailMessage();
-            //    message.From = new MailAddress("karartek@yandex.com");
-            //    message.To.Add(userToResetPassword.Email);
-            //    message.Subject = "Merhaba Sayın " + userToResetPassword.FirstName + " " + userToResetPassword.LastName;
-            //    message.Body = "Yeni uygulama şifreniz: " + NewRandomPassword;
-            //    client.UseDefaultCredentials = false;
-            //    client.EnableSsl = true; // Encryption
-            //    client.Credentials = new System.Net.NetworkCredential("karartek@yandex.com", "plbobupzzvaxxgpw");
-
-            //    client.Send(message);
+            if (user is null || !VerifyPasswordHash(changePasswordDto.currentPassword, user.PasswordHash, user.PasswordSalt) || user.Id != id)
+            {
+                
+                response.HasError = true;
+                response.Message = "Bilgilerinizi kontrol ediniz."; //mantıksız
+                return response;
 
 
 
-            //    //We create Token here
+            }
 
-            //    response.HasError = false;
-            //    response.Message = "Şifre Sıfırlama İşlemi Başarılı";
-            //    return response;
-            //}
+            else
+            {
+
+                CreatePasswordHash(NewPassword, out passwordHash,out passwordSalt);
+                var userToResetPassword = _userDal.userForChangePassword(id, passwordHash, passwordSalt);
+
+
+                SmtpClient client = new SmtpClient("smtp.yandex.com.tr", 587);
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress("karartek@yandex.com");
+                message.To.Add(userToResetPassword.Email);
+                message.Subject = "Merhaba Sayın " + userToResetPassword.FirstName + " " + userToResetPassword.LastName;
+                message.Body = "Yeni uygulama şifreniz: " + NewPassword;
+                client.UseDefaultCredentials = false;
+                client.EnableSsl = true; // Encryption
+                client.Credentials = new System.Net.NetworkCredential("karartek@yandex.com", "plbobupzzvaxxgpw");
+
+                client.Send(message);
+
+
+
+                //We create Token here
+
+                response.HasError = false;
+                response.Message = "Şifre Sıfırlama İşlemi Başarılı";
+                return response;
+            }
 
         }
     }

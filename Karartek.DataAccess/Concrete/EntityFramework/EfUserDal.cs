@@ -67,10 +67,10 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
 
         }
 
-        public User userForChangePassword(string identityNumber, byte[] passwordHash, byte[] passwordSalt)
+        public User userForChangePassword(int id, byte[] passwordHash, byte[] passwordSalt)
         {
             using var context = new AppDbContext();
-            var user = GetUserByIdentity(identityNumber);
+            var user = Get(p=>p.Id==id);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             context.Update(user);

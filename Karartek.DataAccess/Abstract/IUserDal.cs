@@ -13,6 +13,6 @@ namespace Karartek.DataAccess.Abstract
         User Insert(User user);
         User userForForgotPassword(string identityNumber, byte[] passwordHash, byte[] passwordSalt);
         User Get(Expression<Func<User, bool>>? filter = null);
-        User userForChangePassword (string identityNumber, byte[] passwordHash, byte[] passwordSalt);
+        User userForChangePassword (int id, byte[] passwordHash, byte[] passwordSalt);
     }
 }
