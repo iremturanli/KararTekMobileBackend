@@ -29,7 +29,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
         {
             // optionsBuilder.UseSqlServer(@"Server=(localdb)\KararTekDemo;database=KararTek;Encrypt=false;TrustServerCertificate=False;Integrated Security=true");
             //optionsBuilder.UseSqlServer(@"Server=localhost;user=sa;Database=KararTek;Password=irem@123;Encrypt=false;TrustServerCertificate=False");
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=KararTek1;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=KararTek2;Trusted_Connection=true");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -201,7 +201,6 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<UserLike>().ToTable("UserLikes");
             modelBuilder.Entity<UserLike>().Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
             modelBuilder.Entity<UserLike>().HasOne<User>(x => x.User).WithMany(x => x.UserLikes).IsRequired().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<UserLike>().HasOne<SearchType>(x => x.SearchType).WithMany(x => x.UserLikes).IsRequired().HasForeignKey(x => x.SearchTypeId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<UserLike>().Property(x => x.LawyerJudgmentId).IsRequired();
             modelBuilder.Entity<UserLike>().Property(x => x.isLike).IsRequired();
             modelBuilder.Entity<UserLike>().Property(x => x.CreateDate).IsRequired();

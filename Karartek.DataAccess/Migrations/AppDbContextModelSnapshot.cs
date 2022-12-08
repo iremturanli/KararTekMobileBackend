@@ -7667,7 +7667,7 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2022, 12, 2, 10, 12, 43, 353, DateTimeKind.Local).AddTicks(9966),
+                            CreateDate = new DateTime(2022, 12, 8, 9, 59, 9, 742, DateTimeKind.Local).AddTicks(8275),
                             IsDeleted = false,
                             TypeId = 1,
                             TypeName = "Yargıtay"
@@ -7675,7 +7675,7 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2022, 12, 2, 10, 12, 43, 353, DateTimeKind.Local).AddTicks(9984),
+                            CreateDate = new DateTime(2022, 12, 8, 9, 59, 9, 742, DateTimeKind.Local).AddTicks(8321),
                             IsDeleted = false,
                             TypeId = 2,
                             TypeName = "Danıştay"
@@ -7683,7 +7683,7 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            CreateDate = new DateTime(2022, 12, 2, 10, 12, 43, 353, DateTimeKind.Local).AddTicks(9984),
+                            CreateDate = new DateTime(2022, 12, 8, 9, 59, 9, 742, DateTimeKind.Local).AddTicks(8322),
                             IsDeleted = false,
                             TypeId = 3,
                             TypeName = "Anayasa Mahkemesi"
@@ -7838,7 +7838,7 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2022, 12, 2, 10, 12, 43, 350, DateTimeKind.Local).AddTicks(14),
+                            CreateDate = new DateTime(2022, 12, 8, 9, 59, 9, 739, DateTimeKind.Local).AddTicks(3396),
                             IsDeleted = false,
                             StateId = 1,
                             StateName = "Onaya Gönderildi"
@@ -7846,7 +7846,7 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2022, 12, 2, 10, 12, 43, 351, DateTimeKind.Local).AddTicks(3874),
+                            CreateDate = new DateTime(2022, 12, 8, 9, 59, 9, 740, DateTimeKind.Local).AddTicks(6284),
                             IsDeleted = false,
                             StateId = 2,
                             StateName = "Onay Bekliyor"
@@ -7854,7 +7854,7 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            CreateDate = new DateTime(2022, 12, 2, 10, 12, 43, 351, DateTimeKind.Local).AddTicks(3881),
+                            CreateDate = new DateTime(2022, 12, 8, 9, 59, 9, 740, DateTimeKind.Local).AddTicks(6292),
                             IsDeleted = false,
                             StateId = 3,
                             StateName = "Reddedildi"
@@ -7862,7 +7862,7 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 4,
-                            CreateDate = new DateTime(2022, 12, 2, 10, 12, 43, 351, DateTimeKind.Local).AddTicks(3882),
+                            CreateDate = new DateTime(2022, 12, 8, 9, 59, 9, 740, DateTimeKind.Local).AddTicks(6293),
                             IsDeleted = false,
                             StateId = 4,
                             StateName = "Onaylandı"
@@ -7901,7 +7901,7 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2022, 12, 2, 10, 12, 43, 353, DateTimeKind.Local).AddTicks(4088),
+                            CreateDate = new DateTime(2022, 12, 8, 9, 59, 9, 742, DateTimeKind.Local).AddTicks(3159),
                             IsDeleted = false,
                             TypeId = 1,
                             TypeName = "Avukatın Eklediği Kararlar"
@@ -7909,7 +7909,7 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2022, 12, 2, 10, 12, 43, 353, DateTimeKind.Local).AddTicks(4103),
+                            CreateDate = new DateTime(2022, 12, 8, 9, 59, 9, 742, DateTimeKind.Local).AddTicks(3172),
                             IsDeleted = false,
                             TypeId = 2,
                             TypeName = "Yüksek Yargı Kararları"
@@ -8076,6 +8076,42 @@ namespace Karartek.DataAccess.Migrations
                     b.ToTable("UserJudgmentStatistics", (string)null);
                 });
 
+            modelBuilder.Entity("Karartek.Entities.Concrete.UserLike", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LawyerJudgmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SearchTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isLike")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SearchTypeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserLikes", (string)null);
+                });
+
             modelBuilder.Entity("Karartek.Entities.Concrete.UserType", b =>
                 {
                     b.Property<int>("Id")
@@ -8108,7 +8144,7 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2022, 12, 2, 10, 12, 43, 352, DateTimeKind.Local).AddTicks(8492),
+                            CreateDate = new DateTime(2022, 12, 8, 9, 59, 9, 741, DateTimeKind.Local).AddTicks(8141),
                             IsDeleted = false,
                             TypeId = 1,
                             TypeName = "Avukat-Avukat Stajyeri"
@@ -8116,7 +8152,7 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2022, 12, 2, 10, 12, 43, 352, DateTimeKind.Local).AddTicks(8514),
+                            CreateDate = new DateTime(2022, 12, 8, 9, 59, 9, 741, DateTimeKind.Local).AddTicks(8159),
                             IsDeleted = false,
                             TypeId = 2,
                             TypeName = "Öğrenci"
@@ -8124,7 +8160,7 @@ namespace Karartek.DataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            CreateDate = new DateTime(2022, 12, 2, 10, 12, 43, 352, DateTimeKind.Local).AddTicks(8515),
+                            CreateDate = new DateTime(2022, 12, 8, 9, 59, 9, 741, DateTimeKind.Local).AddTicks(8160),
                             IsDeleted = false,
                             TypeId = 3,
                             TypeName = "TBB Kullanıcısı"
@@ -8307,6 +8343,25 @@ namespace Karartek.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Karartek.Entities.Concrete.UserLike", b =>
+                {
+                    b.HasOne("Karartek.Entities.Concrete.SearchType", "SearchType")
+                        .WithMany("UserLikes")
+                        .HasForeignKey("SearchTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Karartek.Entities.Concrete.User", "User")
+                        .WithMany("UserLikes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SearchType");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Karartek.Entities.Concrete.City", b =>
                 {
                     b.Navigation("Districts");
@@ -8358,6 +8413,8 @@ namespace Karartek.DataAccess.Migrations
             modelBuilder.Entity("Karartek.Entities.Concrete.SearchType", b =>
                 {
                     b.Navigation("JudgmentPools");
+
+                    b.Navigation("UserLikes");
                 });
 
             modelBuilder.Entity("Karartek.Entities.Concrete.User", b =>
@@ -8369,6 +8426,8 @@ namespace Karartek.DataAccess.Migrations
                     b.Navigation("LawyerJudgments");
 
                     b.Navigation("Student");
+
+                    b.Navigation("UserLikes");
 
                     b.Navigation("userJudgmentStatistic")
                         .IsRequired();
