@@ -26,11 +26,11 @@ namespace Karartek.Api.Properties
         }
 
         [HttpPost("GetAll")]
-        public IDataResult<List<UserLike>> GetAll(int searchTypeId)
+        public ActionResult GetAll(int searchTypeId)
         {
             var userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var userTypeToLikes = _userLikeService.GetAll(userId,searchTypeId);
-            return userTypeToLikes;
+            return Ok(userTypeToLikes);
 
             
         }
