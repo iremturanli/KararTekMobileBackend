@@ -90,7 +90,7 @@ namespace Karartek.Api.Controllers
             {
                 return Ok(result);
             }
-            else {
+            else {  
                 return Ok(result);
                     }
 
