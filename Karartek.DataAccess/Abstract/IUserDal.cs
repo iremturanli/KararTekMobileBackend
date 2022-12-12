@@ -10,6 +10,7 @@ namespace Karartek.DataAccess.Abstract
         User GetUserByEmail(string email);
         User GetUserByIdentity(string identity);
         List<User> GetUserById(int id);
+        User GetUserByIdObj(int id);
         User Insert(User user);
         User userForForgotPassword(string identityNumber, byte[] passwordHash, byte[] passwordSalt);
         User Get(Expression<Func<User, bool>>? filter = null);

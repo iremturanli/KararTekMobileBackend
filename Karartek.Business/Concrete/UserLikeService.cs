@@ -21,34 +21,39 @@ namespace Karartek.Business.Concrete
 
 
 
-        public IDataResult<List<UserLike>> GetAll(int id,int searchTypeId)
+        public IDataResult<List<UserLikeDto>> GetAll(int id, int searchTypeId)
         {
-            var result = _userLikeDal.GetAll(p => p.UserId == id && p.TypeId==searchTypeId) ;
+            var result = _userLikeDal.GetAll(p => p.UserId == id && p.TypeId == searchTypeId);
+            UserLikeDto userLikeDto = new UserLikeDto();
+            List<UserLikeDto> userLikeDtoList = new List<UserLikeDto>();
+
+
 
             foreach (var item in result)
             {
 
 
-                var userLikeDto = new UserLikeDto()
-                {
-                    JudgmentId = item.JudgmentId,
-                    isLike=item.isLike
-                    
 
-                };
-                 
-    
-                  
+                userLikeDto.JudgmentId = item.JudgmentId;
+                userLikeDto.isLike = item.isLike;
+
+
+
+
+                userLikeDtoList.Add(userLikeDto);
             }
-          
+
             if (result != null)
             {
-                return new SuccessDataResult<List<UserLike>>(result, "Success");
+                return new SuccessDataResult<List<UserLikeDto>>(userLikeDtoList, "Success");
+
+
+
+
 
             }
             else
-                return new ErrorDataResult<List<UserLike>>("Not Found");
-
+                return new ErrorDataResult<List<UserLikeDto>>("Not Found");
         }
     }
 }

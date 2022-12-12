@@ -17,7 +17,7 @@ namespace Karartek.Business.Abstract
         IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByType(FilterDto filterDto);
         IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByFilter(int id, FilterDetailDto filterDetailDto);
         IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByFilterKK(int id, FilterDetailDtoKK filterDetailDtoKK);
-        IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsbyFilterOB(FilterDetailOnayBekleyenDto filterDetailOnayBekleyenDto);
+        IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByFilterOB(FilterDetailOnayBekleyenDto filterDetailOnayBekleyenDto);
 
     }
 }

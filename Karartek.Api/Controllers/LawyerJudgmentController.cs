@@ -175,6 +175,20 @@ namespace Karartek.Api.Controllers
 
 
         }
+        [HttpPost("GetLawyerJudgmentsByFilterOB")]
+
+        public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByFilterOB(FilterDetailOnayBekleyenDto filterDetailOnayBekleyenDto)
+
+
+        {
+            
+
+            var filterJudgments = _lawyerJudgmentService.GetLawyerJudgmentsByFilterOB(filterDetailOnayBekleyenDto);
+            return filterJudgments;
+
+
+
+        }
 
 
 

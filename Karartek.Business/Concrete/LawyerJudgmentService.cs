@@ -39,19 +39,19 @@ namespace Karartek.Business.Concrete
             {
                 judgment = new LawyerJudgment()
                 {
-                    CommissionId = lawyerJudgmentDto.CommissionId,
+                    CommissionId = lawyerJudgmentDto.CommissionId ,
                     CourtId = lawyerJudgmentDto.CourtId,
-                    Decree = lawyerJudgmentDto.Decree,
-                    LawyerAssessment = lawyerJudgmentDto.LawyerAssessment,
-                    DecreeType = lawyerJudgmentDto.DecreeType,
-                    DecreeNo = lawyerJudgmentDto.DecreeNo,
-                    DecreeYear = lawyerJudgmentDto.DecreeYear,
-                    MeritsNo = lawyerJudgmentDto.MeritsNo,
-                    MeritsYear = lawyerJudgmentDto.MeritsYear,
+                    Decree = lawyerJudgmentDto.Decree == null ? String.Empty : lawyerJudgmentDto.Decree,
+                    LawyerAssessment = lawyerJudgmentDto.LawyerAssessment == null ? String.Empty : lawyerJudgmentDto.LawyerAssessment,
+                    DecreeType = lawyerJudgmentDto.DecreeType == null ? String.Empty : lawyerJudgmentDto.DecreeType ,
+                    DecreeNo = lawyerJudgmentDto.DecreeNo == null ? String.Empty : lawyerJudgmentDto.DecreeNo,
+                    DecreeYear = lawyerJudgmentDto.DecreeYear == null ? String.Empty : lawyerJudgmentDto.DecreeYear,
+                    MeritsNo = lawyerJudgmentDto.MeritsNo == null ? String.Empty : lawyerJudgmentDto.MeritsNo,
+                    MeritsYear = lawyerJudgmentDto.MeritsYear == null ? String.Empty : lawyerJudgmentDto.MeritsYear,
                     StateId = (int)EJudgmentStates.OnayBekliyor,
-                    Decision = lawyerJudgmentDto.Decision,
+                    Decision = lawyerJudgmentDto.Decision == null ? String.Empty : lawyerJudgmentDto.Decision,
                     TBBComments = String.Empty,
-                    JudgmentDate = lawyerJudgmentDto.JudgmentDate,
+                    JudgmentDate = lawyerJudgmentDto.JudgmentDate == null ? DateTime.Today:lawyerJudgmentDto.JudgmentDate,
                     CreateDate = DateTime.Now,
                     UserId = lawyerJudgmentDto.UserId,
                     Likes = 0
@@ -448,7 +448,7 @@ namespace Karartek.Business.Concrete
         public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByType(FilterDto filterDto)//yap
         {
 
-            var result = _lawyerJudgmentDal.GetAll(p => p.Decree.Contains(filterDto.keyword));
+            var result = _lawyerJudgmentDal.GetAll(p => p.Decree.Contains(filterDto.keyword)&&(p.StateId==(int)EJudgmentStates.Onaylandı));
             var listDto = new List<LawyerJudgmentResponseListDto>();
 
             foreach (var item in result)
@@ -547,15 +547,15 @@ namespace Karartek.Business.Concrete
 
         }
 
-        public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsbyFilterOB(FilterDetailOnayBekleyenDto filterDetailOnayBekleyenDto)
+        public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByFilterOB(FilterDetailOnayBekleyenDto filterDetailOnayBekleyenDto)
         {
-            var resultFilter = _lawyerJudgmentDal.GetAll().Where(result => (String.IsNullOrEmpty(filterDetailDtoKK.MeritsNo) || result.MeritsNo == filterDetailDtoKK.MeritsNo)
-              && (String.IsNullOrEmpty(filterDetailDtoKK.DecreeNo) || result.DecreeNo == filterDetailDtoKK.DecreeNo)
-              && (String.IsNullOrEmpty(filterDetailDtoKK.Decree) || result.Decree.Contains(filterDetailDtoKK.Decree.ToLower()))
-              && (String.IsNullOrEmpty(filterDetailDtoKK.Decision) || result.Decision.Contains(filterDetailDtoKK.Decision.ToLower()))
-              && (String.IsNullOrEmpty(filterDetailDtoKK.LawyerAssesment) || result.LawyerAssessment.Contains(filterDetailDtoKK.LawyerAssesment.ToLower()))
-              && (!filterDetailDtoKK.StartDate.HasValue || result.JudgmentDate >= filterDetailDtoKK.StartDate)
-              && (!filterDetailDtoKK.FinishDate.HasValue || result.JudgmentDate <= filterDetailDtoKK.FinishDate));
+            var resultFilter = _lawyerJudgmentDal.GetAll().Where(result => (String.IsNullOrEmpty(filterDetailOnayBekleyenDto.MeritsNo) || result.MeritsNo == filterDetailOnayBekleyenDto.MeritsNo)
+              && (String.IsNullOrEmpty(filterDetailOnayBekleyenDto.DecreeNo) || result.DecreeNo == filterDetailOnayBekleyenDto.DecreeNo)
+              && (String.IsNullOrEmpty(filterDetailOnayBekleyenDto.Decree) || result.Decree.Contains(filterDetailOnayBekleyenDto.Decree.ToLower()))
+              && (String.IsNullOrEmpty(filterDetailOnayBekleyenDto.Decision) || result.Decision.Contains(filterDetailOnayBekleyenDto.Decision.ToLower()))
+              && (String.IsNullOrEmpty(filterDetailOnayBekleyenDto.LawyerAssesment) || result.LawyerAssessment.Contains(filterDetailOnayBekleyenDto.LawyerAssesment.ToLower()))
+              && (!filterDetailOnayBekleyenDto.StartDate.HasValue || result.JudgmentDate >= filterDetailOnayBekleyenDto.StartDate)
+              && (!filterDetailOnayBekleyenDto.FinishDate.HasValue || result.JudgmentDate <= filterDetailOnayBekleyenDto.FinishDate));
 
 
 
@@ -609,6 +609,7 @@ namespace Karartek.Business.Concrete
             }
 
         }
+
     }
 }
 

@@ -77,7 +77,8 @@ namespace Karartek.Business.Concrete
 
         public User GetUser(int id)
         {
-           throw new NotImplementedException();
+            var user = _userDal.GetUserByIdObj(id);
+            return user;
         }
         //IDataResult<List<User>> GetUserInfo(int id)
         //{
