@@ -129,6 +129,18 @@ namespace Karartek.Api.Controllers
 
 
         }
+        [HttpPost("GetJudgmentsCountbyKeyword")]
+
+        public IDataResult<List<UserJudgmentStatistic>> GetJudgmentsCountbyKeyword(FilterStatisticDto filterStatisticDto)
+
+
+        {
+            var judgments = _userJudgmentStatisticService.GetAllbyKeyword(filterStatisticDto);
+            return judgments;
+
+
+
+        }
 
         [HttpPost("LawyerJudgmentToLike")]
         public ActionResult JudgmentsToLike([FromQuery] int id, bool check)
@@ -142,6 +154,8 @@ namespace Karartek.Api.Controllers
             {
                 return Ok(result);
             }
+
+
 
         }
 
@@ -194,14 +208,15 @@ namespace Karartek.Api.Controllers
             }
 
             else
-
+            
             {
 
                 return BadRequest("Hata!");
 
             }
 
-            
+
+        }
 
 
 

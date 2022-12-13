@@ -1,4 +1,5 @@
-﻿using Karartek.DataAccess.Abstract;
+﻿using Core.Utilities.Results;
+using Karartek.DataAccess.Abstract;
 using Karartek.DataAccess.Concrete.EntityFramework.Context;
 using Karartek.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
@@ -52,6 +53,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
 
         public User GetUserById(int id)
         {
+            
             using var context = new AppDbContext();
             var user = context.Users.Where(x => x.Id == id).Include(x => x.UserType).Include(c => c.City).Include(d => d.District).Include(l=>l.Lawyer).Include(s => s.Student).SingleOrDefault();
             return user;
@@ -63,6 +65,25 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
             var user = context.Users.Include(x => x.UserType).Include(c => c.City).ThenInclude(d => d.Districts).SingleOrDefault(x => x.Email == email);
             return user;
 
+        }
+
+        public User userForChangePassword(int id, byte[] passwordHash, byte[] passwordSalt)
+        {
+            using var context = new AppDbContext();
+            var user = Get(p=>p.Id==id);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            context.Update(user);
+            context.SaveChanges();
+
+            return user;
+        }
+
+        public User GetUserByIdObj(int id)
+        {
+            using var context = new AppDbContext();
+            var user = context.Users.Where(x => x.Id == id).Include(x => x.UserType).Include(c => c.City).Include(d => d.District).Include(l => l.Lawyer).Include(s => s.Student).SingleOrDefault();
+            return user;
         }
     }
 }

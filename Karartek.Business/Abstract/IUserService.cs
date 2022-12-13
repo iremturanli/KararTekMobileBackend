@@ -1,4 +1,5 @@
-﻿using Karartek.Entities.Concrete;
+﻿using Core.Utilities.Results;
+using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
 
 namespace Karartek.Business.Abstract
@@ -11,5 +12,8 @@ namespace Karartek.Business.Abstract
         User GetUserByIdentity(string userIdentity);
         UserResponseDto GetUserById(int id);
         User GetUser(int id);
+        //IDataResult<List<User>> GetUserInfo(int id);
+        ResponseDto ChangePassword(ChangePasswordDto changePasswordDto,int id);
+
     }
 }

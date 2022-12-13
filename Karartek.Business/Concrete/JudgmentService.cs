@@ -194,7 +194,7 @@ namespace Karartek.Business.Concrete
             return result;
         }
 
-
+      
     }
 
 

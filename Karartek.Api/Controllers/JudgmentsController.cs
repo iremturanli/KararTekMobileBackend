@@ -6,6 +6,7 @@ using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Karartek.Api.Controllers
 {
@@ -107,7 +108,7 @@ namespace Karartek.Api.Controllers
             if (judgments != null)
             {
                 return Ok(judgments);
-            }
+        }
 
             else
 

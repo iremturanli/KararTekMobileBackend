@@ -1,4 +1,5 @@
-﻿using Karartek.Business.Abstract;
+﻿using Core.Utilities.Results;
+using Karartek.Business.Abstract;
 using Karartek.DataAccess.Abstract;
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
@@ -21,6 +22,7 @@ namespace Karartek.Business.Concrete
         private readonly ILawyerDal _lawyerDal;
         private string RandomPassword;
         private string NewRandomPassword;
+        private string NewPassword;
 
         //
 
@@ -34,26 +36,39 @@ namespace Karartek.Business.Concrete
         }
 
 
-        public UserResponseDto GetUserById(int id)
+        public IDataResult<List<UserResponseDto>> GetUserById(int id)
 
         {
             //TODO:Add remaining Dtos
-            var user = _userDal.GetUserById(id);
-            UserResponseDto userResponseDto = new UserResponseDto();
-            userResponseDto.Id = user.Id;
-            userResponseDto.IdentityNumber = user.IdentityNumber;
-            userResponseDto.FirstName = user.FirstName;
-            userResponseDto.LastName = user.LastName;
-            userResponseDto.PhoneNumber = user.PhoneNumber;
-            userResponseDto.BarRegisterNo = user.Lawyer == null ? String.Empty : user.Lawyer.BarRegisterNo; //profilim fakülte
-            userResponseDto.University = user.Student == null? String.Empty: user.Student.University;
-            userResponseDto.UserTypeId = user.UserTypeId;
-            userResponseDto.CityId = user.CityId;
-            userResponseDto.DistrictId = user.DistrictId;
-            userResponseDto.DistrictName = user.District.Name;
-            userResponseDto.CityName = user.City.Name;
-            userResponseDto.UserTypeName = user.UserType.TypeName;
-            return userResponseDto;
+            var result = _userDal.GetUserById(id);
+            var listDto = new List<UserResponseDto>();
+            foreach (var item in result)
+            {
+                var dto = new UserResponseDto()
+                {
+                    Id = item.Id,
+                    IdentityNumber = item.IdentityNumber,
+                    FirstName = item.FirstName,
+                    LastName = item.LastName,
+                    PhoneNumber = item.PhoneNumber,
+                    BarRegisterNo = item.Lawyer == null ? String.Empty : item.Lawyer.BarRegisterNo, //profilim fakülte
+                    University = item.Student == null ? String.Empty : item.Student.University,
+                    UserTypeId = item.UserTypeId,
+                    CityId = item.CityId,
+                    DistrictId = item.DistrictId,
+                    DistrictName = item.District.Name,
+                    CityName = item.City.Name,
+                    UserTypeName = item.UserType.TypeName,
+                    Email = item.Email,
+                    Faculty = item.Student == null ? String.Empty : item.Student.Faculty,
+                    Grade = item.Student == null ? String.Empty : item.Student.Grade,
+                    StudentNumber = item.Student == null ? String.Empty : item.Student.StudentNumber
+                };
+                listDto.Add(dto);
+            }
+            return new SuccessDataResult<List<UserResponseDto>>(listDto, "Success!");
+
+
 
 
 
@@ -62,9 +77,13 @@ namespace Karartek.Business.Concrete
 
         public User GetUser(int id)
         {
-            var user = _userDal.GetUserById(id);
+            var user = _userDal.GetUserByIdObj(id);
             return user;
         }
+        //IDataResult<List<User>> GetUserInfo(int id)
+        //{
+        //    throw new NotSupportedException();
+        //}
 
         public User GetUserByIdentity(string identity)
 
@@ -145,7 +164,7 @@ namespace Karartek.Business.Concrete
                 message.From = new MailAddress("karartek@yandex.com");
                 message.To.Add(userToResetPassword.Email);
                 message.Subject = "Merhaba Sayın " + userToResetPassword.FirstName + " " + userToResetPassword.LastName;
-                message.Body = "Yeni uygulama şifreniz: " + NewRandomPassword;
+                message.Body = "Yeni uygulama şifreniz: " + NewRandomPassword +"\n"+ "Şifrenizi uygulamaya girişinizin ardından Profilim menüsüne girerek değiştirebilirsiniz.";
                 client.UseDefaultCredentials = false;
                 client.EnableSsl = true; // Encryption
                 client.Credentials = new System.Net.NetworkCredential("karartek@yandex.com", "plbobupzzvaxxgpw");
@@ -223,7 +242,7 @@ namespace Karartek.Business.Concrete
 
 
                 }
-                else
+                else if(userForRegister.UserTypeId == 2)
                 {
 
                     var student = new Student()
@@ -242,6 +261,7 @@ namespace Karartek.Business.Concrete
 
 
                 }
+                
 
 
             }
@@ -272,10 +292,10 @@ namespace Karartek.Business.Concrete
 
             string allowedChars = "";
             allowedChars = "1,2,3,4,5,6,7,8,9,0";
-            allowedChars += "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
-            allowedChars += "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z";
-            allowedChars += "1,2,3,4,5,6,7,8,9,0";
-            allowedChars += "!,#,$,%,&,(,),_,-,+,=,|,<,>,.,?,/";//özelkarakter
+            //allowedChars += "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
+            //allowedChars += "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z";
+            //allowedChars += "1,2,3,4,5,6,7,8,9,0";
+            //allowedChars += "!,#,$,%,&,(,),_,-,+,=,|,<,>,.,?,/";//özelkarakter
 
 
             char[] sep = {
@@ -353,7 +373,56 @@ namespace Karartek.Business.Concrete
 
         }
 
+        public ResponseDto ChangePassword(ChangePasswordDto changePasswordDto, int id )
+        {
 
+            ResponseDto response = new ResponseDto();
+            
+            NewPassword = changePasswordDto.newPassword;
+            var user = _userDal.Get(p=> p.Id == id);
+            string userId = id.ToString();
+            CreatePasswordHash(changePasswordDto.currentPassword, out byte[] passwordHash, out byte[] passwordSalt);
+
+            if (user is null || !VerifyPasswordHash(changePasswordDto.currentPassword, user.PasswordHash, user.PasswordSalt) || user.Id != id)
+            {
+                
+                response.HasError = true;
+                response.Message = "Bilgilerinizi kontrol ediniz."; //mantıksız
+                return response;
+
+
+
+            }
+
+            else
+            {
+
+                CreatePasswordHash(NewPassword, out passwordHash,out passwordSalt);
+                var userToResetPassword = _userDal.userForChangePassword(id, passwordHash, passwordSalt);
+
+
+                SmtpClient client = new SmtpClient("smtp.yandex.com.tr", 587);
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress("karartek@yandex.com");
+                message.To.Add(userToResetPassword.Email);
+                message.Subject = "Merhaba Sayın " + userToResetPassword.FirstName + " " + userToResetPassword.LastName;
+                message.Body = "Yeni uygulama şifreniz: " + NewPassword;
+                client.UseDefaultCredentials = false;
+                client.EnableSsl = true; // Encryption
+                client.Credentials = new System.Net.NetworkCredential("karartek@yandex.com", "plbobupzzvaxxgpw");
+
+                client.Send(message);
+
+
+
+                //We create Token here
+
+                response.HasError = false;
+                response.Message = "Şifre Sıfırlama İşlemi Başarılı";
+                return response;
+            }
+
+        }
     }
 
 

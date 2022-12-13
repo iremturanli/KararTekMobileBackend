@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Utilities.Results;
+﻿using Core.Utilities.Results;
 using Karartek.Business.Abstract;
 using Karartek.DataAccess.Abstract;
-using Karartek.DataAccess.Concrete.EntityFramework;
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Concrete.Enum;
 using Karartek.Entities.Dto;
@@ -15,19 +9,19 @@ using Microsoft.Extensions.Configuration;
 
 namespace Karartek.Business.Concrete
 {
-    public class JudgmentPoolService:IJudgmentPoolService
+    public class JudgmentPoolService : IJudgmentPoolService
 
     {
-        List<Judgment>judgmentsList = new List<Judgment>();
+        List<Judgment> judgmentsList = new List<Judgment>();
         private readonly IJudgmentDal _judgmentDal;
         private readonly ILawyerJudgmentDal _lawyerJudgmentDal;
         private readonly IJudgmentPoolDal _judgmentPoolDal;
 
 
-    
 
 
-        public JudgmentPoolService(IJudgmentDal judgmentDal, ILawyerJudgmentDal lawyerJudgmentDal,IJudgmentPoolDal judgmentPoolDal, IConfiguration configuration)
+
+        public JudgmentPoolService(IJudgmentDal judgmentDal, ILawyerJudgmentDal lawyerJudgmentDal, IJudgmentPoolDal judgmentPoolDal, IConfiguration configuration)
         {
             _judgmentPoolDal = judgmentPoolDal;
             _judgmentDal = judgmentDal;
@@ -35,16 +29,16 @@ namespace Karartek.Business.Concrete
 
         }
 
-        public ResponseDto AddtoJudgmentPool(int userId,int judgmentId,int searchTypeId)
+        public ResponseDto AddtoJudgmentPool(int userId, int judgmentId, int searchTypeId)
         {
             ResponseDto response = new ResponseDto();
-        
-           
+
+
             var judgmentPool = new JudgmentPool();
-            if (searchTypeId==(int)ESearchTypes.AvukatınEklediğiKararlar)
+            if (searchTypeId == (int)ESearchTypes.AvukatınEklediğiKararlar)
             {
 
-           
+
                 {
                     var favlawyerJudgment = _lawyerJudgmentDal.Get(p => p.Id == judgmentId);
                     judgmentPool.DecisionId = favlawyerJudgment.Id;
@@ -52,64 +46,76 @@ namespace Karartek.Business.Concrete
                     judgmentPool.CreateDate = DateTime.Now;
                     judgmentPool.SearchTypeId = searchTypeId;
 
-
-
                 };
-                var resultJudgment = _judgmentPoolDal.Insert(judgmentPool);
 
 
-            }
-
-            else
-            
-            {
-                var favJudgment = _judgmentDal.Get(p => p.Id == judgmentId);
-                judgmentPool.DecisionId = favJudgment.Id;
-                judgmentPool.UserId = userId;
-                judgmentPool.CreateDate = DateTime.Now;
-                judgmentPool.SearchTypeId = searchTypeId;
-                var result = _judgmentPoolDal.Insert(judgmentPool);
-
-
-            }
-
-
-          
-
+            };
+            var resultJudgment = _judgmentPoolDal.Insert(judgmentPool);
 
             response.HasError = false;
             response.Message = "Karar Havuzune Eklendi";
             return response;
 
-         
+
 
         }
 
 
 
+        //public ResponseDto AddLawyerJudgmenttoJudgmentPool(JudgmentPoolDto judgmentPoolDto, int judgmentId)
+        //{
+        //    var favJudgment = _judgmentDal.Get(p => p.Id == judgmentId);
+        //    judgmentPool.DecisionId = favJudgment.Id;
+        //    judgmentPool.UserId = userId;
+        //    judgmentPool.CreateDate = DateTime.Now;
+        //    judgmentPool.SearchTypeId = searchTypeId;
+        //    var result = _judgmentPoolDal.Insert(judgmentPool);
 
-        public bool DeleteFromJudgmentPool(int id )
+
+        //    UserId = judgmentPoolDto.UserId,
+        //        CreateDate = DateTime.Now,
+        //        JudgmentId = 0
+
+
+
+
+        //var result = _judgmentPoolDal.Insert(judgmentPool);
+
+        //response.HasError = false;
+        //    response.Message = "Karar Havuzune Eklendi";
+        //    return response;
+
+        //}
+
+
+
+
+
+
+
+
+
+
+        public bool DeleteFromJudgmentPool(int id)
         {
-                var result = _judgmentPoolDal.Get(p => p.Id == id);
-                _judgmentPoolDal.Delete(result);
-                return true;
-            
+            var result = _judgmentPoolDal.Get(p => p.Id == id);
+            _judgmentPoolDal.Delete(result);
+            return true;
+
         }
 
-       
 
-         public IDataResult <JudgmentLawyerJudgmentDto> GetAll(int userId)
-         {
+
+        public IDataResult<JudgmentLawyerJudgmentDto> GetAll(int userId)
+        {
             JudgmentLawyerJudgmentDto judgmentLawyerJudgmentDto = new JudgmentLawyerJudgmentDto();
-         
-
-            var list = _judgmentPoolDal.GetAll(p=>p.UserId==userId);
-        
 
 
-                if(list!=null)
+            var list = _judgmentPoolDal.GetAll(p => p.UserId == userId);
 
-                {
+            if (list != null)
+
+            {
                 judgmentLawyerJudgmentDto.JudgmentResponseListDto = new List<JudgmentResponseListDto>();
                 judgmentLawyerJudgmentDto.LawyerJudgmentResponseListDto = new List<LawyerJudgmentResponseListDto>();
 
@@ -146,9 +152,9 @@ namespace Karartek.Business.Concrete
 
 
 
-                      
+
                         judgmentLawyerJudgmentDto.LawyerJudgmentResponseListDto.Add(lawyerJudgmentResponseListDto);
-                      
+
 
 
 
@@ -178,7 +184,7 @@ namespace Karartek.Business.Concrete
                         judgmentResponseListDto.MeritsNo = result.MeritsNo;
                         judgmentResponseListDto.MeritsYear = result.MeritsYear;
 
-                      
+
                         judgmentLawyerJudgmentDto.JudgmentResponseListDto.Add(judgmentResponseListDto);
 
                     }
@@ -209,10 +215,11 @@ namespace Karartek.Business.Concrete
 
         }
 
-    }
-
-
-
 
     }
+
+
+
+
+}
 

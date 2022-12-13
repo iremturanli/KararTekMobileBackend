@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Karartek.Core\Karartek.Core.csproj" />
     <ProjectReference Include="..\Karartek.DataAccess\Karartek.DataAccess.csproj" />
     <ProjectReference Include="..\Karartek.Entities\Karartek.Entities.csproj" />
   </ItemGroup>

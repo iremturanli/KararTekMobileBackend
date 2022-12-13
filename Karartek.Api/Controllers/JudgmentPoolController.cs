@@ -67,7 +67,9 @@ namespace Karartek.Api.Controllers
             }
             else
                 return BadRequest("Hata!");
-       
+        
+            var FavouriteJudgments=_judgmentPoolService.GetAll(judgmentPoolDto);
+            return FavouriteJudgments;
            
 
 
