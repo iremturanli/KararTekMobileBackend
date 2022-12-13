@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Karartek.DataAccess\Karartek.DataAccess.csproj" />
+    <ProjectReference Include="..\Karartek.Entities\Karartek.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
