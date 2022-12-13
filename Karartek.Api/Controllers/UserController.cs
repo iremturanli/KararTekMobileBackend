@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace Karartek.Api.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -25,7 +25,7 @@ namespace Karartek.Api.Controllers
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var identity = Int32.Parse(userId);
-            var user = _userService.GetUserById(identity);
+            var user = _userService.GetUser(identity);
 
             if (user == null)
             {
@@ -40,7 +40,7 @@ namespace Karartek.Api.Controllers
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var id = Int32.Parse(userId);
-            var user = _userService.ChangePassword(changePasswordDto,id);
+            var user = _userService.ChangePassword(changePasswordDto, id);
 
             if (user == null)
             {

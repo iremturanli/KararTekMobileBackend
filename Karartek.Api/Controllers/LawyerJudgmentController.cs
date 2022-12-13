@@ -1,11 +1,9 @@
 using Core.Utilities.Results;
 using Karartek.Business.Abstract;
-using Karartek.Business.Concrete;
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.Protocol;
 using System.Security.Claims;
 
 namespace Karartek.Api.Controllers
@@ -18,7 +16,7 @@ namespace Karartek.Api.Controllers
         private ILawyerJudgmentService _lawyerJudgmentService;
         private IUserJudgmentStatisticService _userJudgmentStatisticService;
 
-        public LawyerJudgmentController(ILawyerJudgmentService lawyerJudgmentService,IUserJudgmentStatisticService userJudgmentStatisticService)
+        public LawyerJudgmentController(ILawyerJudgmentService lawyerJudgmentService, IUserJudgmentStatisticService userJudgmentStatisticService)
         {
             _lawyerJudgmentService = lawyerJudgmentService;
             _userJudgmentStatisticService = userJudgmentStatisticService;
@@ -166,8 +164,8 @@ namespace Karartek.Api.Controllers
 
         {
             var UserId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-  
-            var filterJudgments = _lawyerJudgmentService.GetLawyerJudgmentsByFilter(UserId,filterDetailDto);
+
+            var filterJudgments = _lawyerJudgmentService.GetLawyerJudgmentsByFilter(UserId, filterDetailDto);
             return filterJudgments;
 
 
@@ -183,12 +181,12 @@ namespace Karartek.Api.Controllers
             var UserId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
             var filterJudgments = _lawyerJudgmentService.GetLawyerJudgmentsByFilterKK(UserId, filterDetailDtoKK);
-            if (filterJudgments!=null)
+            if (filterJudgments != null)
             {
                 return Ok(filterJudgments);
             }
             else
-            return BadRequest("Hata!");
+                return BadRequest("Hata!");
 
 
 
@@ -202,13 +200,13 @@ namespace Karartek.Api.Controllers
 
         {
             var judgments = _lawyerJudgmentService.GetbyId(id);
-            if (judgments!=null)
+            if (judgments != null)
             {
                 return Ok(judgments);
             }
 
             else
-            
+
             {
 
                 return BadRequest("Hata!");
@@ -217,33 +215,14 @@ namespace Karartek.Api.Controllers
 
 
         }
-
-
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
+
+
 }
+
+
+
+
+
+
+

@@ -10,10 +10,11 @@ namespace Karartek.Business.Abstract
         ResponseDto Register(UserForRegister userForRegister);
         ResponseDto ForgotMyPassword(ForgotMyPasswordDto forgotMyPasswordDto);
         User GetUserByIdentity(string userIdentity);
-        UserResponseDto GetUserById(int id);
+        //   UserResponseDto GetUserById(int id);
+        IDataResult<List<UserResponseDto>> GetUserById(int id);
         User GetUser(int id);
         //IDataResult<List<User>> GetUserInfo(int id);
-        ResponseDto ChangePassword(ChangePasswordDto changePasswordDto,int id);
+        ResponseDto ChangePassword(ChangePasswordDto changePasswordDto, int id);
 
     }
 }

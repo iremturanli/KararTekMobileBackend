@@ -1,16 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Karartek.Business.Abstract;
-using Karartek.Business.Concrete;
-using Karartek.Entities.Concrete;
-using Karartek.Entities.Dto;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 
 namespace Karartek.Api.Controllers
@@ -31,12 +22,12 @@ namespace Karartek.Api.Controllers
 
 
         [HttpPost("AddJudgmentPool")]
-        public ActionResult AddJudgment([FromQuery] int id,int searchTypeId)
+        public ActionResult AddJudgment([FromQuery] int id, int searchTypeId)
         {
-            string userID =User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            string userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             int UserId = Int32.Parse(userID);
 
-            var judgmentToAdd = _judgmentPoolService.AddtoJudgmentPool(UserId, id,searchTypeId);
+            var judgmentToAdd = _judgmentPoolService.AddtoJudgmentPool(UserId, id, searchTypeId);
 
             return Ok(judgmentToAdd);
         }
@@ -58,8 +49,8 @@ namespace Karartek.Api.Controllers
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             int UserId = Int32.Parse(userId);
 
-        
-            var FavouriteJudgments=_judgmentPoolService.GetAll(UserId);
+
+            var FavouriteJudgments = _judgmentPoolService.GetAll(UserId);
             if (FavouriteJudgments != null)
             {
                 return Ok(FavouriteJudgments);
@@ -67,17 +58,10 @@ namespace Karartek.Api.Controllers
             }
             else
                 return BadRequest("Hata!");
-        
-            var FavouriteJudgments=_judgmentPoolService.GetAll(judgmentPoolDto);
-            return FavouriteJudgments;
-           
-
 
 
 
         }
-
-
 
 
     }
