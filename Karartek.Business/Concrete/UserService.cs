@@ -242,7 +242,7 @@ namespace Karartek.Business.Concrete
 
 
                 }
-                else
+                else if(userForRegister.UserTypeId == 2)
                 {
 
                     var student = new Student()
@@ -261,6 +261,7 @@ namespace Karartek.Business.Concrete
 
 
                 }
+                
 
 
             }

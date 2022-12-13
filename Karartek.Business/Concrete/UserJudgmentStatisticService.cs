@@ -36,6 +36,32 @@ namespace Karartek.Business.Concrete
                 return new ErrorDataResult<List<UserJudgmentStatistic>>("Not Found");
 
         }
+        public IDataResult<List<UserJudgmentStatistic>> GetAllbyKeyword(FilterStatisticDto filterStatisticDto)
+
+        {
+            String keyword = filterStatisticDto.keyword.ToLower();
+            var result=_userJudgmentStatisticDal.GetAll();
+            if((keyword == null)||(keyword==""))
+            {
+                result = _userJudgmentStatisticDal.GetAll();
+            }
+            else 
+            {
+                result = _userJudgmentStatisticDal.GetAll(p => (p.UserName.Contains(keyword)) || (p.LastName.Contains(keyword))
+                || ((p.UserName + " " + p.LastName).Contains(keyword)) || (p.CityName.Contains(keyword)) || (p.JudgmentCount.ToString() == keyword));
+            }
+           
+            if (result != null)
+            {
+                return new SuccessDataResult<List<UserJudgmentStatistic>>(result, "Success");
+
+            }
+            else
+                return new ErrorDataResult<List<UserJudgmentStatistic>>("Not Found");
+
+        }
+
+
     }
 }
 
