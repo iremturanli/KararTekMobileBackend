@@ -65,13 +65,23 @@ namespace Karartek.DataAccess.Concrete
 
         }
 
-        public LawyerJudgment Update(LawyerJudgment judgment)
+       public LawyerJudgment Update(LawyerJudgment judgment)
         {
+            //using AppDbContext context = new AppDbContext();
+            //context.Update(judgment);
+            //var result = context.SaveChanges();
+            //if (result > 0)
+            //{
+            //    return true;
+
+            //}
+            //{
+            //    return false;
+            //}
             using (AppDbContext context = new AppDbContext())
             {
                 context.Update(judgment);
                 context.SaveChanges();
-
                 return judgment;
             }
 
