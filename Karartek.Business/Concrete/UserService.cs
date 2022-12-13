@@ -142,7 +142,7 @@ namespace Karartek.Business.Concrete
             NewRandomPassword = GeneratePassword();
             var user = _userDal.GetUserByIdentity(forgotMyPasswordDto.IdentityNumber);
 
-            if (user is null || user.Email != forgotMyPasswordDto.Email||user.IdentityNumber!=forgotMyPasswordDto.IdentityNumber)
+            if (user is null || user.Email != forgotMyPasswordDto.Email || user.IdentityNumber != forgotMyPasswordDto.IdentityNumber)
             {
                 response.HasError = true;
                 response.Message = "Bilgilerinizi kontrol ediniz."; //mantıksız
@@ -164,7 +164,7 @@ namespace Karartek.Business.Concrete
                 message.From = new MailAddress("karartek@yandex.com");
                 message.To.Add(userToResetPassword.Email);
                 message.Subject = "Merhaba Sayın " + userToResetPassword.FirstName + " " + userToResetPassword.LastName;
-                message.Body = "Yeni uygulama şifreniz: " + NewRandomPassword +"\n"+ "Şifrenizi uygulamaya girişinizin ardından Profilim menüsüne girerek değiştirebilirsiniz.";
+                message.Body = "Yeni uygulama şifreniz: " + NewRandomPassword + "\n" + "Şifrenizi uygulamaya girişinizin ardından Profilim menüsüne girerek değiştirebilirsiniz.";
                 client.UseDefaultCredentials = false;
                 client.EnableSsl = true; // Encryption
                 client.Credentials = new System.Net.NetworkCredential("karartek@yandex.com", "plbobupzzvaxxgpw");
@@ -242,7 +242,7 @@ namespace Karartek.Business.Concrete
 
 
                 }
-                else if(userForRegister.UserTypeId == 2)
+                else if (userForRegister.UserTypeId == 2)
                 {
 
                     var student = new Student()
@@ -261,7 +261,7 @@ namespace Karartek.Business.Concrete
 
 
                 }
-                
+
 
 
             }
@@ -373,19 +373,19 @@ namespace Karartek.Business.Concrete
 
         }
 
-        public ResponseDto ChangePassword(ChangePasswordDto changePasswordDto, int id )
+        public ResponseDto ChangePassword(ChangePasswordDto changePasswordDto, int id)
         {
 
             ResponseDto response = new ResponseDto();
-            
+
             NewPassword = changePasswordDto.newPassword;
-            var user = _userDal.Get(p=> p.Id == id);
+            var user = _userDal.Get(p => p.Id == id);
             string userId = id.ToString();
             CreatePasswordHash(changePasswordDto.currentPassword, out byte[] passwordHash, out byte[] passwordSalt);
 
             if (user is null || !VerifyPasswordHash(changePasswordDto.currentPassword, user.PasswordHash, user.PasswordSalt) || user.Id != id)
             {
-                
+
                 response.HasError = true;
                 response.Message = "Bilgilerinizi kontrol ediniz."; //mantıksız
                 return response;
@@ -397,7 +397,7 @@ namespace Karartek.Business.Concrete
             else
             {
 
-                CreatePasswordHash(NewPassword, out passwordHash,out passwordSalt);
+                CreatePasswordHash(NewPassword, out passwordHash, out passwordSalt);
                 var userToResetPassword = _userDal.userForChangePassword(id, passwordHash, passwordSalt);
 
 
