@@ -81,7 +81,7 @@ namespace Karartek.DataAccess.Concrete
             using (AppDbContext context = new AppDbContext())
             {
                 context.Update(judgment);
-                Console.WriteLine("");
+                
                 context.SaveChanges();
                 return judgment;
             }
