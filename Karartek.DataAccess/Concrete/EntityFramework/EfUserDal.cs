@@ -54,7 +54,7 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
         {
 
             using var context = new AppDbContext();
-            var user = context.Users.Where(x => x.Id == id).Include(x => x.UserType).Include(c => c.City).Include(d => d.District).Include(l => l.Lawyer).Include(s => s.Student).ToList();
+            var user = context.Users.Where(x => x.Id == id).Include(x => x.UserType).Include(c => c.City).Include(d => d.District).Include(l=>l.Lawyer).Include(s => s.Student).ToList();
             return user;
         }
 

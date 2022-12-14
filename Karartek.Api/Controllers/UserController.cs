@@ -20,12 +20,12 @@ namespace Karartek.Api.Controllers
         }
 
         [HttpGet("GetUserInformation")]
-        [Authorize]
+        
         public ActionResult GetUser()
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var identity = Int32.Parse(userId);
-            var user = _userService.GetUser(identity);
+            var user = _userService.GetUserById(identity);
 
             if (user == null)
             {
