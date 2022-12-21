@@ -157,18 +157,30 @@ namespace Karartek.Business.Concrete
             {
                 if(check==true)
                 {
-
+                    
                     judgmentToLike.Likes++;
                     _judgmentDal.Update(judgmentToLike);
                     Console.WriteLine(judgmentToLike.Likes);
 
-                    userLikes.UserId = userId;
-                    userLikes.isLike = true;
-                    userLikes.JudgmentId = judgmentToLike.Id;
-                    userLikes.TypeId = (int)ESearchTypes.YuksekYargiKararları;
-                    _userLikeDal.Insert(userLikes);
+                    var foundUserLikes = _userLikeDal.Get(p => p.UserId == userId && p.JudgmentId == judgmentToLike.Id && p.TypeId==(int)ESearchTypes.YuksekYargiKararları);
+                    if (foundUserLikes != null)
+                    {
 
-                    return new SuccessResult("Success!");
+                        return new ErrorResult("Veritabanında kayıtlı");
+                    }
+                    else
+                    {
+                        userLikes.UserId = userId;
+                        userLikes.isLike = true;
+                        userLikes.JudgmentId = judgmentToLike.Id;
+                        userLikes.TypeId = (int)ESearchTypes.YuksekYargiKararları;
+                        _userLikeDal.Insert(userLikes);
+                        return new SuccessResult("Success!");
+
+                    }
+                    
+
+             
 
                 }
                 else
@@ -177,7 +189,13 @@ namespace Karartek.Business.Concrete
                     judgmentToLike.Likes--;
                     _judgmentDal.Update(judgmentToLike);
                     Console.WriteLine(judgmentToLike.Likes);
+
+
+                    var foundUserLikes = _userLikeDal.Get(p => p.UserId == userId && p.JudgmentId == judgmentToLike.Id); //bunu da değiştir şimde dene
+                    foundUserLikes.isLike = false;
+                    _userLikeDal.Update(foundUserLikes);
                     return new SuccessResult("Likes count decreased");
+                 
                 }
 
 

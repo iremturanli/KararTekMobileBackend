@@ -12,8 +12,8 @@ namespace Karartek.Business.Abstract
 {
     public interface IJudgmentPoolService
     {
-        ResponseDto AddtoJudgmentPool(int userId,int judgmentId,int searchTypeId);
-        bool DeleteFromJudgmentPool(int id);
+        BaseResponseDto AddtoJudgmentPool(int userId,int judgmentId,int searchTypeId);
+        BaseResponseDto DeleteFromJudgmentPool(int id, int searchTypeId, int userId);
         IDataResult<JudgmentLawyerJudgmentDto> GetAll(int userId);
 
     }

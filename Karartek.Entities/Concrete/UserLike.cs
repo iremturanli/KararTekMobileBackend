@@ -5,7 +5,7 @@ namespace Karartek.Entities.Concrete
 {
     public class UserLike:BaseEntity
     {
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public int JudgmentId { get; set; }//judgmentId yap
         public int TypeId { get; set; }
         public bool isLike { get; set; }

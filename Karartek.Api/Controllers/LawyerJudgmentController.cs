@@ -143,14 +143,17 @@ namespace Karartek.Api.Controllers
         [HttpPost("LawyerJudgmentToLike")]
         public ActionResult JudgmentsToLike([FromQuery] int id, bool check)
         {
-            var result = _lawyerJudgmentService.Likes(id, check);
+            var UserId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+     
+
+            var result = _lawyerJudgmentService.Likes(id, check,UserId);
             if (result.Success)
             {
                 return Ok(result);
             }
             else
             {
-                return Ok(result);
+                return BadRequest(result);
             }
 
 
