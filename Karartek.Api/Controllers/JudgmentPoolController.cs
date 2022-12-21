@@ -22,27 +22,30 @@ namespace Karartek.Api.Controllers
 
 
         [HttpPost("AddJudgmentPool")]
-        public ActionResult AddJudgment([FromQuery] int id, int searchTypeId)
+        public ActionResult AddJudgment([FromQuery] int judgmentId, int searchTypeId)
         {
             string userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             int UserId = Int32.Parse(userID);
 
-            var judgmentToAdd = _judgmentPoolService.AddtoJudgmentPool(UserId, id, searchTypeId);
+            var judgmentToAdd = _judgmentPoolService.AddtoJudgmentPool(UserId, judgmentId, searchTypeId);
 
             return Ok(judgmentToAdd);
         }
 
 
-        [HttpGet("DeleteDecree/{{id}}")]
-        public bool DeleteDecree(int id)
+        [HttpPost("DeleteDecree")]
+        public ActionResult DeleteDecree([FromQuery] int id,int searchTypeId)
         {
-            _judgmentPoolService.DeleteFromJudgmentPool(id);
-            return true;
+            string userID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            int UserId = Int32.Parse(userID);
+
+           var result= _judgmentPoolService.DeleteFromJudgmentPool(id,searchTypeId,UserId);
+            return Ok(result);
 
         }
 
 
-        [HttpPost("GetAll")]
+        [HttpGet("GetAll")]
         public ActionResult GetAll()
         {
 

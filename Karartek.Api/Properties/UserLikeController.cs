@@ -26,7 +26,7 @@ namespace Karartek.Api.Properties
         }
 
         [HttpPost("GetAll")]
-        public ActionResult GetAll(int searchTypeId)
+        public ActionResult GetAll([FromQuery]int searchTypeId)
         {
             var userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var userTypeToLikes = _userLikeService.GetAll(userId,searchTypeId);

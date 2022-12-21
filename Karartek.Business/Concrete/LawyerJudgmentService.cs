@@ -496,7 +496,7 @@ namespace Karartek.Business.Concrete
         }
 
 
-        public IResult Likes(int id, bool check)
+        public IResult Likes(int id, bool check,int userId)
         {
             var judgmentToLike = _lawyerJudgmentDal.Get(p => p.Id == id);
             var userLikes = new UserLike();
@@ -510,13 +510,26 @@ namespace Karartek.Business.Concrete
                     _lawyerJudgmentDal.Update(judgmentToLike);
                     Console.WriteLine(judgmentToLike.Likes);
 
-                    userLikes.UserId = judgmentToLike.UserId;
-                    userLikes.isLike = true;
-                    userLikes.JudgmentId = judgmentToLike.Id;
-                    userLikes.TypeId = (int)ESearchTypes.AvukatınEklediğiKararlar;
-                    _userLikeDal.Insert(userLikes);
+                    var foundUserLikes = _userLikeDal.Get(p => p.UserId == userId && p.JudgmentId == judgmentToLike.Id); 
+                    if(foundUserLikes != null)
+                    {
 
-                    return new SuccessResult("Success!");
+                        return new ErrorResult("Veritabanında kayıtlı");
+                    }
+                    else
+                    {
+                        userLikes.UserId = userId;
+                        userLikes.isLike = true;
+                        userLikes.JudgmentId = judgmentToLike.Id;
+                        userLikes.TypeId = (int)ESearchTypes.AvukatınEklediğiKararlar;
+                        _userLikeDal.Insert(userLikes);
+
+                        return new SuccessResult("Success!");
+
+
+                    }
+
+                 
 
 
 
@@ -528,9 +541,9 @@ namespace Karartek.Business.Concrete
                     _lawyerJudgmentDal.Update(judgmentToLike);
                     Console.WriteLine(judgmentToLike.Likes);
 
-                    userLikes = _userLikeDal.Get(p => p.UserId == judgmentToLike.UserId && p.JudgmentId == judgmentToLike.Id);
-                    userLikes.isLike = false;
-                    _userLikeDal.Update(userLikes);
+                    var foundUserLikeLawyer = _userLikeDal.Get(p => p.UserId == userId&& p.JudgmentId == judgmentToLike.Id&& p.TypeId == (int)ESearchTypes.AvukatınEklediğiKararlar); //bunu da değiştir şimde dene
+                    foundUserLikeLawyer.isLike = false;
+                    _userLikeDal.Update(foundUserLikeLawyer);
                     return new SuccessResult("Likes count decreased");
                 }
 

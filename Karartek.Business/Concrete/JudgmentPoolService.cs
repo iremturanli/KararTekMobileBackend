@@ -1,6 +1,12 @@
-﻿using Core.Utilities.Results;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Core.Utilities.Results;
 using Karartek.Business.Abstract;
 using Karartek.DataAccess.Abstract;
+using Karartek.DataAccess.Concrete.EntityFramework;
 using Karartek.Entities.Concrete;
 using Karartek.Entities.Concrete.Enum;
 using Karartek.Entities.Dto;
@@ -12,7 +18,7 @@ namespace Karartek.Business.Concrete
     public class JudgmentPoolService : IJudgmentPoolService
 
     {
-        List<Judgment> judgmentsList = new List<Judgment>();
+
         private readonly IJudgmentDal _judgmentDal;
         private readonly ILawyerJudgmentDal _lawyerJudgmentDal;
         private readonly IJudgmentPoolDal _judgmentPoolDal;
@@ -29,9 +35,9 @@ namespace Karartek.Business.Concrete
 
         }
 
-        public ResponseDto AddtoJudgmentPool(int userId, int judgmentId, int searchTypeId)
+        public BaseResponseDto AddtoJudgmentPool(int userId, int judgmentId, int searchTypeId)
         {
-            ResponseDto response = new ResponseDto();
+            BaseResponseDto response = new BaseResponseDto();
 
 
             var judgmentPool = new JudgmentPool();
@@ -40,21 +46,75 @@ namespace Karartek.Business.Concrete
 
 
                 {
-                    var favlawyerJudgment = _lawyerJudgmentDal.Get(p => p.Id == judgmentId);
-                    judgmentPool.DecisionId = favlawyerJudgment.Id;
+                    var foundJudgment = _judgmentPoolDal.Get(p => p.DecisionId == judgmentId && p.UserId == userId && p.SearchTypeId == (int)ESearchTypes.AvukatınEklediğiKararlar);
+                    if(foundJudgment != null)
+                    {
+                        response.HasError = true;
+                        response.Message = "Karar Havuzunda Ekli.";
+                        return response;
+                    }
+                    else
+                    {
+                        var favlawyerJudgment = _lawyerJudgmentDal.Get(p => p.Id == judgmentId);
+                        judgmentPool.DecisionId = favlawyerJudgment.Id;
+                        judgmentPool.UserId = userId;
+                        judgmentPool.CreateDate = DateTime.Now;
+                        judgmentPool.SearchTypeId = searchTypeId;
+
+                        var resultJudgment = _judgmentPoolDal.Insert(judgmentPool);
+
+                        response.HasError = false;
+                        response.Message = "Karar Havuzunda Ekli.";
+                        return response;
+
+                    }
+
+
+                 
+
+
+
+                };
+               
+
+
+            }
+
+            else
+
+            {
+                var foundJudgment = _judgmentPoolDal.Get(p => p.DecisionId == judgmentId && p.UserId == userId && p.SearchTypeId == (int)ESearchTypes.YuksekYargiKararları);
+                if (foundJudgment != null)
+                {
+                    response.HasError = true;
+                    response.Message = "Karar Havuzunda Ekli.";
+                    return response;
+                }
+                else
+                {
+                    var favJudgment = _judgmentDal.Get(p => p.Id == judgmentId);
+                    judgmentPool.DecisionId = favJudgment.Id;
                     judgmentPool.UserId = userId;
                     judgmentPool.CreateDate = DateTime.Now;
                     judgmentPool.SearchTypeId = searchTypeId;
+                    var result = _judgmentPoolDal.Insert(judgmentPool);
 
-                };
+                    response.HasError = false;
+                    response.Message = "Karar Havuzunda Ekli.";
+                    return response;
 
 
-            };
-            var resultJudgment = _judgmentPoolDal.Insert(judgmentPool);
+                }
+                
 
-            response.HasError = false;
-            response.Message = "Karar Havuzune Eklendi";
-            return response;
+
+            }
+
+
+
+
+
+     
 
 
 
@@ -62,45 +122,16 @@ namespace Karartek.Business.Concrete
 
 
 
-        //public ResponseDto AddLawyerJudgmenttoJudgmentPool(JudgmentPoolDto judgmentPoolDto, int judgmentId)
-        //{
-        //    var favJudgment = _judgmentDal.Get(p => p.Id == judgmentId);
-        //    judgmentPool.DecisionId = favJudgment.Id;
-        //    judgmentPool.UserId = userId;
-        //    judgmentPool.CreateDate = DateTime.Now;
-        //    judgmentPool.SearchTypeId = searchTypeId;
-        //    var result = _judgmentPoolDal.Insert(judgmentPool);
 
-
-        //    UserId = judgmentPoolDto.UserId,
-        //        CreateDate = DateTime.Now,
-        //        JudgmentId = 0
-
-
-
-
-        //var result = _judgmentPoolDal.Insert(judgmentPool);
-
-        //response.HasError = false;
-        //    response.Message = "Karar Havuzune Eklendi";
-        //    return response;
-
-        //}
-
-
-
-
-
-
-
-
-
-
-        public bool DeleteFromJudgmentPool(int id)
+        public BaseResponseDto DeleteFromJudgmentPool(int id,int searchTypeId,int userId)
         {
-            var result = _judgmentPoolDal.Get(p => p.Id == id);
+            BaseResponseDto response = new BaseResponseDto();
+            var result = _judgmentPoolDal.Get(p => p.DecisionId == id && p.SearchTypeId==searchTypeId && p.UserId==userId);
+            
             _judgmentPoolDal.Delete(result);
-            return true;
+            response.HasError = false;
+            response.Message = "Karar Başarıyla Silindi";
+            return response;
 
         }
 
@@ -112,6 +143,8 @@ namespace Karartek.Business.Concrete
 
 
             var list = _judgmentPoolDal.GetAll(p => p.UserId == userId);
+
+
 
             if (list != null)
 
@@ -192,6 +225,7 @@ namespace Karartek.Business.Concrete
                     else
                     {
                         return new ErrorDataResult<JudgmentLawyerJudgmentDto>("Hata");
+
                     }
 
 
@@ -214,7 +248,6 @@ namespace Karartek.Business.Concrete
 
 
         }
-
 
     }
 
