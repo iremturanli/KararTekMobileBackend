@@ -8,9 +8,11 @@ namespace Karartek.DataAccess.Abstract
     {
         Court Get(int id);
         List<Court> GetAll(int id);
-        
+        List<Court> GetAllCourts();
 
-        
+
+
+
     }
 }
 

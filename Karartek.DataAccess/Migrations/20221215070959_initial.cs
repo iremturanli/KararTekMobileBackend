@@ -247,7 +247,7 @@ namespace Karartek.DataAccess.Migrations
                     TBBComments = table.Column<string>(type: "nvarchar(max)", maxLength: 99999, nullable: true),
                     JudgmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    StateId = table.Column<int>(type: "int", nullable: true),
+                    StateId = table.Column<int>(type: "int", nullable: false),
                     Likes = table.Column<int>(type: "int", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
@@ -525,9 +525,9 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 12, 13, 15, 34, 50, 97, DateTimeKind.Local).AddTicks(2965), 1, "Yargıtay" },
-                    { 2, new DateTime(2022, 12, 13, 15, 34, 50, 97, DateTimeKind.Local).AddTicks(2981), 2, "Danıştay" },
-                    { 3, new DateTime(2022, 12, 13, 15, 34, 50, 97, DateTimeKind.Local).AddTicks(2981), 3, "Anayasa Mahkemesi" }
+                    { 1, new DateTime(2022, 12, 15, 10, 9, 58, 550, DateTimeKind.Local).AddTicks(709), 1, "Yargıtay" },
+                    { 2, new DateTime(2022, 12, 15, 10, 9, 58, 550, DateTimeKind.Local).AddTicks(723), 2, "Danıştay" },
+                    { 3, new DateTime(2022, 12, 15, 10, 9, 58, 550, DateTimeKind.Local).AddTicks(724), 3, "Anayasa Mahkemesi" }
                 });
 
             migrationBuilder.InsertData(
@@ -535,10 +535,10 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "StateId", "StateName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 12, 13, 15, 34, 50, 93, DateTimeKind.Local).AddTicks(2146), 1, "Onaya Gönderildi" },
-                    { 2, new DateTime(2022, 12, 13, 15, 34, 50, 94, DateTimeKind.Local).AddTicks(9786), 2, "Onay Bekliyor" },
-                    { 3, new DateTime(2022, 12, 13, 15, 34, 50, 94, DateTimeKind.Local).AddTicks(9794), 3, "Reddedildi" },
-                    { 4, new DateTime(2022, 12, 13, 15, 34, 50, 94, DateTimeKind.Local).AddTicks(9795), 4, "Onaylandı" }
+                    { 1, new DateTime(2022, 12, 15, 10, 9, 58, 546, DateTimeKind.Local).AddTicks(4530), 1, "Onaya Gönderildi" },
+                    { 2, new DateTime(2022, 12, 15, 10, 9, 58, 547, DateTimeKind.Local).AddTicks(7396), 2, "Onay Bekliyor" },
+                    { 3, new DateTime(2022, 12, 15, 10, 9, 58, 547, DateTimeKind.Local).AddTicks(7404), 3, "Reddedildi" },
+                    { 4, new DateTime(2022, 12, 15, 10, 9, 58, 547, DateTimeKind.Local).AddTicks(7405), 4, "Onaylandı" }
                 });
 
             migrationBuilder.InsertData(
@@ -546,8 +546,8 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 12, 13, 15, 34, 50, 96, DateTimeKind.Local).AddTicks(7387), 1, "Avukatın Eklediği Kararlar" },
-                    { 2, new DateTime(2022, 12, 13, 15, 34, 50, 96, DateTimeKind.Local).AddTicks(7401), 2, "Yüksek Yargı Kararları" }
+                    { 1, new DateTime(2022, 12, 15, 10, 9, 58, 549, DateTimeKind.Local).AddTicks(4889), 1, "Avukatın Eklediği Kararlar" },
+                    { 2, new DateTime(2022, 12, 15, 10, 9, 58, 549, DateTimeKind.Local).AddTicks(4903), 2, "Yüksek Yargı Kararları" }
                 });
 
             migrationBuilder.InsertData(
@@ -555,9 +555,9 @@ namespace Karartek.DataAccess.Migrations
                 columns: new[] { "Id", "CreateDate", "TypeId", "TypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 12, 13, 15, 34, 50, 96, DateTimeKind.Local).AddTicks(2264), 1, "Avukat-Avukat Stajyeri" },
-                    { 2, new DateTime(2022, 12, 13, 15, 34, 50, 96, DateTimeKind.Local).AddTicks(2281), 2, "Öğrenci" },
-                    { 3, new DateTime(2022, 12, 13, 15, 34, 50, 96, DateTimeKind.Local).AddTicks(2282), 3, "TBB Kullanıcısı" }
+                    { 1, new DateTime(2022, 12, 15, 10, 9, 58, 548, DateTimeKind.Local).AddTicks(9548), 1, "Avukat-Avukat Stajyeri" },
+                    { 2, new DateTime(2022, 12, 15, 10, 9, 58, 548, DateTimeKind.Local).AddTicks(9563), 2, "Öğrenci" },
+                    { 3, new DateTime(2022, 12, 15, 10, 9, 58, 548, DateTimeKind.Local).AddTicks(9564), 3, "TBB Kullanıcısı" }
                 });
 
             migrationBuilder.InsertData(

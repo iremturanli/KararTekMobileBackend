@@ -192,6 +192,26 @@ namespace Karartek.Api.Controllers
 
         }
 
+        [HttpPost("GetLawyerJudgmentsByDetailSearch")]
+
+        public ActionResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByDetailSearch(GetJudgmentByDetailSearchDto filterDetailSearchDto)
+
+
+        {
+            
+
+            var filterJudgments = _lawyerJudgmentService.GetLawyerJudgmentsByDetailSearch( filterDetailSearchDto);
+            if (filterJudgments != null)
+            {
+                return Ok(filterJudgments);
+            }
+            else
+                return BadRequest("Hata!");
+
+
+
+        }
+
 
         [HttpGet("GetById")]
 
@@ -215,6 +235,24 @@ namespace Karartek.Api.Controllers
 
 
         }
+
+        [HttpPost("GetLawyerJudgmentsByFilterOB")]
+
+        public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByFilterOB(FilterDetailOnayBekleyenDto filterDetailOnayBekleyenDto)
+
+
+        {
+
+
+            var filterJudgments = _lawyerJudgmentService.GetLawyerJudgmentsByFilterOB(filterDetailOnayBekleyenDto);
+            return filterJudgments;
+
+
+
+        }
+
+
+        
     }
 
 

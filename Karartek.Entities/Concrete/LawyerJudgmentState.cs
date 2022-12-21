@@ -7,7 +7,7 @@ namespace Karartek.Entities.Concrete
     {
         public int StateId { get; set; }
         public string StateName { get; set; } = null!;
-        public IEnumerable<LawyerJudgment>? LawyerJudgments { get; set; } = null!;
+        public virtual ICollection<LawyerJudgment>? LawyerJudgments { get; set; }
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using Karartek.Core.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Karartek.Entities.Concrete
 {
@@ -18,7 +19,7 @@ namespace Karartek.Entities.Concrete
         public string? TBBComments { get; set; } 
         public DateTime? JudgmentDate { get; set; }
         public int UserId { get; set; }
-        public int? StateId { get; set; }
+        public int StateId { get; set; }
         public int? Likes { get; set; }
         public User? User { get; set; } = null!;
         public Commission? Commission { get; set; } = null!;

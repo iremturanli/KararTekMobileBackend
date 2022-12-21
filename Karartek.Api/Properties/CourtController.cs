@@ -33,5 +33,12 @@ namespace Karartek.Api.Properties
             var courtToSearch = _courtService.GetCourtById(id);
             return courtToSearch;
         }
+
+        [HttpGet("GetAllCourts")]
+        public IDataResult<List<CourtResponseListDto>> GetAllCourts()
+        {
+            var courtToSearch = _courtService.GetAllCourts();
+            return courtToSearch;
+        }
     }
 }

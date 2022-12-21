@@ -53,6 +53,40 @@ namespace Karartek.Business.Concrete
 
 
         }
+
+        public IDataResult<List<CourtResponseListDto>> GetAllCourts()
+        {
+            var result = _courtDal.GetAllCourts();
+            var listDto = new List<CourtResponseListDto>();
+
+            foreach (var item in result)
+            {
+
+                var dto = new CourtResponseListDto()
+                {
+                    Name = item.Name,
+                    Id = item.Id,
+                };
+
+                listDto.Add(dto);
+
+
+            }
+
+
+
+            if (result != null)
+            {
+                return new SuccessDataResult<List<CourtResponseListDto>>(listDto, "Success!");
+            }
+
+            else
+            {
+                return new ErrorDataResult<List<CourtResponseListDto>>("Not Found");
+            }
+
+        }
+
         public Court GetCourtById(int id)
         {
             return _courtDal.Get(id);

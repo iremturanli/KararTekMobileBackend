@@ -24,5 +24,11 @@ namespace Karartek.DataAccess.Concrete.EntityFramework
             var courtList= context.Courts.Where(x => x.CommissionId == id);
             return courtList.ToList();
         }
+        public List<Court> GetAllCourts()
+        {
+            using var context = new AppDbContext();
+            var courtList = context.Courts;
+            return courtList.ToList();
+        }
     }
 }

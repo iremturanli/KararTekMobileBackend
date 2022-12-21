@@ -80,7 +80,15 @@ namespace Karartek.DataAccess.Concrete
             //}
             using (AppDbContext context = new AppDbContext())
             {
-                context.Update(judgment);
+
+                var lawyerJudgment = context.LawyerJudgments.SingleOrDefault(r => r.Id == judgment.Id);
+
+                lawyerJudgment.StateId = judgment.StateId;
+                lawyerJudgment.TBBComments = judgment.TBBComments;
+                lawyerJudgment.Likes = judgment.Likes;
+
+                context.Update(lawyerJudgment);
+                Console.WriteLine(lawyerJudgment.TBBComments);
                 
                 context.SaveChanges();
                 return judgment;

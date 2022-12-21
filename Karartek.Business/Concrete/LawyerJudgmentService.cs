@@ -614,6 +614,80 @@ namespace Karartek.Business.Concrete
             var result = _lawyerJudgmentDal.Get(p => p.Id == id);
             return result;
         }
+
+        public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByDetailSearch(GetJudgmentByDetailSearchDto filterDetailSearchDto)
+         
+        {
+            if (filterDetailSearchDto.courtId==0) { filterDetailSearchDto.courtId = null; }
+            if (filterDetailSearchDto.commissionId==0) { filterDetailSearchDto.commissionId = null; }
+            var resultFilter = _lawyerJudgmentDal.GetAll().Where(result => ((result.Decree.Contains(filterDetailSearchDto.keyword))||(String.IsNullOrEmpty(filterDetailSearchDto.keyword))|| (result.DecreeType.Contains(filterDetailSearchDto.keyword)))
+            &&((String.IsNullOrEmpty(filterDetailSearchDto.commissionId.ToString())||(result.CommissionId==filterDetailSearchDto.commissionId)))
+            && ((String.IsNullOrEmpty(filterDetailSearchDto.courtId.ToString()) || (result.CourtId == filterDetailSearchDto.courtId)))
+            && ((String.IsNullOrEmpty(filterDetailSearchDto.meritsYear) || (result.MeritsYear == filterDetailSearchDto.meritsYear)))
+            && ((String.IsNullOrEmpty(filterDetailSearchDto.meritsFirstOrder))|| (int.Parse(result.MeritsNo) >= int.Parse(filterDetailSearchDto.meritsFirstOrder)))
+            && ((String.IsNullOrEmpty(filterDetailSearchDto.meritsLastOrder)) || (int.Parse(result.MeritsNo) >= int.Parse(filterDetailSearchDto.meritsLastOrder)))
+            && ((String.IsNullOrEmpty(filterDetailSearchDto.decreeYear) || (result.DecreeYear == filterDetailSearchDto.decreeYear)))
+            && ((String.IsNullOrEmpty(filterDetailSearchDto.decreeFirstOrder)) || (int.Parse(result.DecreeNo) >= int.Parse(filterDetailSearchDto.decreeFirstOrder)))
+            && ((String.IsNullOrEmpty(filterDetailSearchDto.decreeLastOrder)) || (int.Parse(result.DecreeNo) >= int.Parse(filterDetailSearchDto.decreeLastOrder)))
+            && (!filterDetailSearchDto.firstDate.HasValue || result.JudgmentDate >= filterDetailSearchDto.firstDate)
+            && (!filterDetailSearchDto.lastDate.HasValue || result.JudgmentDate <= filterDetailSearchDto.lastDate)
+            && (result.StateId == (int)EJudgmentStates.Onaylandı)
+
+            );
+
+
+
+            var listDto = new List<LawyerJudgmentResponseListDto>();
+
+            foreach (var item in resultFilter)
+            {
+
+                var dto = new LawyerJudgmentResponseListDto()
+                {
+                    CommissionName = item.Commission.Name,
+                    CourtName = item.Court.Name,
+                    CommissionId = item.CommissionId,
+                    CourtId = item.CourtId,
+                    Decision = item.Decision,
+                    Decree = item.Decree,
+                    DecreeNo = item.DecreeNo,
+                    DecreeType = item.DecreeType,
+                    DecreeYear = item.DecreeYear,
+                    Id = item.Id,
+                    JudgmentDate = item.JudgmentDate,
+                    Likes = item.Likes,
+                    MeritsNo = item.MeritsNo,
+                    MeritsYear = item.MeritsYear,
+                    CreateDate = item.CreateDate,
+                    TBBComments = item.TBBComments,
+                    UserId = item.UserId,
+                    StateName = item.LawyerJudgmentState.StateName,
+                    StateId = item.LawyerJudgmentState.StateId,
+                    UserName = item.User.FirstName,
+                    LastName = item.User.LastName,
+                    LawyerAssesment = item.LawyerAssessment
+
+
+
+                };
+
+                listDto.Add(dto);
+
+            }
+
+
+            if (resultFilter != null)
+            {
+                return new SuccessDataResult<List<LawyerJudgmentResponseListDto>>(listDto, "Success!");
+            }
+
+            else
+            {
+                return new ErrorDataResult<List<LawyerJudgmentResponseListDto>>("Not Found");
+            }
+
+        }
     }
+
 }
 

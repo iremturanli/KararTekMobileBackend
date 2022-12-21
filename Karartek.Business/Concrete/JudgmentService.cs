@@ -1,6 +1,7 @@
 ﻿using Core.Utilities.Results;
 using Karartek.Business.Abstract;
 using Karartek.DataAccess.Abstract;
+using Karartek.DataAccess.Concrete;
 using Karartek.DataAccess.Concrete.EntityFramework;
 using Karartek.DataAccess.Concrete.EntityFramework.Context;
 using Karartek.Entities.Concrete;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -194,7 +196,109 @@ namespace Karartek.Business.Concrete
             return result;
         }
 
-      
+        public IDataResult<List<JudgmentResponseListDto>> GetJudgmentsByDetailSearch(GetJudgmentByDetailSearchDto detailSearchDto)
+        {
+            if (detailSearchDto.courtId == 0) { detailSearchDto.courtId = null; }
+            if (detailSearchDto.commissionId == 0) { detailSearchDto.commissionId = null; }
+            var resultFilter = _judgmentDal.GetAll().Where(result => (result.JudgmentTypeId==detailSearchDto.judgmentTypeId)
+            &&((result.Decree.Contains(detailSearchDto.keyword)) || (String.IsNullOrEmpty(detailSearchDto.keyword)) || (result.DecreeType.Contains(detailSearchDto.keyword)))
+            && ((String.IsNullOrEmpty(detailSearchDto.commissionId.ToString()) || (result.CommissionId == detailSearchDto.commissionId)))
+            && ((String.IsNullOrEmpty(detailSearchDto.courtId.ToString()) || (result.CourtId == detailSearchDto.courtId)))
+            && ((String.IsNullOrEmpty(detailSearchDto.meritsYear) || (result.MeritsYear == detailSearchDto.meritsYear)))
+            && ((String.IsNullOrEmpty(detailSearchDto.meritsFirstOrder)) || (int.Parse(result.MeritsNo) >= int.Parse(detailSearchDto.meritsFirstOrder)))
+            && ((String.IsNullOrEmpty(detailSearchDto.meritsLastOrder)) || (int.Parse(result.MeritsNo) >= int.Parse(detailSearchDto.meritsLastOrder)))
+            && ((String.IsNullOrEmpty(detailSearchDto.decreeYear) || (result.DecreeYear == detailSearchDto.decreeYear)))
+            && ((String.IsNullOrEmpty(detailSearchDto.decreeFirstOrder)) || (int.Parse(result.DecreeNo) >= int.Parse(detailSearchDto.decreeFirstOrder)))
+            && ((String.IsNullOrEmpty(detailSearchDto.decreeLastOrder)) || (int.Parse(result.DecreeNo) >= int.Parse(detailSearchDto.decreeLastOrder)))
+            && (!detailSearchDto.firstDate.HasValue || result.JudgmentDate >= detailSearchDto.firstDate)
+            && (!detailSearchDto.lastDate.HasValue || result.JudgmentDate <= detailSearchDto.lastDate)
+            
+
+            );
+
+
+            var listDto = new List<JudgmentResponseListDto>();
+
+            foreach (var item in resultFilter)
+            {
+
+                var dto = new JudgmentResponseListDto()
+                {
+                    CommissionName = item.Commission.Name,
+                    CourtName = item.Court.Name,
+                    JudgmentTypeName = item.JudgmentType.TypeName,
+                    CommissionId = item.CommissionId,
+                    CourtId = item.CourtId,
+                    Decision = item.Decision,
+                    Decree = item.Decree,
+                    DecreeNo = item.DecreeNo,
+                    DecreeType = item.DecreeType,
+                    DecreeYear = item.DecreeYear,
+                    Id = item.Id,
+                    JudgmentDate = item.JudgmentDate,
+                    JudgmentTypeId = item.JudgmentTypeId,
+                    Likes = item.Likes,
+                    MeritsNo = item.MeritsNo,
+                    MeritsYear = item.MeritsYear,
+                    CreateDate = item.CreateDate,
+
+
+                };
+
+                listDto.Add(dto);
+
+
+            }
+
+
+
+            if (resultFilter != null)
+            {
+                return new SuccessDataResult<List<JudgmentResponseListDto>>(listDto, "Success!");
+            }
+
+            else
+            {
+                return new ErrorDataResult<List<JudgmentResponseListDto>>("Not Found");
+            }
+
+
+
+
+
+        }
+
+        //public IDataResult<List<JudgmentResponseListDto>> GetFilteredJudgmentsResult(FilterSearchResultsJudgmentDto filterSearchResultsDto)
+        //{
+            
+
+        //    var resultsFilter = filterSearchResultsDto.JudgmentResponseListDto;
+        //    var results = resultsFilter;
+            
+
+        //    if(resultsFilter != null)
+        //    {
+        //        if (filterSearchResultsDto.OrderItem == 1)
+        //        {
+        //           results= resultsFilter.OrderByDescending(x =>x.JudgmentDate).ToList();
+        //        }
+        //        else if (filterSearchResultsDto.OrderItem == 2)
+        //        {
+        //           results= resultsFilter.OrderByDescending(x => x.Likes).ToList();
+        //        }
+        //        else 
+        //        {
+        //            results = resultsFilter.ToList();
+        //        }
+
+        //        if (filterSearchResultsDto.CourtId == 0) { filterSearchResultsDto.CourtId = null; }
+        //        if (filterSearchResultsDto.CommissionId == 0) { filterSearchResultsDto.CommissionId = null; }
+
+        //        var resultFilter = results.Where(x => (x.Decree.Contains(filterSearchResultsDto.ke)));
+        //    }
+
+            
+        //}
     }
 
 

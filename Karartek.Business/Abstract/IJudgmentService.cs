@@ -20,6 +20,8 @@ namespace Karartek.Business.Abstract
         bool DeleteDecree(int id);
         IResult Likes(int id,bool check,int userId);
         Judgment GetbyId(int id);
+        IDataResult<List<JudgmentResponseListDto>> GetJudgmentsByDetailSearch(GetJudgmentByDetailSearchDto detailSearchDto);
+        //IDataResult<List<JudgmentResponseListDto>> GetFilteredJudgmentsResult(FilterSearchResultsJudgmentDto filterSearchResultsDto);
 
     }
 }

@@ -9,6 +9,7 @@ namespace Karartek.Business.Abstract
     {
         Court GetCourtById(int id);
         IDataResult<List<CourtResponseListDto>> GetAllbyId(int id);
+        IDataResult<List<CourtResponseListDto>> GetAllCourts();
     }
 }
 

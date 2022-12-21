@@ -6,7 +6,6 @@ using Karartek.Entities.Concrete;
 using Karartek.Entities.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Karartek.Api.Controllers
 {
@@ -58,6 +57,19 @@ namespace Karartek.Api.Controllers
 
         {
             var judgments = _judgmentService.GetJudgmentsByType(filterDto);
+            return judgments;
+
+
+
+        }
+
+        [HttpPost("GetJudgmentByDetailSearch")]
+
+        public IDataResult<List<JudgmentResponseListDto>> GetJudgmentByDetailSearch([FromBody] GetJudgmentByDetailSearchDto detailSearchDto)
+
+
+        {
+            var judgments = _judgmentService.GetJudgmentsByDetailSearch(detailSearchDto);
             return judgments;
 
 
