@@ -52,12 +52,18 @@ namespace Karartek.Api.Controllers
 
         [HttpPost("GetJudgmentByType")]
 
-        public IDataResult<List<JudgmentResponseListDto>> GetJudgmentByType([FromBody] FilterDto filterDto)
+        public ActionResult<List<JudgmentResponseListDto>> GetJudgmentByType([FromBody] FilterDto filterDto)
 
 
         {
             var judgments = _judgmentService.GetJudgmentsByType(filterDto);
-            return judgments;
+            if (judgments!=null)
+            {
+                return Ok(judgments);
+
+            }
+            else
+            { return BadRequest("Failed"); }
 
 
 
@@ -65,12 +71,18 @@ namespace Karartek.Api.Controllers
 
         [HttpPost("GetJudgmentByDetailSearch")]
 
-        public IDataResult<List<JudgmentResponseListDto>> GetJudgmentByDetailSearch([FromBody] GetJudgmentByDetailSearchDto detailSearchDto)
+        public ActionResult<List<JudgmentResponseListDto>> GetJudgmentByDetailSearch([FromBody] GetJudgmentByDetailSearchDto detailSearchDto)
 
 
         {
             var judgments = _judgmentService.GetJudgmentsByDetailSearch(detailSearchDto);
-            return judgments;
+            if (judgments != null)
+            {
+                return Ok(judgments);
+
+            }
+            else
+            { return BadRequest("Failed"); }
 
 
 

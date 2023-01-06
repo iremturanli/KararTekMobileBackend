@@ -10,6 +10,7 @@ namespace Karartek.DataAccess.Abstract
         UserLike Update(UserLike userLike);
         List<UserLike> GetAll(Expression<Func<UserLike, bool>>? filter = null);
         UserLike Get(Expression<Func<UserLike, bool>>? filter = null);
+        void Delete(UserLike userLike);
     }
 }
 

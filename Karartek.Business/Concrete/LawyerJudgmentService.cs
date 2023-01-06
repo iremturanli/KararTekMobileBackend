@@ -510,7 +510,7 @@ namespace Karartek.Business.Concrete
                     _lawyerJudgmentDal.Update(judgmentToLike);
                     Console.WriteLine(judgmentToLike.Likes);
 
-                    var foundUserLikes = _userLikeDal.Get(p => p.UserId == userId && p.JudgmentId == judgmentToLike.Id); 
+                    var foundUserLikes = _userLikeDal.Get(p => p.UserId == userId && p.JudgmentId == judgmentToLike.Id && p.TypeId == (int)ESearchTypes.AvukatınEklediğiKararlar); 
                     if(foundUserLikes != null)
                     {
 
@@ -540,10 +540,11 @@ namespace Karartek.Business.Concrete
                     judgmentToLike.Likes--;
                     _lawyerJudgmentDal.Update(judgmentToLike);
                     Console.WriteLine(judgmentToLike.Likes);
-
+                    
                     var foundUserLikeLawyer = _userLikeDal.Get(p => p.UserId == userId&& p.JudgmentId == judgmentToLike.Id&& p.TypeId == (int)ESearchTypes.AvukatınEklediğiKararlar); //bunu da değiştir şimde dene
-                    foundUserLikeLawyer.isLike = false;
-                    _userLikeDal.Update(foundUserLikeLawyer);
+                    _userLikeDal.Delete(foundUserLikeLawyer);
+                    //foundUserLikeLawyer.isLike = false;
+                    //_userLikeDal.Update(foundUserLikeLawyer);
                     return new SuccessResult("Likes count decreased");
                 }
 

@@ -366,7 +366,7 @@ namespace Karartek.Business.Concrete
             };
 
             var token = new JwtSecurityToken(claims: _claims,
-                                             expires: DateTime.Now.AddDays(2),
+                                             expires: DateTime.Now.AddDays(90),
                                              signingCredentials: cred);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

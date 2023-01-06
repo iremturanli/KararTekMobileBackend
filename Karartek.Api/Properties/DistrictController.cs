@@ -21,10 +21,15 @@ namespace Karartek.Api.Properties
         }
 
         [HttpGet("GetAll")]
-        public IDataResult<List<DistrictResponseListDto>> GetAllbyId(int id)
+        public ActionResult<List<DistrictResponseListDto>> GetAllbyId(int id)
         {
             var districtToSearch = _districtService.GetAllbyId(id);
-            return districtToSearch;
+            if (districtToSearch != null)
+            {
+                return Ok(districtToSearch);
+            }
+            else
+                return BadRequest("Hata!");
         }
 
         [HttpGet("GetById/{{id}}")]

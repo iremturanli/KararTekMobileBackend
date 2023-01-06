@@ -162,14 +162,20 @@ namespace Karartek.Api.Controllers
 
         [HttpPost("GetLawyerJudgmentsByFilter")]
 
-        public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByFilter(FilterDetailDto filterDetailDto)
+        public ActionResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByFilter(FilterDetailDto filterDetailDto)
 
 
         {
             var UserId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
             var filterJudgments = _lawyerJudgmentService.GetLawyerJudgmentsByFilter(UserId, filterDetailDto);
-            return filterJudgments;
+            if (filterJudgments != null)
+            {
+                return Ok(filterJudgments);
+
+            }
+            else
+            { return BadRequest("Failed"); }
 
 
 
@@ -241,14 +247,19 @@ namespace Karartek.Api.Controllers
 
         [HttpPost("GetLawyerJudgmentsByFilterOB")]
 
-        public IDataResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByFilterOB(FilterDetailOnayBekleyenDto filterDetailOnayBekleyenDto)
+        public ActionResult<List<LawyerJudgmentResponseListDto>> GetLawyerJudgmentsByFilterOB(FilterDetailOnayBekleyenDto filterDetailOnayBekleyenDto)
 
 
         {
 
 
             var filterJudgments = _lawyerJudgmentService.GetLawyerJudgmentsByFilterOB(filterDetailOnayBekleyenDto);
-            return filterJudgments;
+            if (filterJudgments != null)
+            {
+                return Ok(filterJudgments);
+            }
+            else
+                return BadRequest("Hata!");
 
 
 

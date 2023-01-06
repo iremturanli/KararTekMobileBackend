@@ -191,9 +191,10 @@ namespace Karartek.Business.Concrete
                     Console.WriteLine(judgmentToLike.Likes);
 
 
-                    var foundUserLikes = _userLikeDal.Get(p => p.UserId == userId && p.JudgmentId == judgmentToLike.Id); //bunu da değiştir şimde dene
-                    foundUserLikes.isLike = false;
-                    _userLikeDal.Update(foundUserLikes);
+                    var foundUserLikes = _userLikeDal.Get(p => p.UserId == userId && p.JudgmentId == judgmentToLike.Id && p.TypeId==(int)ESearchTypes.YuksekYargiKararları); //bunu da değiştir şimde dene
+                    _userLikeDal.Delete(foundUserLikes);
+                    //foundUserLikes.isLike = false;
+                    //_userLikeDal.Update(foundUserLikes);
                     return new SuccessResult("Likes count decreased");
                  
                 }
@@ -242,9 +243,9 @@ namespace Karartek.Business.Concrete
 
                 var dto = new JudgmentResponseListDto()
                 {
-                    CommissionName = item.Commission.Name,
+                    CommissionName = item.Commission.Name == null ? String.Empty : item.Commission.Name,
                     CourtName = item.Court.Name,
-                    JudgmentTypeName = item.JudgmentType.TypeName,
+                    JudgmentTypeName = item.JudgmentType.TypeName==null ? String.Empty: item.JudgmentType.TypeName,
                     CommissionId = item.CommissionId,
                     CourtId = item.CourtId,
                     Decision = item.Decision,

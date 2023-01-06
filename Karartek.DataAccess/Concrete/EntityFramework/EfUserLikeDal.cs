@@ -49,7 +49,18 @@ namespace Karartek.DataAccess.Concrete.EntityFramework.Context
                     return userLike;
                 }
             }
-        }
+            public void Delete(UserLike userLike)
+            {
+                using (AppDbContext context = new AppDbContext())
+                {
+                    var deletedDecree = context.Entry(userLike);
+                    deletedDecree.State = EntityState.Deleted;
+                    context.SaveChanges();
+                }
+
+
+            }
+    }
     
 }
 

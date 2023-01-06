@@ -21,10 +21,15 @@ namespace Karartek.Api.Properties
         }
 
         [HttpGet("GetAll")]
-        public IDataResult<List<CourtResponseListDto>> GetAllbyId(int id)
+        public ActionResult<List<CourtResponseListDto>> GetAllbyId(int id)
         {
             var courtToSearch = _courtService.GetAllbyId(id);
-            return courtToSearch;
+            if (courtToSearch != null)
+            {
+                return Ok(courtToSearch);
+            }
+            else
+                return BadRequest("Hata!");
         }
 
         [HttpGet("GetById/{{id}}")]
@@ -35,10 +40,15 @@ namespace Karartek.Api.Properties
         }
 
         [HttpGet("GetAllCourts")]
-        public IDataResult<List<CourtResponseListDto>> GetAllCourts()
+        public ActionResult<List<CourtResponseListDto>> GetAllCourts()
         {
             var courtToSearch = _courtService.GetAllCourts();
-            return courtToSearch;
+            if (courtToSearch != null)
+            {
+                return Ok(courtToSearch);
+            }
+            else
+                return BadRequest("Hata!");
         }
     }
 }

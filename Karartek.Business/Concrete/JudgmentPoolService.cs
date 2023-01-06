@@ -64,7 +64,7 @@ namespace Karartek.Business.Concrete
                         var resultJudgment = _judgmentPoolDal.Insert(judgmentPool);
 
                         response.HasError = false;
-                        response.Message = "Karar Havuzunda Ekli.";
+                        response.Message = "Karar Havuzuna başarıyla kaydedildi.";
                         return response;
 
                     }
@@ -206,6 +206,7 @@ namespace Karartek.Business.Concrete
                         judgmentResponseListDto.CreateDate = result.CreateDate;
                         judgmentResponseListDto.Decree = result.Decree;
                         judgmentResponseListDto.DecreeNo = result.DecreeNo;
+                        judgmentResponseListDto.DecreeYear = result.DecreeYear;
                         judgmentResponseListDto.DecreeType = result.DecreeType;
                         judgmentResponseListDto.CommissionId = result.Commission.Id;
                         judgmentResponseListDto.CourtId = result.CourtId;
